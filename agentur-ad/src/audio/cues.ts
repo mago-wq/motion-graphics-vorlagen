@@ -1,39 +1,25 @@
-/** Ton-Drehbuch: alle Zeitpunkte aus timing.ts, dieselben wie im Bild. Nur Geräusche, keine Musik. */
-import {BEWEIS, BEWEIS_TICKS, CTA, CUTS, HOOK, LOESUNG, PROBLEM, SNAP_LAND, ZUFALL} from '../timing';
+/**
+ * Toneffekte über der Musik: nur wo sie etwas bedeuten (apple-design §13).
+ * Zeitpunkte aus timing.ts, dieselben wie im Bild.
+ */
+import {framesToLand, SPRINGS} from '../motion';
+import {BEWEIS, CTA, PROBLEM, REVEAL, SCENE} from '../timing';
 import manifest from './sfx-manifest.json';
 
 export const SFX = manifest;
 export type SoundName = keyof typeof manifest;
 export type Cue = {sound: SoundName; frame: number; volume?: number};
 
-export const buildCues = (): Cue[] => {
-	const c: Cue[] = [];
-	CUTS.forEach((frame, i) => c.push({sound: i % 2 ? 'whoosh_uebergang_hoch' : 'whoosh_uebergang_seite', frame}));
+const LAND = framesToLand(SPRINGS.land);
 
-	c.push({sound: 'einschlag_stark', frame: HOOK.stopp});
-	HOOK.lines.forEach((frame) => c.push({sound: 'einschlag', frame}));
-	ZUFALL.lines.forEach((frame) => c.push({sound: 'einschlag', frame}));
-	c.push({sound: 'einschlag', frame: ZUFALL.reveal[0]});
-	c.push({sound: 'einschlag_stark', frame: ZUFALL.reveal[1]});
-	c.push({sound: 'swish', frame: ZUFALL.barStart});
-
-	PROBLEM.cards.forEach((card, i) => {
-		if (i > 0) c.push({sound: 'klack', frame: card.in + SNAP_LAND, volume: 0.7});
-		c.push({sound: 'whoosh_karte_rechts', frame: card.out + 3});
-	});
-	c.push({sound: 'abschluss_schlag', frame: PROBLEM.weggewischt});
-
-	LOESUNG.rows.forEach((start, i) => {
-		c.push({sound: i % 2 ? 'whoosh_karte_rechts' : 'whoosh_karte_links', frame: start + 2});
-		c.push({sound: 'klack', frame: start + SNAP_LAND});
-	});
-	c.push({sound: 'einschlag_stark', frame: LOESUNG.fuerDich});
-
-	BEWEIS_TICKS.forEach((frame) => c.push({sound: 'tick', frame, volume: 1.4}));
-	BEWEIS.vorstellen.forEach((frame, i) => c.push({sound: i ? 'einschlag_stark' : 'einschlag', frame}));
-
-	CTA.lines.forEach((frame, i) => c.push({sound: i === 1 ? 'einschlag_stark' : 'einschlag', frame}));
-	c.push({sound: 'klack', frame: CTA.buttonIn + SNAP_LAND});
-	CTA.pulses.forEach((p) => c.push({sound: 'pop', frame: p + 1}));
-	return c;
-};
+export const buildCues = (): Cue[] => [
+	// Punkt landet, später wächst er über das Bild
+	{sound: 'klack', frame: REVEAL.dotLand + LAND, volume: 0.5},
+	{sound: 'whoosh_uebergang_seite', frame: REVEAL.dotGrow[1] - 2, volume: 0.45},
+	// Der Satz wird weggewischt: Spitze bei höchster Geschwindigkeit
+	{sound: 'whoosh_uebergang_hoch', frame: PROBLEM.flick + PROBLEM.flickFrames - 2, volume: 0.7},
+	// Die Uhr tickt auf jeder vollen Sekunde
+	...[SCENE.beweis, ...BEWEIS.secondChanges].map((frame) => ({sound: 'tick' as const, frame, volume: 0.9})),
+	// Button rastet ein
+	{sound: 'pop', frame: CTA.pillExpand + LAND, volume: 0.9},
+];

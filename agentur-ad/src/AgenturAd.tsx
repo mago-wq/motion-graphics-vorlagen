@@ -1,320 +1,504 @@
-// Das komplette Video: Hintergrund, sechs Szenen mit harten Schnitten, Zuschau-Zähler, Tonspur.
-import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
+// Das komplette Video: sechs Szenen, harte Schnitte auf den Drops der Musik.
+// Bewegungssprache nach Apple: Wörter blenden mit Unschärfe ein (kritisch gedämpfte
+// Feder, kein Überschwingen), schnelle Bewegungen tragen echte Bewegungsunschärfe,
+// Überschwingen nur bei Landungen mit Schwung (Punkt, Button).
+import {AbsoluteFill, Easing, Html5Audio, interpolate, interpolateColors, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {config} from './config';
-import {FitText} from './components/FitText';
+import {fitFontSize} from './components/FitText';
 import {FontGate} from './components/FontGate';
 import {SoundTrack} from './components/SoundTrack';
-import {SPRINGS, softIn, springFrom} from './motion';
-import {BODY_FONT, COLORS, HEADLINE_FONT, withAlpha} from './theme';
-import {BEWEIS, CTA, CUTS, HOOK, IMPACTS, LOESUNG, PROBLEM, SCENE_STARTS, SLAM_LAND, STILL_FROM, ZUFALL} from './timing';
+import {SPRINGS, springFrom} from './motion';
+import {C, FONT, tracking, withAlpha} from './theme';
+import {BEISPIEL, BEWEIS, CTA, HOOK, PROBLEM, REVEAL, SCENE, STILL_FROM} from './timing';
 import {FPS, SAFE, WIDTH} from './video';
 
 const T = config.texte;
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
+/** Heller Text auf Dunkel, dunkler Text auf Hell: nie reines Schwarz/Weiß */
+const INK_ON_DARK = '#F4F4F2';
+const INK_ON_LIGHT = C.dunkel;
 
 /** Globaler Frame, eingefroren ab STILL_FROM */
 const useFrame = () => Math.min(useCurrentFrame(), STILL_FROM);
 
-/** Zuschauzeit als "07,4 s" */
-const watchTime = (frame: number) => (frame / FPS).toFixed(1).replace('.', ',').padStart(4, '0');
+/** Eine gemeinsame Größe für mehrere Zeilen: die längste bestimmt */
+const fitLines = (lines: string[], maxSize: number, weight: number, maxWidth: number = SAFE.width) =>
+	Math.min(
+		...lines.map((text) =>
+			fitFontSize({text, maxWidth, maxFontSize: maxSize, fontFamily: FONT, fontWeight: weight, letterSpacing: tracking(maxSize)}),
+		),
+	);
 
 // ---------------------------------------------------------------- Bausteine
 
-/** Wort/Zeile, die mit Überschwingen aus großer Skalierung einschlägt. Landet auf `at`. */
-const Slam: React.FC<{at: number; text: string; size: number; color?: string; y?: number}> = ({at, text, size, color = COLORS.text, y = 0}) => {
+/** Wort: steigt aus der Unschärfe auf */
+const Word: React.FC<{text: string; start: number; color: string}> = ({text, start, color}) => {
 	const frame = useFrame();
-	const p = springFrom(frame, at - SLAM_LAND, SPRINGS.slam);
-	if (frame < at - SLAM_LAND) return null;
+	const p = springFrom(frame, start, SPRINGS.text);
 	return (
-		<div style={{transform: `translateY(${y}px) scale(${interpolate(p, [0, 1], [2.6, 1])})`, opacity: interpolate(p, [0, 0.35], [0, 1], clamp), filter: `blur(${interpolate(p, [0, 0.8], [14, 0], clamp)}px)`}}>
-			<FitText text={text} maxWidth={SAFE.width} maxFontSize={size} fontFamily={HEADLINE_FONT} uppercase style={{color, textAlign: 'center'}} />
-		</div>
+		<span
+			style={{
+				display: 'inline-block',
+				color,
+				opacity: interpolate(p, [0, 0.45], [0, 1], clamp),
+				transform: `translateY(${(1 - p) * 0.32}em)`,
+				filter: p < 0.999 ? `blur(${(1 - p) * 18}px)` : undefined,
+			}}
+		>
+			{text}
+		</span>
 	);
 };
 
-const Body: React.FC<{text: string; at: number; size?: number; color?: string}> = ({text, at, size = 54, color = COLORS.textMuted}) => {
-	const frame = useFrame();
-	const p = softIn(frame, at, 14);
+type LinesProps = {
+	lines: string[];
+	starts: number[];
+	colors: string[];
+	maxSize: number;
+	weight?: number;
+	stagger?: number;
+	lineHeight?: number;
+	align?: 'left' | 'center';
+};
+
+/** Mehrzeilige Überschrift, Wort für Wort, jede Zeile mit eigenem Start */
+const Lines: React.FC<LinesProps> = ({lines, starts, colors, maxSize, weight = 700, stagger = 3, lineHeight = 1.06, align = 'left'}) => {
+	const size = fitLines(lines, maxSize, weight);
 	return (
-		<div style={{opacity: p, transform: `translateY(${(1 - p) * 30}px)`}}>
-			<FitText text={text} maxWidth={SAFE.width} maxFontSize={size} fontFamily={BODY_FONT} fontWeight={600} style={{color, textAlign: 'center'}} />
-		</div>
-	);
-};
-
-const Stack: React.FC<{children: React.ReactNode; gap?: number; top?: number}> = ({children, gap = 10, top}) => (
-	<AbsoluteFill style={{alignItems: 'center', justifyContent: top === undefined ? 'center' : 'flex-start', paddingTop: top, flexDirection: 'column', gap}}>
-		{children}
-	</AbsoluteFill>
-);
-
-/** Bewegter Hintergrund: Raster, das langsam wandert, und ein Lichtfleck im Akzent */
-const Background: React.FC = () => {
-	const frame = useFrame();
-	const drift = (frame * 0.8) % 90;
-	const gx = 540 + Math.sin(frame / 50) * 260;
-	const gy = 900 + Math.cos(frame / 70) * 380;
-	return (
-		<AbsoluteFill>
-			<AbsoluteFill
-				style={{
-					backgroundImage: `linear-gradient(${COLORS.hairline} 2px, transparent 2px), linear-gradient(90deg, ${COLORS.hairline} 2px, transparent 2px)`,
-					backgroundSize: '90px 90px',
-					backgroundPosition: `0 ${drift}px`,
-					maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 80%)',
-				}}
-			/>
-			<AbsoluteFill style={{background: `radial-gradient(circle 620px at ${gx}px ${gy}px, ${withAlpha(config.akzentfarbe, 0.13)}, transparent)`}} />
-		</AbsoluteFill>
-	);
-};
-
-/** Bildwackler bei jedem Einschlag, klingt über 7 Frames ab */
-const useShake = () => {
-	const frame = useFrame();
-	let x = 0;
-	let y = 0;
-	for (const at of IMPACTS) {
-		const d = frame - at;
-		if (d >= 0 && d < 7) {
-			const k = (1 - d / 7) * 14;
-			x += Math.sin(at * 7.3 + d * 2.1) * k;
-			y += Math.cos(at * 3.1 + d * 2.7) * k;
-		}
-	}
-	return `translate(${x}px, ${y}px)`;
-};
-
-/** Blitz + leichter Zoom bei jedem harten Schnitt */
-const CutFlash: React.FC = () => {
-	const frame = useFrame();
-	const cut = CUTS.find((c) => frame >= c && frame < c + 6);
-	if (cut === undefined) return null;
-	return <AbsoluteFill style={{backgroundColor: config.akzentfarbe, opacity: interpolate(frame - cut, [0, 5], [0.45, 0], clamp), mixBlendMode: 'screen'}} />;
-};
-
-/** Szenen-Hülle: kurzer Zoom-Einstieg nach dem Schnitt */
-const Scene: React.FC<{children: React.ReactNode; from: number}> = ({children, from}) => {
-	const frame = useFrame() - from;
-	const s = interpolate(frame, [0, 8], [1.08, 1], {...clamp, easing: Easing.out(Easing.cubic)});
-	return <AbsoluteFill style={{transform: `scale(${s})`}}>{children}</AbsoluteFill>;
-};
-
-/** Kleiner Zähler oben: "● DU SCHAUST SEIT 07,4 s" – die Zahl ist die echte Zuschauzeit */
-const WatchHud: React.FC = () => {
-	const frame = useFrame();
-	if (frame >= SCENE_STARTS.beweis && frame < SCENE_STARTS.cta) return null;
-	const blink = frame >= STILL_FROM || Math.floor(frame / 15) % 2 === 0;
-	return (
-		<div style={{position: 'absolute', top: SAFE.top + 10, left: 0, width: WIDTH, display: 'flex', justifyContent: 'center'}}>
-			<div style={{display: 'flex', alignItems: 'center', gap: 16, padding: '14px 28px', borderRadius: 999, border: `2px solid ${COLORS.hairline}`, backgroundColor: withAlpha(config.hauptfarbe, 0.7), fontFamily: BODY_FONT, fontWeight: 600, fontSize: 30, color: COLORS.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase'}}>
-				<div style={{width: 16, height: 16, borderRadius: 8, backgroundColor: config.warnfarbe, opacity: blink ? 1 : 0.25}} />
-				{T.hudLabel}
-				<span style={{color: config.akzentfarbe, fontVariantNumeric: 'tabular-nums', minWidth: 110}}>{watchTime(frame)} s</span>
-			</div>
-		</div>
-	);
-};
-
-// ---------------------------------------------------------------- Szenen
-
-const HookScene: React.FC = () => (
-	<Stack gap={0}>
-		<Slam at={HOOK.stopp} text={T.stopp} size={330} color={config.akzentfarbe} />
-		<div style={{height: 30}} />
-		{T.hook.map((line, i) => (
-			<Slam key={line} at={HOOK.lines[i]} text={line} size={i === 1 ? 190 : 120} />
-		))}
-	</Stack>
-);
-
-const ZufallScene: React.FC = () => {
-	const frame = useFrame();
-	const up = softIn(frame, ZUFALL.shiftUp, 12);
-	const bar = interpolate(frame, [ZUFALL.barStart, ZUFALL.barStart + 10], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
-	return (
-		<Stack gap={0}>
-			<div style={{transform: `translateY(${-up * 60}px)`, opacity: 1 - up * 0.65}}>
-				{T.keinZufall.map((line, i) => (
-					<Slam key={line} at={ZUFALL.lines[i]} text={line} size={i === 0 ? 130 : 170} />
-				))}
-			</div>
-			<div style={{height: 40}} />
-			<Slam at={ZUFALL.reveal[0]} text={T.aufloesung[0]} size={110} />
-			<div style={{position: 'relative', padding: '6px 24px'}}>
-				<div style={{position: 'absolute', inset: 0, backgroundColor: config.akzentfarbe, transformOrigin: 'left', transform: `scaleX(${bar}) skewX(-8deg)`}} />
-				<div style={{position: 'relative'}}>
-					<Slam at={ZUFALL.reveal[1]} text={T.aufloesung[1]} size={170} color={bar > 0.5 ? config.hauptfarbe : COLORS.text} />
+		<div style={{fontFamily: FONT, fontWeight: weight, fontSize: size, lineHeight, letterSpacing: `${tracking(size)}em`, textAlign: align}}>
+			{lines.map((line, li) => (
+				<div key={li} style={{whiteSpace: 'nowrap'}}>
+					{line.split(' ').map((w, wi) => (
+						<span key={wi}>
+							{wi > 0 ? ' ' : null}
+							<Word text={w} start={starts[li] + wi * stagger} color={colors[li] ?? colors[0]} />
+						</span>
+					))}
 				</div>
-			</div>
-		</Stack>
-	);
-};
-
-/** Graue Standard-Anzeige, wie sie jeder im Feed überwischt */
-const BoringCard: React.FC<{titel: string; zeile: string; inAt: number; outAt: number}> = ({titel, zeile, inAt, outAt}) => {
-	const frame = useFrame();
-	const pin = springFrom(frame, inAt, SPRINGS.snap);
-	const out = interpolate(frame, [outAt, outAt + PROBLEM.swipeFrames], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
-	if (frame < inAt || out >= 1) return null;
-	const y = interpolate(pin, [0, 1], [900, 0]) - out * 1500;
-	const muted = withAlpha(config.textfarbe, 0.35);
-	return (
-		<div style={{position: 'absolute', left: 170, top: 520, width: 740, transform: `translateY(${y}px) rotate(${out * -6}deg)`, borderRadius: 36, backgroundColor: '#1C1C1E', border: `2px solid ${COLORS.hairline}`, padding: 36, filter: 'grayscale(1)'}}>
-			<div style={{display: 'flex', alignItems: 'center', gap: 18, marginBottom: 26}}>
-				<div style={{width: 64, height: 64, borderRadius: 32, backgroundColor: '#2C2C2E'}} />
-				<div style={{fontFamily: BODY_FONT, fontSize: 28, color: muted}}>Gesponsert</div>
-			</div>
-			<div style={{height: 420, borderRadius: 20, background: 'linear-gradient(135deg, #2A2A2C, #202022)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: BODY_FONT, fontSize: 30, color: muted}}>Stockfoto</div>
-			<div style={{fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: withAlpha(config.textfarbe, 0.6), marginTop: 30}}>{titel}</div>
-			<div style={{fontFamily: BODY_FONT, fontSize: 32, color: muted, marginTop: 10}}>{zeile}</div>
+			))}
 		</div>
 	);
 };
 
-/** Finger-Punkt, der nach oben wischt */
-const SwipeFinger: React.FC<{at: number}> = ({at}) => {
-	const frame = useFrame();
-	const t = interpolate(frame, [at - 4, at + PROBLEM.swipeFrames], [0, 1], clamp);
-	if (t <= 0 || t >= 1) return null;
-	return <div style={{position: 'absolute', left: 740, top: 1250 - t * 600, width: 90, height: 90, borderRadius: 45, backgroundColor: withAlpha('#FFFFFF', 0.35 * Math.sin(t * Math.PI)), border: '3px solid rgba(255,255,255,0.6)'}} />;
-};
+/** Absolut platzierter Block in der Sicherheitszone */
+const Block: React.FC<{top: number; children: React.ReactNode; style?: React.CSSProperties}> = ({top, children, style}) => (
+	<div style={{position: 'absolute', top, left: SAFE.left, width: SAFE.width, ...style}}>{children}</div>
+);
 
-const ProblemScene: React.FC = () => {
+/** Richtungsgebundene Bewegungsunschärfe (nur vertikal), per SVG-Filter */
+const VerticalBlur: React.FC<{id: string; amount: number}> = ({id, amount}) => (
+	<svg width={0} height={0} style={{position: 'absolute'}}>
+		<filter id={id} x="-5%" y="-20%" width="110%" height="140%">
+			<feGaussianBlur stdDeviation={`0 ${amount.toFixed(2)}`} />
+		</filter>
+	</svg>
+);
+
+/** Szene: Grundfarbe + langsames Heranfahren (links verankert, bleibt in der Sicherheitszone) */
+const Scene: React.FC<{from: number; to: number; bg: string; children: React.ReactNode}> = ({from, to, bg, children}) => {
 	const frame = useFrame();
-	const done = frame >= PROBLEM.weggewischt - SLAM_LAND;
+	const s = interpolate(frame, [from, to], [1, 1.025], clamp);
 	return (
-		<AbsoluteFill>
-			<div style={{position: 'absolute', top: 390, width: WIDTH, opacity: done ? 0 : 1}}>
-				<Body text={T.problemTitel} at={PROBLEM.titleIn} size={60} color={COLORS.text} />
-			</div>
-			{T.langweiligeAnzeigen.map((a, i) => (
-				<BoringCard key={a.titel} {...a} inAt={PROBLEM.cards[i].in} outAt={PROBLEM.cards[i].out} />
-			))}
-			{PROBLEM.cards.map((c) => (
-				<SwipeFinger key={c.out} at={c.out} />
-			))}
-			<Stack gap={24}>
-				<Slam at={PROBLEM.weggewischt} text={T.weggewischt} size={210} color={config.warnfarbe} />
-				<Body text={T.keinerSchaut} at={PROBLEM.keinerSchaut} size={64} />
-			</Stack>
+		<AbsoluteFill style={{backgroundColor: bg}}>
+			<AbsoluteFill style={{transform: `scale(${s})`, transformOrigin: `${SAFE.left}px 50%`}}>{children}</AbsoluteFill>
 		</AbsoluteFill>
 	);
 };
 
-const LoesungScene: React.FC = () => {
+// ---------------------------------------------------------------- 1 Hook: der Feed bleibt stehen
+
+const LINE = 112;
+const FEED_SIZE = 64;
+const TARGET = 34;
+const HOOK_LINES = Array.from({length: TARGET + 9}, (_, i) => (i === TARGET ? T.stopp : T.feed[i % T.feed.length]));
+
+/** Scroll-Abbremsung: schnell, dann weich auf den Punkt (wie ein iPhone-Feed) */
+const hookOffset = (frame: number) => HOOK.rushFrom * (1 - Math.min(1, Math.max(0, frame) / HOOK.stop)) ** 4;
+
+const HookScene: React.FC = () => {
 	const frame = useFrame();
+	// Vorwärts-Differenz: auch Frame 0 zeigt schon die volle Unschärfe
+	const speed = Math.abs(hookOffset(frame + 1) - hookOffset(frame));
+	const blur = Math.min(34, speed * 0.13);
+	const others = interpolate(frame, [HOOK.stop + 2, HOOK.stop + 14], [1, 0], clamp);
+	const up = springFrom(frame, HOOK.targetUp, SPRINGS.move);
+	const columnTop = 960 - (TARGET * LINE + LINE / 2) + hookOffset(frame);
 	return (
-		<AbsoluteFill>
-			<div style={{position: 'absolute', top: 420, width: WIDTH}}>
-				<Body text={T.loesungTitel} at={LOESUNG.titleIn} size={60} color={COLORS.text} />
-			</div>
-			<div style={{position: 'absolute', top: 560, left: SAFE.left, width: SAFE.width, display: 'flex', flexDirection: 'column', gap: 34}}>
-				{T.punkte.map((p, i) => {
-					const s = springFrom(frame, LOESUNG.rows[i], SPRINGS.snap);
-					if (frame < LOESUNG.rows[i]) return <div key={p} style={{height: 150}} />;
+		<>
+			<VerticalBlur id="hook-blur" amount={blur} />
+			<div style={{position: 'absolute', left: SAFE.left, top: columnTop, width: SAFE.width, filter: blur > 0.2 ? 'url(#hook-blur)' : undefined}}>
+				{HOOK_LINES.map((text, i) => {
+					const isTarget = i === TARGET;
+					const top = i * LINE;
+					// Nur Zeilen zeichnen, die im Bild sein können
+					if (columnTop + top > 2000 || columnTop + top < -LINE) return null;
 					return (
-						<div key={p} style={{height: 150, display: 'flex', alignItems: 'center', gap: 30, padding: '0 36px', borderRadius: 28, backgroundColor: COLORS.surface, border: `2px solid ${withAlpha(config.akzentfarbe, 0.35)}`, transform: `translateX(${(1 - s) * (i % 2 ? 1 : -1) * 1100}px)`}}>
-							<div style={{fontFamily: HEADLINE_FONT, fontSize: 110, color: config.akzentfarbe, lineHeight: 1}}>{`0${i + 1}`}</div>
-							<FitText text={p} maxWidth={SAFE.width - 230} maxFontSize={72} fontFamily={HEADLINE_FONT} uppercase style={{color: COLORS.text}} />
+						<div
+							key={i}
+							style={{
+								position: 'absolute',
+								top,
+								height: LINE,
+								display: 'flex',
+								alignItems: 'center',
+								whiteSpace: 'nowrap',
+								fontFamily: FONT,
+								fontWeight: 600,
+								fontSize: FEED_SIZE,
+								letterSpacing: `${tracking(FEED_SIZE)}em`,
+								color: isTarget ? interpolateColors(frame, [HOOK.stop - 3, HOOK.stop + 2], [C.feed, INK_ON_DARK]) : C.feed,
+								opacity: isTarget ? 1 : others,
+								filter: !isTarget && others < 1 ? `blur(${(1 - others) * 10}px)` : undefined,
+								transform: isTarget ? `translateY(${-up * 270}px) scale(${1 + up * 0.42})` : undefined,
+								transformOrigin: 'left center',
+							}}
+						>
+							{text}
 						</div>
 					);
 				})}
 			</div>
-			<div style={{position: 'absolute', top: 1180, width: WIDTH, transform: 'rotate(-4deg)'}}>
-				<Slam at={LOESUNG.fuerDich} text={T.fuerDich} size={170} color={config.akzentfarbe} />
+			<Block top={840}>
+				<Lines lines={T.keinZufall} starts={HOOK.keinZufall} colors={[C.grauAufDunkel, INK_ON_DARK]} maxSize={132} />
+			</Block>
+		</>
+	);
+};
+
+// ---------------------------------------------------------------- 2 Reveal: Motion Design.
+
+/** Wort, dessen Buchstaben einzeln erscheinen und dabei zusammenrücken */
+const TrackedWord: React.FC<{text: string; start: number; size: number; children?: React.ReactNode}> = ({text, start, size, children}) => {
+	const frame = useFrame();
+	const squeeze = springFrom(frame, start, SPRINGS.letters);
+	return (
+		<div
+			style={{
+				fontFamily: FONT,
+				fontWeight: 800,
+				fontSize: size,
+				lineHeight: 0.98,
+				whiteSpace: 'nowrap',
+				color: INK_ON_LIGHT,
+				letterSpacing: `${interpolate(squeeze, [0, 1], [0.32, tracking(size)])}em`,
+			}}
+		>
+			{text.split('').map((ch, i) => {
+				const p = springFrom(frame, start + i * 1.5, SPRINGS.text);
+				return (
+					<span
+						key={i}
+						style={{
+							display: 'inline-block',
+							opacity: interpolate(p, [0, 0.4], [0, 1], clamp),
+							transform: `translateY(${(1 - p) * 0.25}em)`,
+							filter: p < 0.999 ? `blur(${(1 - p) * 22}px)` : undefined,
+						}}
+					>
+						{ch}
+					</span>
+				);
+			})}
+			{children}
+		</div>
+	);
+};
+
+const RevealScene: React.FC = () => {
+	const frame = useFrame();
+	const size = fitLines([T.motionDesign[0], `${T.motionDesign[1]}.`], 270, 800);
+	const land = springFrom(frame, REVEAL.dotLand, SPRINGS.land);
+	const grow = interpolate(frame, REVEAL.dotGrow, [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
+	return (
+		<>
+			<Block top={560}>
+				<Lines lines={[T.dasIst]} starts={[REVEAL.dasIst]} colors={[C.grauAufHell]} maxSize={78} weight={600} />
+			</Block>
+			<Block top={670}>
+				<TrackedWord text={T.motionDesign[0]} start={REVEAL.motion} size={size} />
+				<TrackedWord text={T.motionDesign[1]} start={REVEAL.design} size={size}>
+					<span
+						style={{
+							display: 'inline-block',
+							width: '0.2em',
+							height: '0.2em',
+							marginLeft: '0.06em',
+							borderRadius: '50%',
+							backgroundColor: C.akzent,
+							transform: `scale(${land * (1 + grow * 130)})`,
+						}}
+					/>
+				</TrackedWord>
+			</Block>
+		</>
+	);
+};
+
+// ---------------------------------------------------------------- 3 Problem: weggewischt
+
+const FeedBackdrop: React.FC<{speedBoostAt: number}> = ({speedBoostAt}) => {
+	const frame = useFrame();
+	const local = frame - SCENE.problem;
+	const boost = frame > speedBoostAt ? 1100 * (1 - Math.exp(-(frame - speedBoostAt) / 7)) : 0;
+	const pos = local * 4 + boost;
+	const prev = (local - 1) * 4 + (frame - 1 > speedBoostAt ? 1100 * (1 - Math.exp(-(frame - 1 - speedBoostAt) / 7)) : 0);
+	const blur = Math.min(30, Math.abs(pos - prev) * 0.14);
+	const cycle = LINE * T.feed.length;
+	return (
+		<>
+			<VerticalBlur id="feed-blur" amount={blur} />
+			{/* Zur Bildmitte hin ausgeblendet: der Satz steht frei, der Feed rauscht oben und unten */}
+			<AbsoluteFill style={{maskImage: 'linear-gradient(180deg, black 0%, black 22%, transparent 38%, transparent 68%, black 84%, black 100%)'}}>
+			<div style={{position: 'absolute', left: SAFE.left, top: -(pos % cycle), filter: blur > 0.2 ? 'url(#feed-blur)' : undefined}}>
+				{Array.from({length: 3 * T.feed.length}, (_, i) => (
+					<div
+						key={i}
+						style={{
+							height: LINE,
+							display: 'flex',
+							alignItems: 'center',
+							whiteSpace: 'nowrap',
+							fontFamily: FONT,
+							fontWeight: 600,
+							fontSize: FEED_SIZE,
+							letterSpacing: `${tracking(FEED_SIZE)}em`,
+							color: C.feedLeise,
+						}}
+					>
+						{T.feed[i % T.feed.length]}
+					</div>
+				))}
 			</div>
-		</AbsoluteFill>
+			</AbsoluteFill>
+		</>
+	);
+};
+
+const ProblemScene: React.FC = () => {
+	const frame = useFrame();
+	const t = interpolate(frame, [PROBLEM.flick, PROBLEM.flick + PROBLEM.flickFrames], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
+	const tPrev = interpolate(frame - 1, [PROBLEM.flick, PROBLEM.flick + PROBLEM.flickFrames], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
+	const y = -1700 * t;
+	const blur = Math.min(40, Math.abs(y + 1700 * tPrev) * 0.12);
+	return (
+		<>
+			<FeedBackdrop speedBoostAt={PROBLEM.flick} />
+			{t < 1 ? (
+				<>
+					<VerticalBlur id="flick-blur" amount={blur} />
+					<Block top={800} style={{transform: `translateY(${y}px)`, filter: blur > 0.2 ? 'url(#flick-blur)' : undefined}}>
+						<Lines lines={T.problem} starts={PROBLEM.lines} colors={[C.grauAufDunkel, INK_ON_DARK]} maxSize={92} />
+					</Block>
+				</>
+			) : null}
+			<Block top={800}>
+				<Lines lines={T.grund} starts={PROBLEM.grund} colors={[C.grauAufDunkel, INK_ON_DARK]} maxSize={108} />
+			</Block>
+		</>
+	);
+};
+
+// ---------------------------------------------------------------- 4 Beispiel: echte Arbeit statt Behauptung
+
+const CARD = {w: 540, h: 960, top: 500};
+
+const BeispielScene: React.FC = () => {
+	const frame = useFrame();
+	const p = springFrom(frame, BEISPIEL.card, SPRINGS.move);
+	return (
+		<>
+			<Block top={262}>
+				<Lines lines={T.beispielTitel} starts={[BEISPIEL.title, BEISPIEL.title + 8]} colors={[C.grauAufHell, INK_ON_LIGHT]} maxSize={80} />
+			</Block>
+			<div style={{position: 'absolute', left: (WIDTH - CARD.w) / 2, top: CARD.top, width: CARD.w, height: CARD.h, perspective: 1800}}>
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+						borderRadius: 44,
+						overflow: 'hidden',
+						backgroundColor: '#0E0E0E',
+						opacity: interpolate(p, [0, 0.2], [0, 1], clamp),
+						transform: `translateY(${(1 - p) * 900}px) rotateX(${(1 - p) * 24}deg)`,
+						transformOrigin: '50% 100%',
+						boxShadow: `0 60px 120px -30px ${withAlpha(C.dunkel, 0.45)}, 0 0 0 1px ${withAlpha(C.dunkel, 0.08)}`,
+					}}
+				>
+					<Sequence from={BEISPIEL.video} layout="none">
+						<OffthreadVideo src={staticFile(config.beispielVideo)} muted style={{width: '100%', height: '100%'}} />
+					</Sequence>
+				</div>
+			</div>
+		</>
+	);
+};
+
+// ---------------------------------------------------------------- 5 Beweis: die echte Zuschauzeit
+
+const DIGIT_SIZE = 400;
+
+const Odometer: React.FC = () => {
+	const frame = useFrame();
+	const secs = Math.floor(frame / FPS);
+	const p = springFrom(frame, secs * FPS, SPRINGS.digit);
+	const cur = String(secs).padStart(2, '0');
+	const old = String(secs - 1).padStart(2, '0');
+	return (
+		<div style={{display: 'flex', fontFamily: FONT, fontWeight: 800, fontSize: DIGIT_SIZE, lineHeight: 1.1, letterSpacing: `${tracking(DIGIT_SIZE)}em`, fontFeatureSettings: '"tnum"', color: INK_ON_DARK}}>
+			{cur.split('').map((d, i) => {
+				const rolling = old[i] !== d && p < 0.999;
+				return (
+					<span key={i} style={{position: 'relative', display: 'inline-block', height: '1.1em', overflow: 'hidden'}}>
+						<span style={{visibility: 'hidden'}}>0</span>
+						{rolling ? (
+							<span style={{position: 'absolute', left: 0, top: 0, transform: `translateY(${-p * 100}%)`, opacity: 1 - p, filter: `blur(${(1 - Math.abs(0.5 - p) * 2) * 8}px)`}}>
+								{old[i]}
+							</span>
+						) : null}
+						<span style={{position: 'absolute', left: 0, top: 0, transform: rolling ? `translateY(${(1 - p) * 100}%)` : undefined, filter: rolling ? `blur(${(1 - Math.abs(0.5 - p) * 2) * 8}px)` : undefined}}>
+							{d}
+						</span>
+					</span>
+				);
+			})}
+		</div>
 	);
 };
 
 const BeweisScene: React.FC = () => {
 	const frame = useFrame();
-	const grow = springFrom(frame, SCENE_STARTS.beweis, SPRINGS.snap);
-	const dim = softIn(frame, BEWEIS.vorstellen[0] - 8, 10);
+	const u = springFrom(frame, BEWEIS.blockUp, SPRINGS.move);
 	return (
-		<Stack gap={0}>
-			<div style={{opacity: 1 - dim * 0.35, transform: `translateY(${-dim * 230}px) scale(${1 - dim * 0.15})`, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-				<Body text={T.beweisVor} at={BEWEIS.labelIn} size={64} color={COLORS.text} />
-				<div style={{fontFamily: HEADLINE_FONT, fontSize: 400, lineHeight: 1, color: config.akzentfarbe, fontVariantNumeric: 'tabular-nums', transform: `scale(${interpolate(grow, [0, 1], [0.3, 1])})`, textShadow: `0 0 80px ${withAlpha(config.akzentfarbe, 0.35)}`}}>
-					{watchTime(frame)}
-					<span style={{fontSize: 160}}> s</span>
-				</div>
-				<Body text={T.beweisNach} at={BEWEIS.zuIn} size={64} color={COLORS.text} />
-			</div>
-			<div style={{position: 'absolute', top: 1140, width: WIDTH}}>
-				{T.vorstellen.map((line, i) => (
-					<Slam key={line} at={BEWEIS.vorstellen[i]} text={line} size={i === 0 ? 90 : 110} color={i === 1 ? config.akzentfarbe : COLORS.text} />
-				))}
-			</div>
-		</Stack>
+		<>
+			<Block top={430} style={{transform: `translateY(${-u * 180}px) scale(${1 - u * 0.14})`, transformOrigin: 'left top', opacity: 1 - u * 0.55}}>
+				<Lines lines={[T.beweisVor]} starts={[BEWEIS.label]} colors={[C.grauAufDunkel]} maxSize={68} weight={600} />
+				<Odometer />
+				<Lines lines={[T.beweisNach]} starts={[BEWEIS.nach]} colors={[C.grauAufDunkel]} maxSize={68} weight={600} />
+			</Block>
+			<Block top={1000}>
+				<Lines lines={T.vorstellen} starts={BEWEIS.vorstellen} colors={[INK_ON_DARK, INK_ON_DARK, C.akzent]} maxSize={112} />
+			</Block>
+		</>
 	);
 };
 
+// ---------------------------------------------------------------- 6 CTA
+
+const PILL = {w: SAFE.width, h: 168, cy: 1030, startW: 150, startH: 48};
+
 const CtaScene: React.FC = () => {
 	const frame = useFrame();
-	const b = springFrom(frame, CTA.buttonIn, SPRINGS.snap);
-	let pulse = 1;
-	for (const p of CTA.pulses) {
-		const d = frame - p;
-		if (d >= 0 && d < CTA.pulseLength) pulse += Math.sin((d / CTA.pulseLength) * Math.PI) * 0.06;
-	}
-	const arrow = frame >= CTA.buttonIn ? Math.abs(Math.sin(((frame - CTA.buttonIn) / 20) * Math.PI)) * 20 : 0;
+	const appear = springFrom(frame, CTA.pillIn, SPRINGS.text);
+	const e = springFrom(frame, CTA.pillExpand, SPRINGS.land);
+	const w = PILL.startW + e * (PILL.w - PILL.startW);
+	const h = PILL.startH + e * (PILL.h - PILL.startH);
+	const q = springFrom(frame, CTA.pillText, SPRINGS.text);
+	const sheen = interpolate(frame, CTA.sheen, [-0.35, 1.25], {...clamp, easing: Easing.inOut(Easing.cubic)});
+	const unter = springFrom(frame, CTA.unter, SPRINGS.text);
 	return (
-		<Stack gap={0} top={420}>
-			{T.cta.map((line, i) => (
-				<Slam key={line} at={CTA.lines[i]} text={line} size={i === 1 ? 180 : 120} color={i === 1 ? config.akzentfarbe : COLORS.text} />
-			))}
-			<div style={{height: 70}} />
-			{frame >= CTA.buttonIn ? (
-				<div style={{transform: `scale(${b * pulse})`, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 22}}>
-					<div style={{backgroundColor: config.akzentfarbe, color: config.hauptfarbe, borderRadius: 999, padding: '34px 64px', fontFamily: BODY_FONT, fontWeight: 800, fontSize: 60, boxShadow: `0 0 ${60 * pulse}px ${withAlpha(config.akzentfarbe, 0.5)}`, whiteSpace: 'nowrap'}}>
-						{T.buttonVor} „{config.stichwort}“
+		<>
+			<Block top={330}>
+				<Lines lines={T.cta} starts={CTA.lines} colors={[C.grauAufHell, INK_ON_LIGHT, INK_ON_LIGHT]} maxSize={120} />
+			</Block>
+			{frame >= CTA.pillIn ? (
+				<div
+					style={{
+						position: 'absolute',
+						left: WIDTH / 2 - w / 2,
+						top: PILL.cy - h / 2,
+						width: w,
+						height: h,
+						borderRadius: h / 2,
+						backgroundColor: C.dunkel,
+						overflow: 'hidden',
+						opacity: appear,
+						transform: `scale(${0.7 + appear * 0.3})`,
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						boxShadow: `0 30px 60px -20px ${withAlpha(C.dunkel, 0.5)}`,
+					}}
+				>
+					<div
+						style={{
+							fontFamily: FONT,
+							fontWeight: 600,
+							fontSize: 62,
+							letterSpacing: `${tracking(62)}em`,
+							whiteSpace: 'nowrap',
+							color: INK_ON_DARK,
+							opacity: q,
+							transform: `translateY(${(1 - q) * 20}px)`,
+							filter: q < 0.999 ? `blur(${(1 - q) * 14}px)` : undefined,
+						}}
+					>
+						{T.button} <span style={{color: C.akzent}}>„{config.stichwort}“</span>
 					</div>
-					<div style={{fontFamily: BODY_FONT, fontWeight: 600, fontSize: 44, color: COLORS.textMuted}}>
-						{T.buttonUnter} · <span style={{color: COLORS.text}}>{config.handle}</span>
-					</div>
-					<div style={{fontSize: 70, color: config.akzentfarbe, transform: `translateY(${frame >= STILL_FROM ? 0 : arrow}px)`}}>↓</div>
+					<div
+						style={{
+							position: 'absolute',
+							top: 0,
+							bottom: 0,
+							left: `${sheen * 100}%`,
+							width: 200,
+							transform: 'skewX(-20deg)',
+							background: `linear-gradient(90deg, transparent, ${withAlpha('#FFFFFF', 0.16)}, transparent)`,
+						}}
+					/>
 				</div>
 			) : null}
-		</Stack>
+			<div
+				style={{
+					position: 'absolute',
+					top: PILL.cy + PILL.h / 2 + 44,
+					width: WIDTH,
+					textAlign: 'center',
+					fontFamily: FONT,
+					fontWeight: 500,
+					fontSize: 46,
+					letterSpacing: `${tracking(46)}em`,
+					color: C.grauAufHell,
+					opacity: unter,
+					transform: `translateY(${(1 - unter) * 16}px)`,
+					filter: unter < 0.999 ? `blur(${(1 - unter) * 12}px)` : undefined,
+				}}
+			>
+				{T.unterButton} <span style={{color: INK_ON_LIGHT, fontWeight: 600}}>{config.handle}</span>
+			</div>
+		</>
 	);
 };
 
 // ---------------------------------------------------------------- Gesamt
 
-const SCENES: [number, number, React.FC, string][] = [
-	[SCENE_STARTS.hook, SCENE_STARTS.zufall, HookScene, '1 Hook'],
-	[SCENE_STARTS.zufall, SCENE_STARTS.problem, ZufallScene, '2 Kein Zufall'],
-	[SCENE_STARTS.problem, SCENE_STARTS.loesung, ProblemScene, '3 Problem'],
-	[SCENE_STARTS.loesung, SCENE_STARTS.beweis, LoesungScene, '4 Lösung'],
-	[SCENE_STARTS.beweis, SCENE_STARTS.cta, BeweisScene, '5 Beweis'],
-	[SCENE_STARTS.cta, SCENE_STARTS.ende, CtaScene, '6 CTA'],
+const SCENES: {from: number; to: number; bg: string; C: React.FC}[] = [
+	{from: SCENE.hook, to: SCENE.reveal, bg: C.dunkel, C: HookScene},
+	{from: SCENE.reveal, to: SCENE.problem, bg: C.hell, C: RevealScene},
+	{from: SCENE.problem, to: SCENE.beispiel, bg: C.dunkel, C: ProblemScene},
+	{from: SCENE.beispiel, to: SCENE.beweis, bg: C.hell, C: BeispielScene},
+	{from: SCENE.beweis, to: SCENE.cta, bg: C.dunkel, C: BeweisScene},
+	{from: SCENE.cta, to: SCENE.ende, bg: C.hell, C: CtaScene},
 ];
 
-/** Zeigt nur die aktuelle Szene. Keine <Sequence>, damit alle Szenen mit globalen Frames aus timing.ts rechnen. */
-const Shaken: React.FC = () => {
+const Scenes: React.FC = () => {
 	const frame = useCurrentFrame();
-	const transform = useShake();
 	return (
-		<AbsoluteFill style={{transform}}>
-			{SCENES.filter(([from, to]) => frame >= from && frame < to).map(([from, , C, name]) => (
-				<Scene key={name} from={from}>
-					<C />
+		<>
+			{SCENES.filter((s) => frame >= s.from && frame < s.to).map(({from, to, bg, C: Content}) => (
+				<Scene key={from} from={from} to={to} bg={bg}>
+					<Content />
 				</Scene>
 			))}
-		</AbsoluteFill>
+		</>
 	);
 };
 
 export const AgenturAd: React.FC = () => (
-	<AbsoluteFill style={{backgroundColor: COLORS.bg}}>
-		<Background />
+	<AbsoluteFill style={{backgroundColor: C.dunkel}}>
 		<FontGate>
-			<Shaken />
-			<WatchHud />
-			<CutFlash />
+			<Scenes />
 		</FontGate>
+		<Html5Audio src={staticFile('musik.wav')} />
 		<SoundTrack />
 	</AbsoluteFill>
 );

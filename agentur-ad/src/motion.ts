@@ -1,43 +1,35 @@
-// Federn und Hilfsfunktionen für alle Animationen.
+// Federn nach Apples Modell: Dämpfungsverhältnis + Response (Sekunden) statt
+// Masse/Steifigkeit/Dämpfung. 1,0 = kritisch gedämpft, kein Überschwingen.
 import {spring, type SpringConfig} from 'remotion';
 import {FPS} from './video';
 
+const apple = (response: number, dampingRatio: number): Partial<SpringConfig> => ({
+	mass: 1,
+	stiffness: (2 * Math.PI / response) ** 2,
+	damping: (4 * Math.PI * dampingRatio) / response,
+});
+
 export const SPRINGS = {
-	/** Einschlag: schnell, leicht überschwingend (ca. 4 %) */
-	slam: {damping: 20, stiffness: 320, mass: 0.6},
-	/** Karte rastet ein: leicht überschwingend */
-	snap: {damping: 15, stiffness: 170, mass: 0.8},
-	/** Schere schließt: sehr schnell, kaum Nachschwingen */
-	snipClose: {damping: 22, stiffness: 700, mass: 0.35},
-	/** Schere öffnet wieder: schnell, federnd */
-	snipOpen: {damping: 12, stiffness: 320, mass: 0.4},
-	/** Kurzer Stoß (Zahl beim Abschluss-Schlag) */
-	punch: {damping: 8, stiffness: 220, mass: 0.5},
-	/** Weiche Einblendung ohne Überschwingen (immer mit Dauer benutzen) */
-	soft: {damping: 200},
+	/** Wörter blenden ein: ruhig, ohne Überschwingen */
+	text: apple(0.55, 1),
+	/** Buchstaben laufen zusammen */
+	letters: apple(0.7, 1),
+	/** Große Flächen (Karte, Block verschieben) */
+	move: apple(0.8, 1),
+	/** Ziffern rollen */
+	digit: apple(0.35, 1),
+	/** Landung mit Schwung: nur wo vorher Bewegung war (Punkt, Button) */
+	land: apple(0.45, 0.78),
 } satisfies Record<string, Partial<SpringConfig>>;
 
 /** Feder, die bei `start` (globaler Frame) losläuft. Vor dem Start: 0. */
-export const springFrom = (
-	frame: number,
-	start: number,
-	config: Partial<SpringConfig>,
-	durationInFrames?: number,
-): number => spring({frame: frame - start, fps: FPS, config, durationInFrames});
+export const springFrom = (frame: number, start: number, config: Partial<SpringConfig>): number =>
+	frame < start ? 0 : spring({frame: frame - start, fps: FPS, config});
 
-/** Weiche Einblendung von 0 auf 1 über `duration` Frames. */
-export const softIn = (frame: number, start: number, duration = 18): number =>
-	springFrom(frame, start, SPRINGS.soft, duration);
-
-/**
- * Frames, bis eine Feder ihr Ziel zum ersten Mal erreicht –
- * das ist der sichtbare "Einschlag" und damit der Zeitpunkt für den Ton.
- */
-export const framesToLand = (config: Partial<SpringConfig>, durationInFrames?: number): number => {
+/** Frames, bis eine Feder ihr Ziel zum ersten Mal erreicht (für Ton-Anker). */
+export const framesToLand = (config: Partial<SpringConfig>): number => {
 	for (let f = 0; f < 240; f++) {
-		if (spring({frame: f, fps: FPS, config, durationInFrames}) >= 0.995) {
-			return f;
-		}
+		if (spring({frame: f, fps: FPS, config}) >= 0.995) return f;
 	}
 	throw new Error('Feder erreicht ihr Ziel nicht – Konfiguration prüfen.');
 };

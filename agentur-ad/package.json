@@ -8,6 +8,7 @@
     "check": "python3 scripts/check_video.py",
     "stills": "bash scripts/render-stills.sh",
     "sfx": "python3 scripts/generate_sfx.py",
+    "musik": "python3 scripts/generate_music.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -2,50 +2,60 @@
  * ============================================================
  *  ANPASSBARE DATEN
  * ============================================================
- *  Eigenwerbung der Motion-Graphics-Agentur. Alle Texte, der Handle und
- *  die Farben stehen nur hier. Überschriften sind in Bebas Neue gesetzt
- *  (nur Großbuchstaben). Lange Texte werden automatisch kleiner gesetzt.
+ *  Eigenwerbung der Motion-Graphics-Agentur. Texte, Handle und Farben stehen
+ *  nur hier. Lange Zeilen werden automatisch kleiner gesetzt (FitText).
+ *  Zeitpunkte: src/timing.ts, Musik-Ablauf: src/musik-plan.json.
  */
 export const config = {
 	/** Instagram-/TikTok-Handle inklusive @ */
 	handle: '@deinhandle',
-	/** Stichwort, das Interessenten per DM schicken sollen */
+	/** Stichwort, das Interessenten per DM schicken */
 	stichwort: 'VIDEO',
+	/** Arbeitsbeispiel im Video (liegt in public/), 9:16 */
+	beispielVideo: 'beispiel-barber.mp4',
 
-	hauptfarbe: '#0A0A0B',
-	akzentfarbe: '#D7FF3A',
-	textfarbe: '#F4F4F0',
-	/** Farbe für "Weggewischt." */
-	warnfarbe: '#FF4D3A',
+	farben: {
+		dunkel: '#0B0B0C',
+		hell: '#EDEDEA',
+		/** Einzige Akzentfarbe: Punkt, "deine Kunden.", Stichwort */
+		akzent: '#FF5B2E',
+		/** Nebentext: Kontrast > 4,5:1 auf dem jeweiligen Grund */
+		grauAufDunkel: '#8B8B91',
+		grauAufHell: '#66666C',
+		/** Vorbeirauschende Standard-Werbesprüche */
+		feed: '#55555B',
+		feedLeise: '#1D1D20',
+	},
 
 	texte: {
-		/** Szene 1: das erste Wort schlägt auf Frame 0 ein */
-		stopp: 'Stopp.',
-		hook: ['Du hast gerade', 'aufgehört', 'zu scrollen.'],
-		/** Szene 2 */
-		keinZufall: ['Das war', 'kein Zufall.'],
-		aufloesung: ['Das ist', 'Motion Design.'],
-		/** Szene 3: langweilige Werbeanzeigen, die weggewischt werden */
-		problemTitel: 'Deine Werbung heute:',
-		langweiligeAnzeigen: [
-			{titel: 'Ihr zuverlässiger Partner', zeile: 'Qualität · Service · Erfahrung'},
-			{titel: 'Wir freuen uns auf Sie!', zeile: 'Besuchen Sie unsere Website'},
-			{titel: 'Seit über 20 Jahren', zeile: 'Kompetent in Ihrer Region'},
+		/** Typische austauschbare Werbesätze, die im Feed vorbeirauschen */
+		feed: [
+			'Jetzt 20 % sparen',
+			'Ihr Partner in der Region',
+			'Qualität seit 1998',
+			'Neu bei uns',
+			'Link in Bio',
+			'Angebot der Woche',
+			'Wir sind für Sie da',
+			'Nur für kurze Zeit',
+			'Besuchen Sie uns',
+			'Kompetent und zuverlässig',
+			'Jetzt Termin buchen',
+			'Alles aus einer Hand',
 		],
-		weggewischt: 'Weggewischt.',
-		keinerSchaut: 'Keiner schaut hin.',
-		/** Szene 4 */
-		loesungTitel: 'Was ich für dich baue:',
-		punkte: ['Ein Hook, der stoppt', 'Jeder Schnitt sitzt auf Ton', 'Gemacht für TikTok & Reels'],
-		fuerDich: 'Für deine Firma.',
-		/** Szene 5: der Zähler zeigt die echte Zuschauzeit */
+		stopp: 'Du hast angehalten.',
+		keinZufall: ['Das war', 'kein Zufall.'],
+		dasIst: 'Das ist',
+		/** Der Punkt hinter "Design" ist ein Akzent-Kreis, der am Ende das Bild füllt */
+		motionDesign: ['Motion', 'Design'],
+		problem: ['Die meisten Anzeigen', 'werden weggewischt.'],
+		grund: ['Weil sie aussehen', 'wie alle anderen.'],
+		beispielTitel: ['So könnte deine', 'Werbung aussehen.'],
 		beweisVor: 'Du schaust seit',
-		beweisNach: 'zu.',
-		vorstellen: ['Stell dir vor,', 'das wären deine Kunden.'],
-		/** Szene 6 */
+		beweisNach: 'Sekunden zu.',
+		vorstellen: ['Stell dir vor,', 'das wären', 'deine Kunden.'],
 		cta: ['Willst du', 'so ein Video', 'für deine Firma?'],
-		buttonVor: 'Schreib mir',
-		buttonUnter: 'per DM',
-		hudLabel: 'Du schaust seit',
+		button: 'Schreib mir',
+		unterButton: 'per DM an',
 	},
 };

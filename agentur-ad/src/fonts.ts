@@ -1,15 +1,8 @@
-// Schriften über @remotion/google-fonts. Werden beim Rendern geladen,
-// FontGate wartet darauf, bevor irgendetwas gemessen oder gezeichnet wird.
-import {loadFont as loadBebas} from '@remotion/google-fonts/BebasNeue';
-import {loadFont as loadInter} from '@remotion/google-fonts/Inter';
+// Geist (OFL) über @remotion/google-fonts. Wird beim Rendern geladen und ins Video
+// gebrannt; FontGate wartet darauf, bevor irgendetwas gemessen wird.
+import {loadFont} from '@remotion/google-fonts/Geist';
 
-const bebas = loadBebas('normal', {weights: ['400'], subsets: ['latin', 'latin-ext']});
-const inter = loadInter('normal', {
-	weights: ['400', '500', '600', '800'],
-	subsets: ['latin', 'latin-ext'],
-});
+const geist = loadFont('normal', {weights: ['500', '600', '700', '800'], subsets: ['latin', 'latin-ext']});
 
-export const HEADLINE_FONT = bebas.fontFamily;
-export const BODY_FONT = inter.fontFamily;
-
-export const fontsReady = Promise.all([bebas.waitUntilDone(), inter.waitUntilDone()]);
+export const FONT = geist.fontFamily;
+export const fontsReady = geist.waitUntilDone();

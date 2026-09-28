@@ -1,0 +1,12 @@
+{
+	"bpm": 120,
+	"dauer": 30,
+	"szenen": [0, 4, 8, 12, 18, 24],
+	"stoppSchlag": 1.0,
+	"drops": [4, 12, 24],
+	"grooveB": 8,
+	"breakdown": 18,
+	"riser": [[0, 1], [3, 4], [11, 12], [22, 24]],
+	"endSchlag": 28,
+	"stillAb": 29.5
+}

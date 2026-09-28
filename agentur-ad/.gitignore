@@ -1,3 +1,5 @@
 out/*.wav
 out/stills/
 out/bundle/
+out/frames/
+out/strip.png

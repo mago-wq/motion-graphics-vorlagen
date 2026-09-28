@@ -7,7 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
-| [`agentur-ad/`](agentur-ad/) | Eigenwerbung der Agentur: Stopp-Hook, Zuschau-Zähler als Beweis, DM-CTA | 30 s |
+| [`agentur-ad/`](agentur-ad/) | Eigenwerbung der Agentur: Apple-Kinetic-Type, eigene Musik auf dem Beat, echte Zuschauzeit als Beweis, DM-CTA | 30 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
