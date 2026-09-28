@@ -1,0 +1,77 @@
+{
+  "einschlag": {
+    "file": "sfx/einschlag.wav",
+    "duration": 0.42,
+    "anchor": 0.004
+  },
+  "einschlag_stark": {
+    "file": "sfx/einschlag_stark.wav",
+    "duration": 0.72,
+    "anchor": 0.004
+  },
+  "kratzen": {
+    "file": "sfx/kratzen.wav",
+    "duration": 0.78,
+    "anchor": 0.0
+  },
+  "schnipp_1": {
+    "file": "sfx/schnipp_1.wav",
+    "duration": 0.17,
+    "anchor": 0.038
+  },
+  "schnipp_2": {
+    "file": "sfx/schnipp_2.wav",
+    "duration": 0.17,
+    "anchor": 0.038
+  },
+  "whoosh_karte_links": {
+    "file": "sfx/whoosh_karte_links.wav",
+    "duration": 0.36,
+    "anchor": 0.1
+  },
+  "whoosh_karte_rechts": {
+    "file": "sfx/whoosh_karte_rechts.wav",
+    "duration": 0.36,
+    "anchor": 0.1
+  },
+  "klack": {
+    "file": "sfx/klack.wav",
+    "duration": 0.13,
+    "anchor": 0.002
+  },
+  "swish": {
+    "file": "sfx/swish.wav",
+    "duration": 0.34,
+    "anchor": 0.05
+  },
+  "tick": {
+    "file": "sfx/tick.wav",
+    "duration": 0.035,
+    "anchor": 0.0
+  },
+  "swipe_rahmen": {
+    "file": "sfx/swipe_rahmen.wav",
+    "duration": 1.0,
+    "anchor": 0.0
+  },
+  "abschluss_schlag": {
+    "file": "sfx/abschluss_schlag.wav",
+    "duration": 0.62,
+    "anchor": 0.004
+  },
+  "pop": {
+    "file": "sfx/pop.wav",
+    "duration": 0.085,
+    "anchor": 0.004
+  },
+  "whoosh_uebergang_seite": {
+    "file": "sfx/whoosh_uebergang_seite.wav",
+    "duration": 0.5,
+    "anchor": 0.17
+  },
+  "whoosh_uebergang_hoch": {
+    "file": "sfx/whoosh_uebergang_hoch.wav",
+    "duration": 0.5,
+    "anchor": 0.17
+  }
+}
