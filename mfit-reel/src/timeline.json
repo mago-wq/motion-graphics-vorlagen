@@ -1,0 +1,96 @@
+{
+  "_info": "Zeitplan des Reels in Beats (1 Beat = 12 Frames bei 150 BPM und 30 fps, 1 Takt = 4 Beats = 1,6 s). Bild (src/timing.ts) und Ton (scripts/make_soundtrack.py) lesen beide nur diese Datei. Wer hier einen Wert verschiebt, verschiebt Animation und Ton gemeinsam.",
+  "fps": 30,
+  "bpm": 150,
+  "beatsPerBar": 4,
+  "totalBeats": 88,
+
+  "chords": ["Am", "F", "Dm", "E", "Am", "F", "Dm", "E", "Am", "F", "Dm", "E", "Am", "E", "Am", "F", "Dm", "E", "Am", "F", "E", "Am"],
+
+  "music": [
+    {"from": 0, "to": 8, "part": "voll"},
+    {"from": 8, "to": 12, "part": "breakdown"},
+    {"from": 12, "to": 16, "part": "build"},
+    {"from": 16, "to": 52, "part": "voll"},
+    {"from": 52, "to": 56, "part": "pause"},
+    {"from": 56, "to": 80, "part": "voll"},
+    {"from": 80, "to": 84, "part": "build"},
+    {"from": 84, "to": 88, "part": "finale"}
+  ],
+
+  "hook": {
+    "start": 0,
+    "premium": 0,
+    "rollen": 0,
+    "fuer": 0.5,
+    "ziffern": [1.25, 1.5, 1.75, 2],
+    "landet": 2,
+    "imMonat": 2.5,
+    "abgang": 3.75
+  },
+
+  "haken": {
+    "start": 4,
+    "faellt": 4,
+    "worte": [4, 4.25, 4.5],
+    "haken": 5,
+    "ehrlich": 8,
+    "esGibt": 10,
+    "vermehren": [12, 12.5, 13, 13.5, 14, 14.5],
+    "einholen": 15,
+    "stille": [15.5, 16]
+  },
+
+  "items": [
+    {"start": 16, "tick": 16, "end": 20, "events": {"bruch": 18}},
+    {"start": 20, "tick": 20, "end": 24, "events": {"null": 21}},
+    {"start": 24, "tick": 24, "end": 28, "events": {"umlauf": [24, 27.5]}},
+    {"start": 28, "tick": 32, "end": 36, "events": {"scan": 28.5, "nein": [29, 30, 31], "entsperrt": 32}},
+    {"start": 36, "tick": 36, "end": 38, "events": {"fuellen": 36}},
+    {"start": 38, "tick": 38, "end": 40, "events": {"schild": 38}},
+    {"start": 40, "tick": 44, "end": 48, "events": {"linie": 40.5, "stationen": [41, 41.5, 42, 42.5, 43, 43.5], "neu": [44.5, 45, 45.5]}}
+  ],
+
+  "recap": {
+    "start": 48,
+    "titel": 48,
+    "zeilen": [48.5, 48.75, 49, 49.25, 49.5, 49.75, 50]
+  },
+
+  "anker": {
+    "start": 52,
+    "worte": [52, 52.5, 53, 53.5],
+    "preis": 54,
+    "strich": 55,
+    "stille": [55.25, 56]
+  },
+
+  "preis": {
+    "start": 56,
+    "slam": 56,
+    "imMonat": 56.5,
+    "statt": 57,
+    "details": [58, 58.5],
+    "glanz": 60
+  },
+
+  "cta": {
+    "start": 64,
+    "frage": 64,
+    "antwort": 66,
+    "titel": 68,
+    "punkte": [69, 69.5, 70],
+    "aufruf": 72,
+    "partner": 74
+  },
+
+  "ende": {
+    "start": 76,
+    "rahmen": 76,
+    "logo": 77,
+    "claim": [80, 81],
+    "kontakt": 82,
+    "finale": 84,
+    "still": 86
+  }
+}

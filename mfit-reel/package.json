@@ -1,0 +1,29 @@
+{
+  "name": "mfit-reel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "35-Sekunden-Instagram-Reel (9:16) für MFit Smart, gebaut mit Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "soundtrack": "python3 scripts/make_soundtrack.py",
+    "render": "bash scripts/render.sh",
+    "stills": "bash scripts/render-stills.sh",
+    "check": "python3 scripts/check_video.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/noise": "4.0.529",
+    "@remotion/paths": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules/
+# Render-Ausgaben: nur das fertige Video wird eingecheckt
+out/*
+!out/mfit-reel.mp4
