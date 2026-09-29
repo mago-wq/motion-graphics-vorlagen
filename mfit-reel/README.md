@@ -4,7 +4,10 @@ Instagram-Reel für **MFit Smart** (Premium SmartGym 24/7, Bremen und Umgebung).
 9:16, 1080×1920, 30 fps, 1056 Frames = 35,2 s. Eigene Musik und eigenes Sounddesign,
 alles synthetisiert, keine fremden Rechte.
 
-Das fertige Video liegt eingecheckt unter `out/mfit-reel.mp4`.
+Das fertige Video liegt eingecheckt unter `out/mfit-reel.mp4` (1080×1920, für den
+Instagram-Upload). Dazu gibt es einen **4K-Master** (2160×3840, `npm run render:4k` →
+`out/mfit-reel-4k.mp4`) als Lieferfassung in hoher Qualität. Instagram zeigt Reels
+höchstens in 1080×1920 an und rechnet größere Uploads herunter.
 Idee und Marketing-Psychologie dahinter: [`KONZEPT.md`](KONZEPT.md).
 
 ## Inhalte ändern
@@ -38,8 +41,11 @@ kein Internet.
 | Befehl | Was passiert |
 |---|---|
 | `npm run studio` | Vorschau im Browser (mit Ton) |
-| `npm run render` | Video rendern: `out/mfit-reel.mp4` |
+| `npm run render` | Video rendern: `out/mfit-reel.mp4` (1080×1920) |
+| `npm run render:4k` | 4K-Master: `out/mfit-reel-4k.mp4` (2160×3840, verlustfreie Einzelbilder, x264 slow, CRF 14) |
 | `npm run check` | Abnahme-Check: H.264, 1056 Frames, AAC 48 kHz Stereo, 35,2 s, Lautheit ≈ −12 LUFS, True Peak im MP4, Ton-Versatz, stilles Standbild-Ende |
+| `npm run check:4k` | derselbe Check für den 4K-Master |
+| `npm run assets` | Logo in doppelter Auflösung und Filmkorn neu erzeugen (`scripts/prepare_assets.py`) |
 | `npm run stills` | Standbilder der Schlüsselmomente nach `out/stills/` + `out/kontaktbogen.png` |
 | `npm run stills -- --safe` | dasselbe mit Sicherheitszone |
 | `npm run stills -- 0 192 672` | beliebige Frames |

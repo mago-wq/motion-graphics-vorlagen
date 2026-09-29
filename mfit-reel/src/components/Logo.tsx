@@ -2,12 +2,17 @@
 // - Vektor (vermessen aus dem Original auf mfit-smart.de) für den Aufbau Stück für Stück,
 // - das Original als freigestelltes PNG (3D-Gold) für den fertigen Zustand.
 // Koordinaten im Raum des Original-Logos: 576 × 685.
+// Die PNGs liegen in doppelter Auflösung vor (@2x, scripts/prepare_assets.py),
+// damit die Endcard auch im 4K-Render scharf ist.
 import {evolvePath} from '@remotion/paths';
 import {Img, interpolate, staticFile} from 'remotion';
 import {clamp} from '../motion';
 
 export const LOGO_W = 576;
 export const LOGO_H = 685;
+
+const LOGO_SRC = 'brand/mfit-logo@2x.png';
+const MARK_SRC = 'brand/mfit-zeichen@2x.png';
 
 /** Rahmen: abgerundetes Rechteck, Mittellinie der Kontur */
 const FRAME = {x: 18, y: 18, w: 540, h: 643, r: 72, stroke: 5.5};
@@ -122,12 +127,9 @@ export const Logo: React.FC<{height: number; build?: LogoBuild}> = ({height, bui
 				</g>
 			</svg>
 			{build.original > 0 ? (
-				<Img
-					src={staticFile('brand/mfit-logo.png')}
-					style={{position: 'absolute', inset: 0, width, height, opacity: build.original}}
-				/>
+				<Img src={staticFile(LOGO_SRC)} style={{position: 'absolute', inset: 0, width, height, opacity: build.original}} />
 			) : null}
-			{sheenOn ? <LogoSheen width={width} height={height} x={sheenX} src="brand/mfit-logo.png" /> : null}
+			{sheenOn ? <LogoSheen width={width} height={height} x={sheenX} src={LOGO_SRC} /> : null}
 		</div>
 	);
 };
@@ -138,8 +140,8 @@ export const LogoMark: React.FC<{height: number; sheen?: number}> = ({height, sh
 	const sheenX = interpolate(sheen, [0, 1], [-420, LOGO_W + 420], clamp);
 	return (
 		<div style={{position: 'relative', width, height}}>
-			<Img src={staticFile('brand/mfit-zeichen.png')} style={{position: 'absolute', inset: 0, width, height}} />
-			{sheen > 0 && sheen < 1 ? <LogoSheen width={width} height={height} x={sheenX} src="brand/mfit-zeichen.png" /> : null}
+			<Img src={staticFile(MARK_SRC)} style={{position: 'absolute', inset: 0, width, height}} />
+			{sheen > 0 && sheen < 1 ? <LogoSheen width={width} height={height} x={sheenX} src={MARK_SRC} /> : null}
 		</div>
 	);
 };

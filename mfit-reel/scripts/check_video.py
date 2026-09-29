@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Abnahme-Check für out/mfit-reel.mp4.
+"""Abnahme-Check für out/mfit-reel.mp4 (oder eine andere Datei als Argument).
 
-Prüft: H.264, 1080×1920, 30 fps, 1056 Frames, yuv420p/BT.709; AAC 48 kHz Stereo;
-Länge 35,2 s; Lautheit und True Peak der Tonspur im MP4; Synchronität (Versatz der
-Tonspur im MP4 gegenüber der Quelle, per Kreuzkorrelation); stilles, stehendes Ende.
+Prüft: H.264, 1080×1920 (bzw. 2160×3840 bei *-4k.mp4), 30 fps, 1056 Frames,
+yuv420p/BT.709; AAC 48 kHz Stereo; Länge 35,2 s; Lautheit und True Peak der Tonspur
+im MP4; Synchronität (Versatz der Tonspur im MP4 gegenüber der Quelle, per
+Kreuzkorrelation); stilles, stehendes Ende.
 Braucht numpy, scipy, pyloudnorm, Pillow. Nutzt ffprobe/ffmpeg aus Remotion.
+
+Aufruf: python3 scripts/check_video.py [out/mfit-reel-4k.mp4]
 """
 import json
 import subprocess
@@ -17,7 +20,9 @@ from scipy import signal
 from scipy.io import wavfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VIDEO = ROOT / 'out' / 'mfit-reel.mp4'
+VIDEO = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / 'out' / 'mfit-reel.mp4'
+IS_4K = VIDEO.stem.endswith('-4k')
+EXPECTED_SIZE = (2160, 3840) if IS_4K else (1080, 1920)
 SOURCE = ROOT / 'public' / 'audio' / 'mfit-soundtrack.wav'
 TL = json.loads((ROOT / 'src' / 'timeline.json').read_text(encoding='utf-8'))
 FRAMES = int(TL['totalBeats'] * 60 / TL['bpm'] * TL['fps'])
@@ -40,7 +45,7 @@ probe = json.loads(npx('ffprobe', '-v', 'error', '-show_streams', '-show_format'
 v = next(s for s in probe['streams'] if s['codec_type'] == 'video')
 a = next(s for s in probe['streams'] if s['codec_type'] == 'audio')
 report(v['codec_name'] == 'h264', f"Video-Codec {v['codec_name']}")
-report((v['width'], v['height']) == (1080, 1920), f"Auflösung {v['width']}×{v['height']}")
+report((v['width'], v['height']) == EXPECTED_SIZE, f"Auflösung {v['width']}×{v['height']} (soll {EXPECTED_SIZE[0]}×{EXPECTED_SIZE[1]})")
 report(v['r_frame_rate'] == f"{TL['fps']}/1", f"Bildrate {v['r_frame_rate']}")
 report(int(v['nb_read_frames']) == FRAMES, f"Frames {v['nb_read_frames']} (soll {FRAMES})")
 report(v['pix_fmt'] == 'yuv420p', f"Pixelformat {v['pix_fmt']}")

@@ -23,6 +23,8 @@ export type MfitReelProps = {
 	showSafeZone: boolean;
 	/** Tonspur einbinden (für die Vorschau im Studio; beim Rendern kommt der Ton per ffmpeg dazu) */
 	withAudio: boolean;
+	/** 4K-Render (--scale=2): feineres Filmkorn in doppelter Auflösung */
+	hd: boolean;
 };
 
 /** Große Momente: Kamera-Stoß und warmer Lichtstoß im Hintergrund */
@@ -30,7 +32,7 @@ const DROPS = [HOOK.premium, ITEMS[0].start, PREIS.slam, ENDE.finale];
 /** Kleinere Einschläge: nur ein leichter Kamera-Stoß */
 const HITS = [HOOK.landet, HAKEN.haken];
 
-export const MfitReel: React.FC<MfitReelProps> = ({showSafeZone, withAudio}) => {
+export const MfitReel: React.FC<MfitReelProps> = ({showSafeZone, withAudio, hd}) => {
 	const raw = useCurrentFrame();
 	// Letzte Frames: Standbild, damit das Reel sauber endet
 	const frame = Math.min(raw, STILL_FROM);
@@ -57,7 +59,7 @@ export const MfitReel: React.FC<MfitReelProps> = ({showSafeZone, withAudio}) => 
 					<Header frame={frame} />
 				</AbsoluteFill>
 			</FontGate>
-			<Grain frame={frame} still={still} />
+			<Grain frame={frame} still={still} hd={hd} />
 			{withAudio ? <Html5Audio src={staticFile('audio/mfit-soundtrack.wav')} /> : null}
 			{showSafeZone ? <SafeZoneOverlay /> : null}
 		</AbsoluteFill>

@@ -7,8 +7,11 @@
     "studio": "remotion studio",
     "soundtrack": "python3 scripts/make_soundtrack.py",
     "render": "bash scripts/render.sh",
+    "render:4k": "bash scripts/render.sh --4k",
     "stills": "bash scripts/render-stills.sh",
     "check": "python3 scripts/check_video.py",
+    "check:4k": "python3 scripts/check_video.py out/mfit-reel-4k.mp4",
+    "assets": "python3 scripts/prepare_assets.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

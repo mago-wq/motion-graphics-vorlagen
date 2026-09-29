@@ -11,6 +11,6 @@ export const RemotionRoot: React.FC = () => (
 		fps={FPS}
 		width={WIDTH}
 		height={HEIGHT}
-		defaultProps={{showSafeZone: false, withAudio: true} satisfies MfitReelProps}
+		defaultProps={{showSafeZone: false, withAudio: true, hd: false} satisfies MfitReelProps}
 	/>
 );

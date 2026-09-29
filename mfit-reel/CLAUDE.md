@@ -23,6 +23,9 @@ Bewusst eigenständig gebaut, nicht aus barber-ad abgeleitet.
   `npm run stills -- --safe`. Schnüre und Haken dürfen dekorativ darüber hinaus.
 - **Fußnote auf demselben Bild wie ihr Sternchen** (24/7, Wellpass/Hansefit, Recap).
 - **Letzte 0,8 s Standbild** (`STILL_FROM`), Ton ab 0,3 s vor Schluss still.
+- **4K = dieselbe Komposition mit `--scale=2`** (`render.sh --4k`), nie eine zweite
+  Komposition mit anderen Maßen: Layout, Zeilenbreiten und Sicherheitszone bleiben in
+  1080er-Einheiten. Rasterbilder deshalb in doppelter Auflösung (`@2x`, Filmkorn `korn-hd`).
 - Bewegung nur mit Easing/Federn, nichts linear (Ausnahme: Glanz- und Scan-Durchläufe).
 
 ## Prüfen ohne Bildschirm
@@ -53,6 +56,10 @@ Musik lässt sich nicht anhören: Spektrogramm, Bandbalance und Pegel messen.
 - **Ton-Versatz im MP4:** Remotion kodiert AAC als ADTS und verliert die Edit-List (46 ms).
   Deshalb rendert Remotion nur das Bild (`--muted`), ffmpeg kodiert die WAV direkt ins MP4.
 - **Farbraum:** `Config.setColorSpace('bt709')` → yuv420p TV-Range statt yuvj420p.
+- **Logo in 4K weich:** Das größte Original auf mfit-smart.de hat das Logo nur in
+  ~550×650 px (`/brand/logo.png` ist 500×500). Für 4K (Endcard ~1040 px hoch) ist es
+  hochskaliert: Farbe vormultipliziert mit Lanczos, Maskenkante nachgeschärft
+  (`scripts/prepare_assets.py`). Ein echtes Vektor-/Hi-Res-Logo von MFit wäre besser.
 - **Schriften messen:** `FontGate` hält das Rendern an, bis Rubik/Rubik One geladen sind;
   sonst misst `fitText` mit der Ersatzschrift.
 - **Cloud-Container:** `npx remotion browser ensure` klappte hier ohne Umwege. Schriften

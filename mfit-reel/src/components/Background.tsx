@@ -24,10 +24,15 @@ export const Background: React.FC<{frame: number; drops: number[]}> = ({frame, d
 	);
 };
 
-/** Filmkorn als oberste Ebene. Wechselt alle 2 Frames die Kachel (wirkt wie Film, nicht wie Flimmern). */
-export const Grain: React.FC<{frame: number; still: boolean}> = ({frame, still}) => {
+/**
+ * Filmkorn als oberste Ebene. Wechselt alle 2 Frames die Kachel (wirkt wie Film, nicht wie Flimmern).
+ * `hd`: Kacheln in doppelter Auflösung für den 4K-Render – gleiche Körnung relativ zum Bild,
+ * aber nativ fein statt hochskaliert.
+ */
+export const Grain: React.FC<{frame: number; still: boolean; hd: boolean}> = ({frame, still, hd}) => {
 	const step = still ? 0 : Math.floor(frame / 2);
 	const tile = step % 8;
+	const name = (i: number) => `grain/korn-${hd ? 'hd-' : ''}${i}.png`;
 	// Versatz je Schritt, damit sich das Muster nicht als Kachel zu erkennen gibt
 	const ox = (step * 97) % 256;
 	const oy = (step * 61) % 256;
@@ -37,7 +42,7 @@ export const Grain: React.FC<{frame: number; still: boolean}> = ({frame, still})
 				style={{
 					position: 'absolute',
 					inset: -256,
-					backgroundImage: `url('${staticFile(`grain/korn-${tile}.png`)}')`,
+					backgroundImage: `url('${staticFile(name(tile))}')`,
 					backgroundSize: '256px 256px',
 					transform: `translate(${ox}px, ${oy}px)`,
 				}}
@@ -45,7 +50,7 @@ export const Grain: React.FC<{frame: number; still: boolean}> = ({frame, still})
 			{/* Kacheln vorab laden, damit beim Rendern keine fehlen */}
 			<div style={{display: 'none'}}>
 				{Array.from({length: 8}, (_, i) => (
-					<Img key={i} src={staticFile(`grain/korn-${i}.png`)} />
+					<Img key={i} src={staticFile(name(i))} />
 				))}
 			</div>
 		</AbsoluteFill>
