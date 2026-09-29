@@ -2,6 +2,7 @@ node_modules/
 # Render-Ausgaben: nur das fertige Video wird eingecheckt
 out/*
 !out/mfit-reel.mp4
+!out/mfit-film.mp4
 # Lottie-Figur (Lottie Simple License): wird mit `npm run figuren` geladen, liegt nicht im Repo
 public/figuren/
 __pycache__/
