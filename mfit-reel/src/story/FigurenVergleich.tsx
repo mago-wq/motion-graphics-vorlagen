@@ -9,9 +9,10 @@ import {Line, TextLine} from '../components/Type';
 import {clamp, EASE} from '../motion';
 import {COLORS, TEXT_FONT, withAlpha} from '../theme';
 import {TYPE_WIDTH} from '../video';
-import {easeInOut, hueftX, VERGLEICH} from './figuren/gang';
+import {easeInOut, VERGLEICH, VERGLEICH_GANG} from './figuren/gang';
 import {KIT_OBEN, KIT_SOHLE, KitFigur, kitPose} from './figuren/KitFigur';
-import {LottieFigur, lottieGesicht, PX_PRO_ZYKLUS} from './figuren/LottieFigur';
+import {LottieFigur, lottieGesicht, pxProZyklus} from './figuren/LottieFigur';
+import {LOTTIE_MANN} from './figuren/lottieMann';
 import {NachtHinten, NachtSymbole, NachtVorn, type NachtZustand} from './NachtStudio';
 
 export type Variante = 'lottie' | 'kit';
@@ -108,7 +109,7 @@ const Etikett: React.FC<{variante: Variante}> = ({variante}) => {
 
 /** Eine Hälfte des Vergleichs: komplette Szene mit einer Figur (1080 × 1920) */
 export const VergleichPanel: React.FC<{variante: Variante; frame: number; etikett: boolean}> = ({variante, frame, etikett}) => {
-	const x = hueftX(frame);
+	const x = VERGLEICH_GANG.hueftX(frame);
 	// Beim Hineingehen etwas kleiner und höher: die Figur geht in die Tiefe
 	const rein = smooth(700, 960, x);
 	const tiefe = 1 - 0.06 * rein;
@@ -116,7 +117,7 @@ export const VergleichPanel: React.FC<{variante: Variante; frame: number; etiket
 	const kitS = KIT_SKALA * tiefe;
 	const gesicht =
 		variante === 'lottie'
-			? lottieGesicht(x, boden, tiefe)
+			? lottieGesicht(LOTTIE_MANN, x, boden, V.hoehe, tiefe)
 			: {x: x + KIT_GESICHT.x * kitS, y: boden - (KIT_SOHLE - KIT_GESICHT.y) * kitS};
 	const z: NachtZustand = {...szene(frame), gesicht};
 	return (
@@ -124,12 +125,12 @@ export const VergleichPanel: React.FC<{variante: Variante; frame: number; etiket
 			<GoldDefs />
 			<NachtHinten z={z} />
 			{variante === 'lottie' ? (
-				<LottieFigur frame={frame} x={x} boden={boden} tiefe={tiefe} />
+				<LottieFigur figur={LOTTIE_MANN} gang={VERGLEICH_GANG} frame={frame} x={x} boden={boden} hoehe={V.hoehe} tiefe={tiefe} />
 			) : (
 				<svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
 					<ellipse cx={x + 6 * kitS} cy={boden + 4} rx={62 * kitS} ry={9 * kitS} fill="#000000" opacity={0.38} />
 					<g transform={`translate(${x} ${boden}) scale(${kitS}) translate(0 ${-KIT_SOHLE})`}>
-						<KitFigur pose={kitPose(frame, PX_PRO_ZYKLUS, kitS)} />
+						<KitFigur pose={kitPose(VERGLEICH_GANG, frame, pxProZyklus(LOTTIE_MANN, V.hoehe), kitS)} />
 					</g>
 				</svg>
 			)}

@@ -7,7 +7,8 @@ im MP4; Synchronität (Versatz der Tonspur im MP4 gegenüber der Quelle, per
 Kreuzkorrelation); stilles, stehendes Ende.
 Braucht numpy, scipy, pyloudnorm, Pillow. Nutzt ffprobe/ffmpeg aus Remotion.
 
-Aufruf: python3 scripts/check_video.py [out/mfit-reel-4k.mp4]
+Aufruf: python3 scripts/check_video.py [out/mfit-reel-4k.mp4 | out/mfit-film.mp4 | out/mfit-film-4k.mp4]
+(Dateien mit "film" im Namen werden gegen den Zeitplan des Films geprüft.)
 """
 import json
 import subprocess
@@ -23,8 +24,15 @@ ROOT = Path(__file__).resolve().parent.parent
 VIDEO = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / 'out' / 'mfit-reel.mp4'
 IS_4K = VIDEO.stem.endswith('-4k')
 EXPECTED_SIZE = (2160, 3840) if IS_4K else (1080, 1920)
-SOURCE = ROOT / 'public' / 'audio' / 'mfit-soundtrack.wav'
-TL = json.loads((ROOT / 'src' / 'timeline.json').read_text(encoding='utf-8'))
+IS_FILM = 'film' in VIDEO.stem
+if IS_FILM:
+    SOURCE = ROOT / 'public' / 'audio' / 'mfit-film.wav'
+    TL = json.loads((ROOT / 'src' / 'story' / 'film' / 'film.json').read_text(encoding='utf-8'))
+    STILL_BEAT = TL['stillAb']
+else:
+    SOURCE = ROOT / 'public' / 'audio' / 'mfit-soundtrack.wav'
+    TL = json.loads((ROOT / 'src' / 'timeline.json').read_text(encoding='utf-8'))
+    STILL_BEAT = TL['ende']['still']
 FRAMES = int(TL['totalBeats'] * 60 / TL['bpm'] * TL['fps'])
 DURATION = FRAMES / TL['fps']
 
@@ -81,7 +89,7 @@ report(abs(lag) < 2.0, f'Ton-Versatz im MP4 {lag:+.2f} ms (soll ±2 ms)')
 tail = dec[-int(0.3 * sr):]
 tail_db = 20 * np.log10(np.max(np.abs(tail)) + 1e-12)
 report(tail_db < -40, f'Ton in den letzten 0,3 s: Spitze {tail_db:.1f} dBFS')
-still_from = int(TL['ende']['still'] * 60 / TL['bpm'] * TL['fps'])
+still_from = int(round(STILL_BEAT * 60 / TL['bpm'] * TL['fps']))
 # Remotions ffmpeg kennt kein rawvideo, also die letzten Frames als PNG ausgeben
 frame_dir = ROOT / 'out' / '.check-frames'
 frame_dir.mkdir(parents=True, exist_ok=True)

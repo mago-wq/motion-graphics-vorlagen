@@ -2,6 +2,8 @@ import {Composition, Still} from 'remotion';
 import {MfitReel, type MfitReelProps} from './MfitReel';
 import {VERGLEICH} from './story/figuren/gang';
 import {FigurEinzeln, FigurenVergleich} from './story/FigurenVergleich';
+import {Film, type FilmProps} from './story/film/Film';
+import {DAUER as FILM_DAUER} from './story/film/zeit';
 import {StilFigur} from './story/StilFigur';
 import {StilHandy} from './story/StilHandy';
 import {DURATION} from './timing';
@@ -21,6 +23,16 @@ export const RemotionRoot: React.FC = () => (
 		{/* Stilbilder für das zweite Video (Figuren + Anmelde-Ablauf) */}
 		<Still id="StilFigur" component={StilFigur} width={WIDTH} height={HEIGHT} />
 		<Still id="StilHandy" component={StilHandy} width={WIDTH} height={HEIGHT} />
+		{/* Der Film mit der Lottie-Figur: Probetraining-Werbung, alle Angebote */}
+		<Composition
+			id="MfitFilm"
+			component={Film}
+			durationInFrames={FILM_DAUER}
+			fps={FPS}
+			width={WIDTH}
+			height={HEIGHT}
+			defaultProps={{mitTon: true, hd: false, sicherheitszone: false} satisfies FilmProps}
+		/>
 		{/* Figuren-Vergleich: Lottie-Figur gegen Baukasten, nebeneinander und einzeln */}
 		<Composition id="FigurenVergleich" component={FigurenVergleich} durationInFrames={VERGLEICH.frames} fps={FPS} width={WIDTH * 2} height={HEIGHT} />
 		<Composition id="FigurLottie" component={FigurEinzeln} durationInFrames={VERGLEICH.frames} fps={FPS} width={WIDTH} height={HEIGHT} defaultProps={{variante: 'lottie' as const}} />

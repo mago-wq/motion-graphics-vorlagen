@@ -98,3 +98,18 @@ Musik lässt sich nicht anhören: Spektrogramm, Bandbalance und Pegel messen.
   Rückenlinie abschneiden, vorderen Ärmel als eigenes Segment nachbauen, fernen Arm nach
   hinten nur wenig schwingen (sonst steht er wie ein Umhang hinter dem Rücken). Der
   Oberkörper ist für den Gang vorgeneigt gezeichnet: um 5° aufrichten.
+
+## Film (`src/story/film/`, Komposition `MfitFilm`)
+
+- **Zeitpunkte nur in `film.json` (Beats).** `zeit.ts` rechnet Frames, `make_film_sound.py`
+  liest dieselbe Datei; Akkordwechsel an Pause und Preis-Schlag kommen ebenfalls von dort.
+  Szenenwechsel liegen auf Taktanfängen (Vielfache von 4 Beats).
+- **Blenden als oberste Ebene** (`HandyBlende`, `CtaBlende` in `Film.tsx` zuletzt): eine
+  Blende innerhalb der alten Szene würde von der neuen Szene verdeckt.
+- **Rundgang:** Stationen stehen dort, wo die Kamera beim Aufspringen ihrer Karte ist
+  (`weltBei(karte, 820)`), damit sie frei im Bild stehen. Karten im Abstand von 3,5 Beats,
+  Abgang nach 44 Frames – sonst überlappen zwei Karten.
+- **Ton:** Pops und Pings liegen oft auf der Kick und gingen darin unter (−7 bis −10 dB).
+  Lösung: Effekte lauter und Ducking – die Musik tritt unter jedem Effekt bis −4 dB zurück.
+  Prüfen: Effekte-Stem gegen Musik-Stem an den Ereignissen messen (80-ms-Fenster).
+- **Keine Stimme** ohne echten Sprecher (siehe README); Aussagen stehen im Bild.

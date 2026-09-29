@@ -51,6 +51,10 @@ kein Internet.
 | `npm run stills -- 0 192 672` | beliebige Frames |
 | `npm run soundtrack` | Tonspur neu erzeugen: `public/audio/mfit-soundtrack.wav` + Stems in `out/stems/` |
 | `npm run typecheck` | TypeScript prüfen |
+| `npm run render:film` | Der Film (40 s, Lottie-Figur): `out/mfit-film.mp4` (1080×1920) |
+| `npm run render:film:4k` | Film als 4K-Master: `out/mfit-film-4k.mp4` (2160×3840) |
+| `npm run check:film` / `check:film:4k` | Abnahme-Check für den Film (gleiche Prüfungen wie beim Reel) |
+| `npm run sound:film` | Film-Tonspur neu erzeugen: `public/audio/mfit-film.wav` |
 | `npm run figuren` | Lottie-Figur für den Figuren-Vergleich laden (`public/figuren/`, nicht eingecheckt) |
 | `npm run vergleich` | Figuren-Vergleich rendern: `out/figuren-vergleich.mp4` (2160×1920, beide Varianten nebeneinander) |
 | `npm run stills -- --comp=FigurenVergleich 0 120` | Standbilder einer anderen Komposition |
@@ -99,6 +103,27 @@ public/
 scripts/           Tonspur, Render, Check, Standbilder, Kontaktbogen
 ```
 
+## Der Film (Komposition `MfitFilm`, 40 s)
+
+Zweites Video mit der Lottie-Figur: eine kleine Geschichte statt einer Liste. Zeitplan in
+Beats in `src/story/film/film.json` (120 BPM, 15 Frames/Beat), Bild und Ton lesen dieselbe
+Datei. Szenen in `src/story/film/`.
+
+| Zeit | Szene | Was man sieht | Angebot |
+|---|---|---|---|
+| 0–4 s | Problem | 22:47 Uhr, er kommt müde zu einem (beliebigen) Studio, der Rollladen fällt. „Studio zu.“ | – |
+| 4–10 s | Handy | Anfrageformular von mfit-smart.de: Studio, Tag, Uhrzeit, Name, „Probetraining anfragen“ → „Anfrage gesendet!“ | kostenloses Probetraining |
+| 10–18 s | Tür | 03:17 Uhr, gut gelaunt: Face-ID-Scan, Tür gleitet auf, er geht hinein | 24/7*, Face-ID |
+| 18–26 s | Rundgang | Kamera läuft mit, an jeder Station eine Karte | keine Anmeldegebühr, Getränke, Parkplätze, monatlich kündbar |
+| 26–30 s | Studios | Karte mit sechs Pins, NEU-Schilder | eine Mitgliedschaft, alle Studios |
+| 30–34 s | Preis | 17,90 € statt 29,90 €, Details, Wellpass/Hansefit* | Preis |
+| 34–38 s | Einladung | „Noch unsicher? Probier's einfach.“, drei Punkte, Tipp auf „Jetzt anfragen“ | Probetraining |
+| 38–40 s | Logo | Logo, Claim, Adresse, Standbild | – |
+
+Ohne Sprecherstimme: Hier stehen nur Sprachsynthesen zur Verfügung, die nicht wie ein
+professioneller Sprecher klingen. Alle Aussagen stehen deshalb als Text im Bild (das Video
+funktioniert auch stumm). Eine echte Sprecheraufnahme lässt sich später auf die Tonspur legen.
+
 ## Figuren-Vergleich (Vorstufe für das zweite Video)
 
 Dieselbe Szene zweimal nebeneinander (Komposition `FigurenVergleich`, 9 s): nachts zum
@@ -132,7 +157,7 @@ Audio-Logo wieder. Mastering: True-Peak-Limiter, ≈ −12,7 LUFS, im MP4 unter 
 - Logo und Marke gehören MFit. Das Video ist als Angebot an MFit gebaut.
 - Musik und Effekte sind in diesem Projekt erzeugt, ohne Samples oder fremde Aufnahmen: keine Rechte Dritter.
 - Schriften: Rubik und Rubik One, SIL Open Font License (`public/fonts/OFL-*.txt`).
-- Figuren-Vergleich: „The guy walks and smiles“ von konstaner (LottieFiles, Lottie Simple
+- Film und Figuren-Vergleich: „The guy walks and smiles“ und „Sad guy is walking“ von konstaner (LottieFiles, Lottie Simple
   License: kommerziell nutzbar und veränderbar, ohne Namensnennung; Weitergabe der Datei nur
   unter derselben Lizenz). Sie liegt deshalb nicht im Repo, sondern wird per `npm run figuren`
   geladen. Humaaans von Pablo Stanley: CC0.

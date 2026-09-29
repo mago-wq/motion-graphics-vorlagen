@@ -14,7 +14,12 @@
     "assets": "python3 scripts/prepare_assets.py",
     "typecheck": "tsc --noEmit",
     "figuren": "bash scripts/figuren.sh",
-    "vergleich": "bash scripts/figuren.sh && remotion render FigurenVergleich out/figuren-vergleich.mp4 --crf=16"
+    "vergleich": "bash scripts/figuren.sh && remotion render FigurenVergleich out/figuren-vergleich.mp4 --crf=16",
+    "sound:film": "python3 scripts/make_film_sound.py",
+    "render:film": "bash scripts/render-film.sh",
+    "render:film:4k": "bash scripts/render-film.sh --4k",
+    "check:film": "python3 scripts/check_video.py out/mfit-film.mp4",
+    "check:film:4k": "python3 scripts/check_video.py out/mfit-film-4k.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.529",

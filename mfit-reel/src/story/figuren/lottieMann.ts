@@ -1,9 +1,12 @@
-// Variante 1: fertige Lottie-Figur "The guy walks and smiles" von konstaner (LottieFiles,
+// Lottie-Figur "The guy walks and smiles" von konstaner (LottieFiles,
 // Lottie Simple License: kommerzielle Nutzung und Bearbeitung erlaubt, ohne Namensnennung;
 // Weitergabe der Datei nur unter derselben Lizenz). Deshalb nicht eingecheckt, sondern mit
 // `npm run figuren` geholt (scripts/figuren.sh).
 // Alle Maße unten sind in Lottie-Einheiten (Leinwand 500 × 1000) aus der Datei gemessen.
 import type {ColorRule} from './lottie';
+
+
+export type LottieFigurDef = Omit<typeof LOTTIE_MANN, 'datei' | 'quelle' | 'farben'> & {datei: string; quelle: string; farben: ColorRule[]};
 
 export const LOTTIE_MANN = {
 	datei: 'figuren/lottie-mann.json',
@@ -45,4 +48,20 @@ export const LOTTIE_MANN = {
 		{from: '#050705', to: '#2A2E38'},
 		{from: '#32324C', to: '#000000', layers: ['shadow'], opacity: 38},
 	] satisfies ColorRule[],
+};
+
+/**
+ * Dieselbe Figur traurig ("Sad guy is walking", konstaner, gleiche Lizenz): gleiches Rig und
+ * identische Beinbewegung, nur Gesicht und Arme anders (beide Arme pendeln, keine Hand in der
+ * Tasche). Deshalb gelten alle Maße und Phasen von oben.
+ */
+export const LOTTIE_MANN_TRAURIG: LottieFigurDef = {
+	...LOTTIE_MANN,
+	datei: 'figuren/lottie-mann-traurig.json',
+	quelle: 'https://lottiefiles.com/animations/sad-guy-is-walking-8qw9i9BtHa',
+	farben: [
+		// vorderer Arm pendelt hier und hat die Jackenfarbe
+		{from: '#6959B9', to: '#E9E2D2', layers: ['arm-left-up 2', 'arm-left-down 2']},
+		...LOTTIE_MANN.farben,
+	],
 };

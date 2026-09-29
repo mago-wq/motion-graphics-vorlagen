@@ -7,7 +7,7 @@
 import {useId} from 'react';
 import {interpolate} from 'remotion';
 import {clamp} from '../../motion';
-import {easeInOut, gangzustand} from './gang';
+import {easeInOut, type Gang} from './gang';
 import {JACKE, KOPF, SNEAKER, SNEAKER_KNOECHEL, SNEAKER_SOHLE} from './humaaans';
 
 /** Farben passend zur Lottie-Variante (helle Jacke, dunkles Shirt, goldene Sneaker) */
@@ -139,7 +139,7 @@ const gangPose = (phi: number, zyklusWeg: number): Pose => {
 const mischeFuss = (a: Fuss, b: Fuss, t: number): Fuss => ({x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, w: a.w + (b.w - a.w) * t});
 
 /** Pose der Figur im Videobild `frame`. `pxProZyklus`: Weg pro Doppelschritt in Bildpixeln, `skala`: px pro Einheit. */
-export const kitPose = (frame: number, pxProZyklus: number, skala: number): Pose => {
+export const kitPose = (gang: Gang, frame: number, pxProZyklus: number, skala: number): Pose => {
 	const zyklusWeg = pxProZyklus / skala;
 	const halt = gangPose(HALT_PHASE, zyklusWeg);
 	const yBoden = KIT_SOHLE - KNOECHEL_HOEHE;
@@ -151,7 +151,7 @@ export const kitPose = (frame: number, pxProZyklus: number, skala: number): Pose
 		armFern: ARM_STAND.fern,
 		neigung: 0,
 	};
-	const z = gangzustand(frame);
+	const z = gang.zustand(frame);
 	if (z.art === 'gehen') return gangPose(HALT_PHASE + z.weg / pxProZyklus, zyklusWeg);
 	if (z.art === 'schliessen') {
 		// naher Fuß setzt neben dem fernen auf, Arme fallen in die Hängeposition
