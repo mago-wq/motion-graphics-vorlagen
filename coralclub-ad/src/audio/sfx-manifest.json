@@ -1,0 +1,87 @@
+{
+  "einschlag": {
+    "file": "sfx/einschlag.wav",
+    "duration": 0.42,
+    "anchor": 0.004
+  },
+  "einschlag_stark": {
+    "file": "sfx/einschlag_stark.wav",
+    "duration": 0.72,
+    "anchor": 0.004
+  },
+  "strich": {
+    "file": "sfx/strich.wav",
+    "duration": 0.26,
+    "anchor": 0.0
+  },
+  "strich_klein": {
+    "file": "sfx/strich_klein.wav",
+    "duration": 0.18,
+    "anchor": 0.0
+  },
+  "fall": {
+    "file": "sfx/fall.wav",
+    "duration": 0.55,
+    "anchor": 0.0
+  },
+  "kaching": {
+    "file": "sfx/kaching.wav",
+    "duration": 0.5,
+    "anchor": 0.001
+  },
+  "stempel": {
+    "file": "sfx/stempel.wav",
+    "duration": 0.3,
+    "anchor": 0.003
+  },
+  "wasser": {
+    "file": "sfx/wasser.wav",
+    "duration": 0.7,
+    "anchor": 0.02
+  },
+  "riss": {
+    "file": "sfx/riss.wav",
+    "duration": 0.6,
+    "anchor": 0.001
+  },
+  "glas": {
+    "file": "sfx/glas.wav",
+    "duration": 0.6,
+    "anchor": 0.001
+  },
+  "blubb": {
+    "file": "sfx/blubb.wav",
+    "duration": 0.12,
+    "anchor": 0.004
+  },
+  "plakette": {
+    "file": "sfx/plakette.wav",
+    "duration": 0.085,
+    "anchor": 0.004
+  },
+  "klack": {
+    "file": "sfx/klack.wav",
+    "duration": 0.13,
+    "anchor": 0.002
+  },
+  "tick": {
+    "file": "sfx/tick.wav",
+    "duration": 0.035,
+    "anchor": 0.0
+  },
+  "abschluss_schlag": {
+    "file": "sfx/abschluss_schlag.wav",
+    "duration": 0.62,
+    "anchor": 0.004
+  },
+  "pop": {
+    "file": "sfx/pop.wav",
+    "duration": 0.085,
+    "anchor": 0.004
+  },
+  "wisch": {
+    "file": "sfx/wisch.wav",
+    "duration": 0.45,
+    "anchor": 0.2
+  }
+}
