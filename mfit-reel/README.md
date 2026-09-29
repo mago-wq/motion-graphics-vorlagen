@@ -51,6 +51,9 @@ kein Internet.
 | `npm run stills -- 0 192 672` | beliebige Frames |
 | `npm run soundtrack` | Tonspur neu erzeugen: `public/audio/mfit-soundtrack.wav` + Stems in `out/stems/` |
 | `npm run typecheck` | TypeScript prüfen |
+| `npm run figuren` | Lottie-Figur für den Figuren-Vergleich laden (`public/figuren/`, nicht eingecheckt) |
+| `npm run vergleich` | Figuren-Vergleich rendern: `out/figuren-vergleich.mp4` (2160×1920, beide Varianten nebeneinander) |
+| `npm run stills -- --comp=FigurenVergleich 0 120` | Standbilder einer anderen Komposition |
 
 ## Ablauf
 
@@ -86,6 +89,8 @@ src/
   MfitReel.tsx     Hintergrund + Szenen + Haken + Kopfzeile + Filmkorn + Ton
   scenes/          eine Datei je Szene
   components/      Haken↔Häkchen, Logo, Piktogramme, Walze, Liniennetz, Schrift …
+  story/           Vorstufe zweites Video: Stilbilder, Nachtszene, Figuren-Vergleich
+    figuren/       Lottie-Werkzeuge und -Player, Lottie-Figur, Humaaans-Figur mit Rig, Gang
 public/
   brand/           MFit-Logo freigestellt (mit und ohne Rahmen), von mfit-smart.de
   fonts/           Rubik One, Rubik (SIL Open Font License)
@@ -93,6 +98,21 @@ public/
   grain/           Filmkorn-Kacheln
 scripts/           Tonspur, Render, Check, Standbilder, Kontaktbogen
 ```
+
+## Figuren-Vergleich (Vorstufe für das zweite Video)
+
+Dieselbe Szene zweimal nebeneinander (Komposition `FigurenVergleich`, 9 s): nachts zum
+Studio, Face-ID-Scan, Tür gleitet auf, die Figur geht hinein. Beide Figuren gehen denselben
+Weg zur selben Zeit, nur die Technik unterscheidet sich. Einzeln im Reel-Format:
+`FigurLottie`, `FigurKit`.
+
+1. **Lottie-Figur**: fertig animierte Figur von LottieFiles, in MFit-Farben umgefärbt. Die
+   Choreografie wird aus dem Gehzyklus „gebacken“ (`figuren/lottie.ts`): Schrittphase am Weg
+   gekoppelt, Beiziehschritt zum Stehen, Anlaufen. Nur die Bewegungen, die die Datei
+   mitbringt (hier: Gehen), sind sauber; neue Posen heißt: Keyframes im Rig setzen.
+2. **Baukasten (Humaaans)**: Kopf, Jacke, Hände, Sneaker aus dem Humaaans-Baukasten, Beine
+   und Arme selbst geriggt (`figuren/KitFigur.tsx`). Jede Pose möglich, aber alle Bewegung
+   ist Handarbeit; der Stil ist flacher (keine Gesichter).
 
 ## Ton
 
@@ -112,3 +132,7 @@ Audio-Logo wieder. Mastering: True-Peak-Limiter, ≈ −12,7 LUFS, im MP4 unter 
 - Logo und Marke gehören MFit. Das Video ist als Angebot an MFit gebaut.
 - Musik und Effekte sind in diesem Projekt erzeugt, ohne Samples oder fremde Aufnahmen: keine Rechte Dritter.
 - Schriften: Rubik und Rubik One, SIL Open Font License (`public/fonts/OFL-*.txt`).
+- Figuren-Vergleich: „The guy walks and smiles“ von konstaner (LottieFiles, Lottie Simple
+  License: kommerziell nutzbar und veränderbar, ohne Namensnennung; Weitergabe der Datei nur
+  unter derselben Lizenz). Sie liegt deshalb nicht im Repo, sondern wird per `npm run figuren`
+  geladen. Humaaans von Pablo Stanley: CC0.

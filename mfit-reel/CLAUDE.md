@@ -74,3 +74,27 @@ Musik lässt sich nicht anhören: Spektrogramm, Bandbalance und Pegel messen.
 - **Regler:** DESIGN_VARIANCE hoch (Werbung, Fitness), MOTION_INTENSITY hoch (Reel,
   beat-synchron), VISUAL_DENSITY niedrig (eine Aussage pro Bild). Stil-Skill: `gpt-tasteskill`
   (AIDA, breite Typografie, max. 2–3 Zeilen, keine Meta-Labels).
+
+## Figuren (Vorstufe zweites Video, `src/story/`)
+
+- **Lottie-Gehzyklen erst messen, dann nehmen.** Viele Figuren auf LottieFiles „marschieren
+  auf der Stelle“: der Standfuß gleitet nicht nach hinten, bewegt man sie durchs Bild,
+  rutschen die Füße (so bei „Character Walk“, id 1524739 – deshalb verworfen). Brauchbar ist
+  nur ein echtes Laufband: Standfuß gleitet gleichmäßig nach hinten. Weg pro Zyklus messen
+  und in `lottieMann.ts` eintragen (`wegProZyklus`).
+- **Schrittphase hängt am Weg, nicht an der Zeit** (`gang.ts`). Nur so bleiben die Füße beim
+  Abbremsen und Anlaufen stehen. Geprüft: Sohlen-Position über Folgebilder verfolgen – der
+  Standfuß darf sich nicht bewegen, beim Abrollen nur um die Spitze drehen.
+- **Posen, die es im Zyklus nicht gibt** (Stehen mit geschlossenen Füßen): `bake()` in
+  `figuren/lottie.ts` schreibt je Videobild Halte-Keyframes; Ebenengruppen (je Bein) können
+  so eine andere Phase zeigen als der Rest oder zwischen zwei Phasen mischen. Stand = fernes
+  Bein aus Frame 6 + nahes aus Frame 31. Mischen nur zwischen ähnlichen Posen, sonst löst
+  sich der Fuß vom Knöchel.
+- **Lottie-Datei nicht einchecken.** Die Lottie Simple License erlaubt Nutzung und Änderung,
+  die Weitergabe der Datei aber nur unter derselben Lizenz – das halten wir aus dem Repo
+  heraus. `scripts/figuren.sh` holt sie per öffentlicher LottieFiles-API (GraphQL) + CDN, der Hash
+  sichert die Fassung. Die Website selbst blockt Skripte (Cloudflare), die API nicht.
+- **Humaaans riggen:** vorderer Arm und Rumpf sind im Original *eine* Form. Rumpf an einer
+  Rückenlinie abschneiden, vorderen Ärmel als eigenes Segment nachbauen, fernen Arm nach
+  hinten nur wenig schwingen (sonst steht er wie ein Umhang hinter dem Rücken). Der
+  Oberkörper ist für den Gang vorgeneigt gezeichnet: um 5° aufrichten.
