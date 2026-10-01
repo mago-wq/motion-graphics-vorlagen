@@ -66,7 +66,11 @@ nur `ChromeText`, `Sunburst`, `Starburst` und `VhsOverlay` tauschen.
 - **Preise:** Normalpreis = „Dein Preis“ ohne Registrierung, Clubpreis = registrierte
   Mitglieder, 20 % auf alle Produkte laut Registrierungsbedingungen. Keine erfundenen
   Zwischenpreise („nicht 30, nicht 25 …“), das wären Mondpreise. Stand in `config.ts`.
-- „Werbung“ durchgehend sichtbar (`WerbungBug`), Affiliate-Hinweis im Abschluss.
+- **Kein „Werbung“-Logo im Bild** (Wunsch des Auftraggebers, 01.10.2026; das frühere
+  `WerbungBug` oben links ist entfernt). „Werbung · Affiliate-Link“ steht nur noch im
+  Kleingedruckten des Abschlusses. Die Kennzeichnung nach § 5a Abs. 4 UWG muss deshalb beim
+  Posten passieren: „Werbung“ am Anfang der Caption und auf TikTok der Schalter für
+  Markeninhalte, auf Instagram „Bezahlte Partnerschaft“. Nicht stillschweigend wieder einbauen.
 - Keine Personenfotos aus der Produktgalerie (ausdrücklicher Wunsch), nur Produktfotos.
 
 ## Stolperfallen (gelöst, nicht wieder einbauen)

@@ -37,8 +37,8 @@ Was hier anders ist:
 | 30,8–34,2 s | „Zwanzig Prozent weniger – und das auf alle Coral-Club-Produkte!“ | −20 % zählt hoch, drei Packungen aus dem Sortiment | Ticks, Klacks |
 | 34,2–40,4 s | „Also: Link in der Bio antippen, registrieren und sparen! Greifen Sie zu!“ | Bestell-Banner „LINK IN BIO ↑“, drei Schritte haken sich ab, Schluss-Fanfare; ab 39,9 s Standbild und Stille | Pops, Schluss-Fanfare |
 
-„Werbung“ steht das ganze Video über oben links (im Stil eines Senderlogos), Affiliate- und
-Preishinweis im Abschluss.
+Im Bild gibt es kein „Werbung“-Logo; „Werbung · Affiliate-Link“ und der Preishinweis stehen
+klein im Abschluss. Gekennzeichnet wird deshalb beim Posten (Punkt 3 unten).
 
 ## Vor dem Posten
 
@@ -46,8 +46,9 @@ Preishinweis im Abschluss.
    in `src/config.ts` **und** `src/sprechertext.json` anpassen, `preisStand` setzen. Ändert sich
    ein gesprochener Preis, muss die Stimme neu erzeugt werden (siehe unten).
 2. Link in der Bio auf den eigenen Empfehlungslink setzen.
-3. Beschreibungstext auf TikTok/Instagram mit „Werbung“/„Anzeige“ und dem Hinweis auf den
-   Affiliate-Link; bei TikTok zusätzlich den Schalter für Markeninhalte setzen.
+3. **Als Werbung kennzeichnen** (Pflicht, weil das Video selbst kein Logo mehr hat):
+   „Werbung“ an den Anfang der Caption plus Hinweis auf den Affiliate-Link; bei TikTok den
+   Schalter für Markeninhalte setzen, bei Instagram „Bezahlte Partnerschaft“.
 
 Keine weiteren Gesundheitsaussagen ergänzen (auch nicht in der Caption): nur der zugelassene
 Claim im Wortlaut ist erlaubt. Begründung in `CLAUDE.md`.

@@ -1,10 +1,8 @@
-// Das ganze Video: Szenen nach globalem Frame, Übergänge, TV-Anmutung,
-// Werbekennzeichnung, Ton. Ab STILL_FROM steht das Bild (letzte halbe Sekunde).
+// Das ganze Video: Szenen nach globalem Frame, Übergänge, TV-Anmutung, Ton. Ab STILL_FROM steht das Bild (letzte halbe Sekunde).
 import {AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
 import {SafeZoneOverlay} from './components/SafeZoneOverlay';
 import {SoundTrack} from './components/SoundTrack';
 import {VhsOverlay} from './components/VhsOverlay';
-import {WerbungBug} from './components/WerbungBug';
 import {clamp} from './motion';
 import {AberNochScene} from './scenes/AberNochScene';
 import {AlleScene} from './scenes/AlleScene';
@@ -120,7 +118,6 @@ export const TeleshopAd: React.FC<{showSafeZone: boolean}> = ({showSafeZone}) =>
 			</AbsoluteFill>
 			{overlay}
 			{scene.in === 'tvAn' && active ? null : <VhsOverlay frame={frame} strong={scene.id === 'problem'} />}
-			<WerbungBug />
 			{showSafeZone ? <SafeZoneOverlay /> : null}
 			<SoundTrack />
 		</AbsoluteFill>

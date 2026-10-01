@@ -87,7 +87,8 @@ export const config = {
 		stoerer: 'Clubpreis',
 	},
 
-	/** Kennzeichnung oben links, das ganze Video über sichtbar */
+	/** Kennzeichnung im Kleingedruckten des Abschlusses (kein Logo im Bild, auf Wunsch;
+	 *  gekennzeichnet wird beim Posten über Caption und Markeninhalt-Schalter) */
 	werbung: 'Werbung',
 	/** Klein im Abschluss */
 	hinweis: 'Affiliate-Link · Clubpreis für registrierte Mitglieder · Preise: de.coral.club, Stand',
