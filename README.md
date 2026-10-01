@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`coralclub-kurz/`](coralclub-kurz/) | Coral Club Oceanmin, schnelles Reel ohne Sprecher (Pillow + ffmpeg, ~15 s Renderzeit) | 12,5 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
