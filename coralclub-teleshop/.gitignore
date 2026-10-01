@@ -1,0 +1,8 @@
+out/bundle/
+out/stills/
+out/frames/
+out/takes/
+out/tempotest/
+out/*.wav
+out/*.png
+out/*.txt

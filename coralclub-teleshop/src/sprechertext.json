@@ -1,0 +1,90 @@
+{
+	"_hinweis": "Sprechertext. 'text' ist, was der Sprecher sagt (Zahlen ausgeschrieben, damit die Stimme sie richtig liest), 'stil' die Regieanweisung (deutsch für Menschen, 'stil_zh' wird an das Stimmmodell gegeben), 'pause' die Lücke danach in Sekunden, 'tempo' (optional, sonst sprecher.tempo) beschleunigt per atempo. Optional 'take': Dateiname eines Takes aus out/takes/, der statt des automatisch besten genommen wird. Rechtlich geprüft: nur der zugelassene Magnesium-Claim (VO (EU) 432/2012), Preise und Rabatt von de.coral.club. Nach jeder Änderung: scripts/generate_voice.py, dann npm run musik und npm run render.",
+	"sprecher": {
+		"beschreibung": "Tiefer, magnetischer Bariton mittleren Alters, klassischer deutscher TV-Werbesprecher: begeistert, selbstbewusst, betont, flott, aufgeregt, aber nicht schreiend.",
+		"klangfarbe": "低沉有磁性的中年男低音，胸腔共鸣强，音调偏低。经典德国电视广告配音员：热情洋溢、自信有力、重音突出、节奏明快，兴奋但不尖叫，声音饱满洪亮。",
+		"referenz": "stimme/referenz.wav",
+		"referenzText": "Meine Damen und Herren, aufgepasst! Das hier müssen Sie gesehen haben! Und Sie werden es nicht glauben: Aber das ist noch nicht alles!",
+		"tempo": 1.1
+	},
+	"zeilen": [
+		{
+			"id": "hook",
+			"text": "Meine Damen und Herren – aufgepasst!",
+			"stil": "explosiv begeistert, laut, strahlend, wie der Start einer Teleshopping-Show",
+			"pause": 0.2,
+			"stil_zh": "这一句：开场爆发，极度兴奋，声音洪亮灿烂，像电视购物节目隆重开场。"
+		},
+		{
+			"id": "kennen",
+			"text": "Kennen Sie das? Drei Uhr nachmittags – und Sie sind platt wie ein Pfannkuchen?",
+			"stil": "dramatisch, mitfühlend, langsamer, theatralisch übertrieben",
+			"pause": 0.15,
+			"stil_zh": "这一句：戏剧化、同情的语气，放慢语速，夸张的电视购物腔调。",
+			"tempo": 1.0
+		},
+		{
+			"id": "kaffee",
+			"text": "Der vierte Kaffee – und immer noch nix?",
+			"stil": "komisch resigniert, mit Augenzwinkern",
+			"pause": 1.25,
+			"stil_zh": "这一句：滑稽、无奈、带点调侃。"
+		},
+		{
+			"id": "reveal",
+			"text": "Darf ich vorstellen: Oceanmin von Coral Club!",
+			"stil": "triumphierend, Fanfare in der Stimme, große Geste",
+			"pause": 0.15,
+			"stil_zh": "这一句：胜利般隆重介绍，像号角响起，气势宏大。"
+		},
+		{
+			"id": "demo",
+			"text": "Einfach einen Stick in Wasser auflösen und über den Tag verteilt trinken!",
+			"stil": "flott, begeistert, leicht und einfach klingend",
+			"pause": 0.15,
+			"stil_zh": "这一句：轻快、兴奋，听起来简单又轻松。"
+		},
+		{
+			"id": "magnesium",
+			"text": "Mit satten hundertzwanzig Milligramm Magnesium pro Stick!",
+			"stil": "stolz, Betonung auf hundertzwanzig",
+			"pause": 0.15,
+			"stil_zh": "这一句：自豪地强调，重读数字。"
+		},
+		{
+			"id": "claim",
+			"text": "Und Magnesium trägt zur Verringerung von Müdigkeit und Ermüdung bei!",
+			"stil": "überzeugt, deutlich artikuliert, begeistert",
+			"pause": 0.3,
+			"stil_zh": "这一句：坚定、清晰、热情地陈述。"
+		},
+		{
+			"id": "abernoch",
+			"text": "Aber das ist noch nicht alles!",
+			"stil": "maximal aufgeregt, Spannung, fast schreiend vor Begeisterung",
+			"pause": 0.2,
+			"stil_zh": "这一句：极度激动，充满悬念，兴奋到几乎喊出来。"
+		},
+		{
+			"id": "preis",
+			"text": "Mit dem Clubpreis zahlen Sie nicht dreiundzwanzig Euro fünfundsiebzig – sondern nur neunzehn Euro!",
+			"stil": "ungläubig begeistert, Steigerung bis zum Preis",
+			"pause": 0.15,
+			"stil_zh": "这一句：难以置信的兴奋，语气逐步上扬直到价格。"
+		},
+		{
+			"id": "alle",
+			"text": "Zwanzig Prozent weniger – und das auf alle Coral-Club-Produkte!",
+			"stil": "begeistert, großzügig",
+			"pause": 0.2,
+			"stil_zh": "这一句：兴奋、慷慨大方。"
+		},
+		{
+			"id": "cta",
+			"text": "Also: Link in der Bio antippen, registrieren und sparen! Greifen Sie zu!",
+			"stil": "drängend, energiegeladen, großes Finale",
+			"pause": 0,
+			"stil_zh": "这一句：紧迫、充满能量的大结局，号召行动。"
+		}
+	]
+}

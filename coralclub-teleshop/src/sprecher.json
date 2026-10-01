@@ -1,0 +1,605 @@
+{
+ "_hinweis": "Erzeugt von scripts/generate_voice.py – nicht von Hand ändern.",
+ "dauer": 38.584,
+ "zeilen": [
+  {
+   "id": "hook",
+   "text": "Meine Damen und Herren – aufgepasst!",
+   "start": 0.0,
+   "ende": 2.017,
+   "take": "hook__klon1.wav",
+   "woerter": [
+    {
+     "w": "Meine",
+     "s": 0.0,
+     "e": 0.319
+    },
+    {
+     "w": "Damen",
+     "s": 0.32,
+     "e": 0.539
+    },
+    {
+     "w": "und",
+     "s": 0.54,
+     "e": 0.719
+    },
+    {
+     "w": "Herren",
+     "s": 0.72,
+     "e": 0.979
+    },
+    {
+     "w": "aufgepasst!",
+     "s": 1.22,
+     "e": 1.979
+    }
+   ]
+  },
+  {
+   "id": "kennen",
+   "text": "Kennen Sie das? Drei Uhr nachmittags – und Sie sind platt wie ein Pfannkuchen?",
+   "start": 2.217,
+   "ende": 6.852,
+   "take": "kennen__klon1.wav",
+   "woerter": [
+    {
+     "w": "Kennen",
+     "s": 2.217,
+     "e": 2.576
+    },
+    {
+     "w": "Sie",
+     "s": 2.577,
+     "e": 2.676
+    },
+    {
+     "w": "das?",
+     "s": 2.677,
+     "e": 2.956
+    },
+    {
+     "w": "Drei",
+     "s": 3.297,
+     "e": 3.856
+    },
+    {
+     "w": "Uhr",
+     "s": 3.857,
+     "e": 4.036
+    },
+    {
+     "w": "nachmittags",
+     "s": 4.037,
+     "e": 4.756
+    },
+    {
+     "w": "und",
+     "s": 4.757,
+     "e": 5.056
+    },
+    {
+     "w": "Sie",
+     "s": 5.057,
+     "e": 5.196
+    },
+    {
+     "w": "sind",
+     "s": 5.197,
+     "e": 5.396
+    },
+    {
+     "w": "platt",
+     "s": 5.397,
+     "e": 5.716
+    },
+    {
+     "w": "wie",
+     "s": 5.717,
+     "e": 5.896
+    },
+    {
+     "w": "ein",
+     "s": 5.897,
+     "e": 6.056
+    },
+    {
+     "w": "Pfannkuchen?",
+     "s": 6.057,
+     "e": 6.696
+    }
+   ]
+  },
+  {
+   "id": "kaffee",
+   "text": "Der vierte Kaffee – und immer noch nix?",
+   "start": 7.002,
+   "ende": 9.004,
+   "take": "kaffee__klon1.wav",
+   "woerter": [
+    {
+     "w": "Der",
+     "s": 7.002,
+     "e": 7.161
+    },
+    {
+     "w": "vierte",
+     "s": 7.162,
+     "e": 7.521
+    },
+    {
+     "w": "Kaffee",
+     "s": 7.522,
+     "e": 7.881
+    },
+    {
+     "w": "und",
+     "s": 7.882,
+     "e": 8.161
+    },
+    {
+     "w": "immer",
+     "s": 8.162,
+     "e": 8.401
+    },
+    {
+     "w": "noch",
+     "s": 8.402,
+     "e": 8.601
+    },
+    {
+     "w": "nix?",
+     "s": 8.602,
+     "e": 8.861
+    }
+   ]
+  },
+  {
+   "id": "reveal",
+   "text": "Darf ich vorstellen: Oceanmin von Coral Club!",
+   "start": 10.254,
+   "ende": 12.939,
+   "take": "reveal__klon2.wav",
+   "woerter": [
+    {
+     "w": "Darf",
+     "s": 10.254,
+     "e": 10.513
+    },
+    {
+     "w": "ich",
+     "s": 10.514,
+     "e": 10.573
+    },
+    {
+     "w": "vorstellen:",
+     "s": 10.574,
+     "e": 10.993
+    },
+    {
+     "w": "Oceanmin",
+     "s": 11.274,
+     "e": 11.953
+    },
+    {
+     "w": "von",
+     "s": 11.954,
+     "e": 12.213
+    },
+    {
+     "w": "Coral",
+     "s": 12.214,
+     "e": 12.553
+    },
+    {
+     "w": "Club!",
+     "s": 12.554,
+     "e": 12.793
+    }
+   ]
+  },
+  {
+   "id": "demo",
+   "text": "Einfach einen Stick in Wasser auflösen und über den Tag verteilt trinken!",
+   "start": 13.089,
+   "ende": 16.779,
+   "take": "demo__klon0.wav",
+   "woerter": [
+    {
+     "w": "Einfach",
+     "s": 13.089,
+     "e": 13.548
+    },
+    {
+     "w": "einen",
+     "s": 13.549,
+     "e": 13.808
+    },
+    {
+     "w": "Stick",
+     "s": 13.809,
+     "e": 14.068
+    },
+    {
+     "w": "in",
+     "s": 14.069,
+     "e": 14.228
+    },
+    {
+     "w": "Wasser",
+     "s": 14.229,
+     "e": 14.528
+    },
+    {
+     "w": "auflösen",
+     "s": 14.529,
+     "e": 15.108
+    },
+    {
+     "w": "und",
+     "s": 15.109,
+     "e": 15.368
+    },
+    {
+     "w": "über",
+     "s": 15.369,
+     "e": 15.548
+    },
+    {
+     "w": "den",
+     "s": 15.549,
+     "e": 15.708
+    },
+    {
+     "w": "Tag",
+     "s": 15.709,
+     "e": 15.948
+    },
+    {
+     "w": "verteilt",
+     "s": 15.949,
+     "e": 16.388
+    },
+    {
+     "w": "trinken!",
+     "s": 16.389,
+     "e": 16.648
+    }
+   ]
+  },
+  {
+   "id": "magnesium",
+   "text": "Mit satten hundertzwanzig Milligramm Magnesium pro Stick!",
+   "start": 16.929,
+   "ende": 19.697,
+   "take": "magnesium__klon1.wav",
+   "woerter": [
+    {
+     "w": "Mit",
+     "s": 16.929,
+     "e": 17.128
+    },
+    {
+     "w": "satten",
+     "s": 17.129,
+     "e": 17.468
+    },
+    {
+     "w": "hundertzwanzig",
+     "s": 17.469,
+     "e": 18.048
+    },
+    {
+     "w": "Milligramm",
+     "s": 18.049,
+     "e": 18.648
+    },
+    {
+     "w": "Magnesium",
+     "s": 18.649,
+     "e": 19.148
+    },
+    {
+     "w": "pro",
+     "s": 19.149,
+     "e": 19.328
+    },
+    {
+     "w": "Stick!",
+     "s": 19.329,
+     "e": 19.568
+    }
+   ]
+  },
+  {
+   "id": "claim",
+   "text": "Und Magnesium trägt zur Verringerung von Müdigkeit und Ermüdung bei!",
+   "start": 19.847,
+   "ende": 23.301,
+   "take": "claim__klon0.wav",
+   "woerter": [
+    {
+     "w": "Und",
+     "s": 19.847,
+     "e": 20.066
+    },
+    {
+     "w": "Magnesium",
+     "s": 20.067,
+     "e": 20.646
+    },
+    {
+     "w": "trägt",
+     "s": 20.647,
+     "e": 20.986
+    },
+    {
+     "w": "zur",
+     "s": 20.987,
+     "e": 21.126
+    },
+    {
+     "w": "Verringerung",
+     "s": 21.127,
+     "e": 21.626
+    },
+    {
+     "w": "von",
+     "s": 21.627,
+     "e": 21.826
+    },
+    {
+     "w": "Müdigkeit",
+     "s": 21.827,
+     "e": 22.306
+    },
+    {
+     "w": "und",
+     "s": 22.307,
+     "e": 22.526
+    },
+    {
+     "w": "Ermüdung",
+     "s": 22.527,
+     "e": 22.946
+    },
+    {
+     "w": "bei!",
+     "s": 22.947,
+     "e": 23.166
+    }
+   ]
+  },
+  {
+   "id": "abernoch",
+   "text": "Aber das ist noch nicht alles!",
+   "start": 23.601,
+   "ende": 25.601,
+   "take": "abernoch__klon1.wav",
+   "woerter": [
+    {
+     "w": "Aber",
+     "s": 23.601,
+     "e": 23.86
+    },
+    {
+     "w": "das",
+     "s": 23.861,
+     "e": 24.24
+    },
+    {
+     "w": "ist",
+     "s": 24.241,
+     "e": 24.68
+    },
+    {
+     "w": "noch",
+     "s": 24.681,
+     "e": 24.92
+    },
+    {
+     "w": "nicht",
+     "s": 24.921,
+     "e": 25.08
+    },
+    {
+     "w": "alles!",
+     "s": 25.081,
+     "e": 25.34
+    }
+   ]
+  },
+  {
+   "id": "preis",
+   "text": "Mit dem Clubpreis zahlen Sie nicht dreiundzwanzig Euro fünfundsiebzig – sondern nur neunzehn Euro!",
+   "start": 25.801,
+   "ende": 30.652,
+   "take": "preis__klon2.wav",
+   "woerter": [
+    {
+     "w": "Mit",
+     "s": 25.801,
+     "e": 25.94
+    },
+    {
+     "w": "dem",
+     "s": 25.941,
+     "e": 26.08
+    },
+    {
+     "w": "Clubpreis",
+     "s": 26.081,
+     "e": 26.64
+    },
+    {
+     "w": "zahlen",
+     "s": 26.641,
+     "e": 27.04
+    },
+    {
+     "w": "Sie",
+     "s": 27.041,
+     "e": 27.16
+    },
+    {
+     "w": "nicht",
+     "s": 27.161,
+     "e": 27.34
+    },
+    {
+     "w": "dreiundzwanzig",
+     "s": 27.341,
+     "e": 27.86
+    },
+    {
+     "w": "Euro",
+     "s": 27.86,
+     "e": 27.91
+    },
+    {
+     "w": "fünfundsiebzig",
+     "s": 27.861,
+     "e": 28.72
+    },
+    {
+     "w": "sondern",
+     "s": 28.721,
+     "e": 29.48
+    },
+    {
+     "w": "nur",
+     "s": 29.481,
+     "e": 29.74
+    },
+    {
+     "w": "neunzehn",
+     "s": 29.741,
+     "e": 30.12
+    },
+    {
+     "w": "Euro!",
+     "s": 30.121,
+     "e": 30.46
+    }
+   ]
+  },
+  {
+   "id": "alle",
+   "text": "Zwanzig Prozent weniger – und das auf alle Coral-Club-Produkte!",
+   "start": 30.802,
+   "ende": 33.947,
+   "take": "alle__klon1.wav",
+   "woerter": [
+    {
+     "w": "Zwanzig",
+     "s": 30.802,
+     "e": 31.161
+    },
+    {
+     "w": "Prozent",
+     "s": 31.162,
+     "e": 31.441
+    },
+    {
+     "w": "weniger",
+     "s": 31.442,
+     "e": 31.881
+    },
+    {
+     "w": "und",
+     "s": 32.102,
+     "e": 32.221
+    },
+    {
+     "w": "das",
+     "s": 32.222,
+     "e": 32.401
+    },
+    {
+     "w": "auf",
+     "s": 32.402,
+     "e": 32.581
+    },
+    {
+     "w": "alle",
+     "s": 32.582,
+     "e": 32.781
+    },
+    {
+     "w": "Coral-Club-Produkte!",
+     "s": 32.782,
+     "e": 33.841
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "text": "Also: Link in der Bio antippen, registrieren und sparen! Greifen Sie zu!",
+   "start": 34.147,
+   "ende": 38.584,
+   "take": "cta__klon0.wav",
+   "woerter": [
+    {
+     "w": "Also:",
+     "s": 34.147,
+     "e": 34.466
+    },
+    {
+     "w": "Link",
+     "s": 34.607,
+     "e": 35.006
+    },
+    {
+     "w": "in",
+     "s": 35.007,
+     "e": 35.146
+    },
+    {
+     "w": "der",
+     "s": 35.147,
+     "e": 35.266
+    },
+    {
+     "w": "Bio",
+     "s": 35.267,
+     "e": 35.526
+    },
+    {
+     "w": "antippen,",
+     "s": 35.527,
+     "e": 35.946
+    },
+    {
+     "w": "registrieren",
+     "s": 36.207,
+     "e": 36.866
+    },
+    {
+     "w": "und",
+     "s": 36.867,
+     "e": 37.126
+    },
+    {
+     "w": "sparen!",
+     "s": 37.127,
+     "e": 37.526
+    },
+    {
+     "w": "Greifen",
+     "s": 37.707,
+     "e": 38.166
+    },
+    {
+     "w": "Sie",
+     "s": 38.167,
+     "e": 38.286
+    },
+    {
+     "w": "zu!",
+     "s": 38.287,
+     "e": 38.466
+    }
+   ]
+  }
+ ]
+}

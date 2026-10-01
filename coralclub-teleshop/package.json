@@ -1,0 +1,26 @@
+{
+  "name": "coralclub-teleshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "30-Sekunden-Affiliate-Video (9:16) im Teleshopping-Stil der 2000er mit Sprecher, gebaut mit Remotion",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "check": "python3 scripts/check_video.py",
+    "stills": "bash scripts/render-stills.sh",
+    "sfx": "python3 scripts/generate_sfx.py",
+    "musik": "python3 scripts/generate_music.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

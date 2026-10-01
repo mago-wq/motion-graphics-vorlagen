@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`coralclub-teleshop/`](coralclub-teleshop/) | Coral Club (Oceanmin), Affiliate: Teleshopping-Stil der 2000er mit KI-Sprecher (Qwen3-TTS, lokal), Musik und Effekten aus Code, Claim-geprüft | 40 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 

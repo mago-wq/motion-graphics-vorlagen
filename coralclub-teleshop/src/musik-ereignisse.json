@@ -1,0 +1,20 @@
+{
+ "_hinweis": "Erzeugt von scripts/generate_music.py \u2013 nicht von Hand \u00e4ndern.",
+ "start": 0.0,
+ "bandstopp": 2.097,
+ "posaune": 9.054,
+ "wirbel": 10.254,
+ "fanfare": 11.274,
+ "stopp": 23.341,
+ "einschlag": 25.621,
+ "preis": 29.741,
+ "schluss": 38.664,
+ "stillAb": 39.914,
+ "dauer": 40.414,
+ "posauneToene": [
+  0.0,
+  0.2,
+  0.4,
+  0.6
+ ]
+}
