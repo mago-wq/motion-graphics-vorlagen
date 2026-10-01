@@ -24,6 +24,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
 
 import soundfile as sf
 
@@ -65,6 +66,7 @@ def main():
     ap.add_argument("--liste", action="store_true")
     ap.add_argument("--suche", action="store_true")
     ap.add_argument("--stimme", help="Stimmen-ID statt der aus config.ts")
+    ap.add_argument("--aus", help="Rohstimme hierhin schreiben statt nach stimme/roh.wav (zum Vergleichen)")
     args = ap.parse_args()
     if args.liste:
         return liste()
@@ -89,10 +91,11 @@ def main():
                })
     y, sr = sf.read(io.BytesIO(base64.b64decode(res["audio_base64"])), dtype="float32")
     y = y.mean(axis=1) if y.ndim > 1 else y
-    ROH_WAV.parent.mkdir(parents=True, exist_ok=True)
-    sf.write(ROH_WAV, y, sr)
+    out = Path(args.aus) if args.aus else ROH_WAV
+    out.parent.mkdir(parents=True, exist_ok=True)
+    sf.write(out, y, sr)
     print(f"Text: {text}")
-    print(f"Gespeichert: {ROH_WAV.relative_to(ROOT)} ({len(y) / sr:.1f} s, Stimme {voice_id})")
+    print(f"Gespeichert: {out} ({len(y) / sr:.1f} s, Stimme {voice_id})")
 
 
 if __name__ == "__main__":

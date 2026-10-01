@@ -20,7 +20,8 @@ erlaubt kommerzielle Nutzung. Neue Bausteine bitte hier eintragen.
 | Swoosh tief (Neon-Wörter) | `public/sfx/swoosh_tief.flac` | Mixkit 1471 „Cinematic wind swoosh“ | Mixkit Sound Effects Free License |
 | Neon-Knistern, Glitch | `public/sfx/neon.flac`, `glitch.flac` | per Code erzeugt (`scripts/toene_vorbereiten.py`) | eigen |
 | Tauben, Lichtlecks, Blitz, Lichtstrahlen, Regen, Filmkorn | `src/components/` | per Code gezeichnet | eigen |
-| Stimme | `public/stimme/stimme.wav` | erzeugt mit Chatterbox Multilingual, Klangvorlage Thorsten-Voice (siehe unten) | Ergebnis eigener Erzeugung; enthält ein unhörbares Wasserzeichen (Perth), das sie als KI-Stimme kennzeichnet |
+| Stimme | `public/stimme/stimme.wav`, Rohfassung `stimme/roh.wav` | ElevenLabs, Standardstimme „Brian“ (eleven_multilingual_v2), danach eigene Bearbeitung (Pausen, Tonhöhe, Hall) | nach ElevenLabs-Abo: im Gratis-Abo nicht kommerziell und mit Hinweis „elevenlabs.io“ im Titel, ab Starter-Abo kommerziell ohne Hinweis |
+| Stimme (Alternative, kostenlos) | über `npm run stimme` | Chatterbox Multilingual, Klangvorlage Thorsten-Voice (siehe unten) | Ergebnis eigener Erzeugung, frei nutzbar; enthält ein unhörbares Wasserzeichen (Perth), das sie als KI-Stimme kennzeichnet |
 | Text | `src/config.ts` | Hadith Qudsi, überliefert bei at-Tirmidhi (Nr. 3540), auch an-Nawawi, 40 Hadithe, Nr. 42 | Übersetzung eigen |
 
 Die Mixkit Sound Effects Free License erlaubt die Nutzung in privaten und

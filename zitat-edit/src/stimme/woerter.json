@@ -1,186 +1,186 @@
 {
- "dauer": 15.429,
- "sprechEnde": 12.567,
+ "dauer": 14.287,
+ "sprechEnde": 11.376,
  "woerter": [
   {
    "wort": "O",
    "abschnitt": 0,
-   "start": 0.095,
-   "ende": 0.117
+   "start": 0.088,
+   "ende": 0.109
   },
   {
    "wort": "Sohn",
    "abschnitt": 0,
-   "start": 0.339,
-   "ende": 0.607
+   "start": 0.257,
+   "ende": 0.447
   },
   {
    "wort": "Adams,",
    "abschnitt": 0,
-   "start": 0.763,
-   "ende": 1.208
+   "start": 0.573,
+   "ende": 0.974
   },
   {
    "wort": "wenn",
    "abschnitt": 1,
-   "start": 2.033,
-   "ende": 2.166
+   "start": 1.83,
+   "ende": 1.999
   },
   {
    "wort": "deine",
    "abschnitt": 1,
-   "start": 2.233,
-   "ende": 2.456
+   "start": 2.041,
+   "ende": 2.252
   },
   {
    "wort": "Sünden",
    "abschnitt": 1,
-   "start": 2.567,
-   "ende": 2.99
+   "start": 2.378,
+   "ende": 2.736
   },
   {
    "wort": "bis",
    "abschnitt": 1,
-   "start": 3.191,
-   "ende": 3.346
+   "start": 2.842,
+   "ende": 2.968
   },
   {
    "wort": "zu",
    "abschnitt": 1,
-   "start": 3.502,
-   "ende": 3.591
+   "start": 3.053,
+   "ende": 3.137
   },
   {
    "wort": "den",
    "abschnitt": 1,
-   "start": 3.68,
-   "ende": 3.792
+   "start": 3.2,
+   "ende": 3.305
   },
   {
    "wort": "Wolken",
    "abschnitt": 1,
-   "start": 3.903,
-   "ende": 4.282
+   "start": 3.411,
+   "ende": 3.727
   },
   {
    "wort": "des",
    "abschnitt": 1,
-   "start": 4.348,
-   "ende": 4.46
+   "start": 3.79,
+   "ende": 3.875
   },
   {
    "wort": "Himmels",
    "abschnitt": 1,
-   "start": 4.504,
-   "ende": 4.838
+   "start": 3.938,
+   "ende": 4.233
   },
   {
    "wort": "reichen",
    "abschnitt": 1,
-   "start": 4.95,
-   "ende": 5.328
+   "start": 4.296,
+   "ende": 4.633
   },
   {
    "wort": "würden",
    "abschnitt": 1,
-   "start": 5.417,
-   "ende": 5.729
+   "start": 4.718,
+   "ende": 4.992
   },
   {
    "wort": "und",
    "abschnitt": 2,
-   "start": 6.014,
-   "ende": 6.125
+   "start": 5.315,
+   "ende": 5.399
   },
   {
    "wort": "du",
    "abschnitt": 2,
-   "start": 6.237,
-   "ende": 6.304
+   "start": 5.442,
+   "ende": 5.505
   },
   {
    "wort": "Mich",
    "abschnitt": 2,
-   "start": 6.415,
-   "ende": 6.548
+   "start": 5.589,
+   "ende": 5.716
   },
   {
    "wort": "dann",
    "abschnitt": 2,
-   "start": 6.638,
-   "ende": 6.86
+   "start": 5.758,
+   "ende": 5.905
   },
   {
    "wort": "um",
    "abschnitt": 2,
-   "start": 7.016,
-   "ende": 7.105
+   "start": 5.947,
+   "ende": 6.011
   },
   {
    "wort": "Vergebung",
    "abschnitt": 2,
-   "start": 7.172,
-   "ende": 7.639
+   "start": 6.053,
+   "ende": 6.517
   },
   {
    "wort": "bittest,",
    "abschnitt": 2,
-   "start": 7.729,
-   "ende": 8.085
+   "start": 6.601,
+   "ende": 7.001
   },
   {
    "wort": "würde",
    "abschnitt": 3,
-   "start": 8.737,
-   "ende": 8.994
+   "start": 7.734,
+   "ende": 8.085
   },
   {
    "wort": "Ich",
    "abschnitt": 3,
-   "start": 9.051,
-   "ende": 9.165
+   "start": 8.221,
+   "ende": 8.329
   },
   {
    "wort": "dir",
    "abschnitt": 3,
-   "start": 9.251,
-   "ende": 9.393
+   "start": 8.383,
+   "ende": 8.545
   },
   {
    "wort": "vergeben.",
    "abschnitt": 3,
-   "start": 9.507,
-   "ende": 10.05
+   "start": 8.599,
+   "ende": 9.193
   },
   {
    "wort": "Und",
    "abschnitt": 4,
-   "start": 11.182,
-   "ende": 11.305
+   "start": 10.298,
+   "ende": 10.392
   },
   {
    "wort": "es",
    "abschnitt": 4,
-   "start": 11.404,
-   "ende": 11.503
+   "start": 10.439,
+   "ende": 10.509
   },
   {
    "wort": "kümmert",
    "abschnitt": 4,
-   "start": 11.602,
-   "ende": 11.949
+   "start": 10.603,
+   "ende": 10.907
   },
   {
    "wort": "Mich",
    "abschnitt": 4,
-   "start": 12.048,
-   "ende": 12.196
+   "start": 10.954,
+   "ende": 11.094
   },
   {
    "wort": "nicht.",
    "abschnitt": 4,
-   "start": 12.32,
-   "ende": 12.567
+   "start": 11.141,
+   "ende": 11.376
   }
  ]
 }

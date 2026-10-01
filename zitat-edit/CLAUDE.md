@@ -58,6 +58,12 @@ als Filmstreifen ansehen. Stimme ohne Hören beurteilen: Grundton und Spektrum m
   kodiert erst dann ins MP4.
 - **Stimm-Umgebung:** liegt in `~/.venvs/tts` (`STIMME_PYTHON` überschreibt).
   `chatterbox-tts` nur mit `--no-deps` installieren, sonst kommen gradio und GPU-torch mit.
+- **ElevenLabs im Gratis-Abo:** Bibliotheksstimmen (auch die deutschen im Konto)
+  liefern über die API 402 „paid_plan_required“, nur Standardstimmen gehen. Höchstens
+  2 Anfragen gleichzeitig (sonst 429). Gratis-Ergebnisse: nicht kommerziell, Hinweis
+  „elevenlabs.io“ im Titel nötig.
+- **Weave über MCP:** Modelle laufen nur mit bezahltem Weave-Plan („Weave MCP tools are
+  only available on a paid Weave plan“), auch wenn die Verknüpfung steht.
 - **Kopiert aus barber-ad:** `FitText`, `FontGate`, `SafeZoneOverlay`,
   `contact_sheet.py` (nur Kommentare angepasst). Laut Haupt-CLAUDE.md wäre jetzt der
   Moment zum Auslagern in einen gemeinsamen Ordner. Das braucht eine gemeinsame

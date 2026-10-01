@@ -19,8 +19,12 @@ Ausgabe:
   src/stimme/woerter.json     Start/Ende jedes Wortes in Sekunden ab Dateibeginn
 
 Aufruf: npm run stimme:bearbeiten   (oder ~/.venvs/tts/bin/python scripts/stimme_bearbeiten.py)
+Zum Vergleichen mehrerer Stimmen, ohne das Projekt zu verändern:
+  ... stimme_bearbeiten.py --roh out/stimmen/rob-roh.wav --aus out/stimmen/rob.wav --tiefer 0 --tempo 0.95
 """
+import argparse
 import json
+from pathlib import Path
 
 import librosa
 import numpy as np
@@ -134,13 +138,24 @@ def fade(x, sr, ms=8):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--roh", help="andere Rohstimme statt stimme/roh.wav")
+    ap.add_argument("--aus", help="nur Hörprobe hierhin schreiben (Projekt bleibt unverändert)")
+    ap.add_argument("--tiefer", type=float, help="statt stimme.tiefer aus config.ts")
+    ap.add_argument("--tempo", type=float, help="statt stimme.tempo aus config.ts")
+    args = ap.parse_args()
+
     cfg = load_config()
     check_tafeln(cfg)
-    st = cfg["stimme"]
+    st = dict(cfg["stimme"])
+    if args.tiefer is not None:
+        st["tiefer"] = args.tiefer
+    if args.tempo is not None:
+        st["tempo"] = args.tempo
     spoken = spoken_words(cfg)
     words = [w["wort"] for w in spoken]
 
-    y, sr = sf.read(ROH_WAV, dtype="float32")
+    y, sr = sf.read(args.roh or ROH_WAV, dtype="float32")
     y = y.mean(axis=1) if y.ndim > 1 else y
     y = librosa.resample(y, orig_sr=sr, target_sr=SR) if sr != SR else y
     peak = np.max(np.abs(y))
@@ -218,6 +233,10 @@ def main():
     if peak_db > -1.0:
         mixed = pb.Limiter(threshold_db=-1.5, release_ms=80)(mixed.astype(np.float32), SR)
 
+    if args.aus:
+        sf.write(args.aus, mixed.T, SR, subtype="PCM_16")
+        print(f"Hörprobe: {args.aus} ({mixed.shape[1] / SR:.1f} s), Projekt unverändert")
+        return
     FERTIG_WAV.parent.mkdir(parents=True, exist_ok=True)
     sf.write(FERTIG_WAV, mixed.T, SR, subtype="PCM_16")
 

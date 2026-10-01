@@ -6,6 +6,7 @@ import {measureText} from '@remotion/layout-utils';
 import {noise2D} from '@remotion/noise';
 import {useMemo} from 'react';
 import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
+import {config} from '../config';
 import {hash, SPRINGS, springFrom} from '../motion';
 import {COLORS, FONT, isNeon, mix, NEON, withAlpha} from '../theme';
 import {ALLE_WOERTER, TAFEL_OUT_FRAMES, TAFELN, type Tafel, type TafelWort} from '../timing';
@@ -13,7 +14,8 @@ import {SAFE, WIDTH} from '../video';
 import {fitFontSize} from './FitText';
 
 const MAX_FONT = 168;
-const MAX_WIDTH = SAFE.width * 0.94;
+/** Schräg gedrehte Tafeln brauchen seitlich Luft (rechte Seite kommt näher und wird größer) */
+const MAX_WIDTH = SAFE.width * (config.textWinkel ? 0.84 : 0.94);
 const LETTER_SPACING = 0.01;
 /** Mitte des Textblocks: im Himmel, über Baum und Person */
 const CENTER_Y = 700;
@@ -236,30 +238,50 @@ const NeonSchein: React.FC<{z: Zeile; frame: number; out: number}> = ({z, frame,
 	);
 };
 
-const TafelView: React.FC<{zeilen: Zeile[]; tafel: Tafel; frame: number}> = ({zeilen, tafel, frame}) => {
+/** Lage einer Tafel im Raum: im Uhrzeigersinn gekippt, rechts näher, je Tafel leicht anders */
+const lage = (index: number, frame: number, inFrame: number) => {
+	const w = config.textWinkel;
+	if (!w) return '';
+	const rotZ = w * (1 + 0.4 * (hash(index * 3.7) - 0.5));
+	const rotY = -w * 2.4 * (1 + 0.3 * (hash(index * 5.3) - 0.5));
+	// Schwenkt aus einer stärkeren Drehung ein
+	const p = springFrom(frame, inFrame, SPRINGS.wort);
+	return `perspective(1400px) rotateY(${rotY - (1 - p) * w * 3}deg) rotateZ(${rotZ + (1 - p) * w * 0.8}deg)`;
+};
+
+const TafelView: React.FC<{zeilen: Zeile[]; tafel: Tafel; index: number; frame: number}> = ({zeilen, tafel, index, frame}) => {
 	const out = interpolate(frame, [tafel.outFrame, tafel.outFrame + TAFEL_OUT_FRAMES], [0, 1], clamp);
 	const float = Math.sin(frame / 38) * 5;
+	const top = zeilen[0].y;
+	const last = zeilen[zeilen.length - 1];
+	const height = last.y + last.size - top;
 	return (
 		<>
 			{zeilen.filter((z) => isNeon(z.wort.akzent)).map((z) => (
 				<NeonSchein key={`schein-${z.wort.index}`} z={z} frame={frame} out={out} />
 			))}
-			<AbsoluteFill
+			<div
 				style={{
+					position: 'absolute',
+					left: SAFE.left,
+					width: SAFE.width,
+					top,
+					height,
 					opacity: 1 - out,
 					filter: out > 0 ? `blur(${out * 12}px)` : undefined,
-					transform: `translateY(${float}px) scale(${1 + out * 0.1})`,
+					transform: `translateY(${float}px) ${lage(index, frame, tafel.inFrame)} scale(${1 + out * 0.1})`,
+					transformOrigin: '50% 50%',
 				}}
 			>
 				{zeilen.map((z) => (
 					<div
 						key={z.wort.index}
-						style={{position: 'absolute', left: SAFE.left, width: SAFE.width, top: z.y, height: z.size, display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+						style={{position: 'absolute', left: 0, width: SAFE.width, top: z.y - top, height: z.size, display: 'flex', justifyContent: 'center', alignItems: 'center'}}
 					>
 						<Wort z={z} frame={frame} />
 					</div>
 				))}
-			</AbsoluteFill>
+			</div>
 		</>
 	);
 };
@@ -272,7 +294,7 @@ export const Tafeln: React.FC = () => {
 		<AbsoluteFill style={{pointerEvents: 'none'}}>
 			{TAFELN.map((tafel, i) =>
 				frame >= tafel.inFrame - 1 && frame < tafel.outFrame + TAFEL_OUT_FRAMES ? (
-					<TafelView key={i} zeilen={layouts[i]} tafel={tafel} frame={frame} />
+					<TafelView key={i} zeilen={layouts[i]} tafel={tafel} index={i} frame={frame} />
 				) : null,
 			)}
 		</AbsoluteFill>

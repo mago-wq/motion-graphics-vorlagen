@@ -42,6 +42,12 @@ export type ZitatConfig = {
 	 * Vögel setzen ein, das Licht wird wärmer. Muss in den Tafeln vorkommen.
 	 */
 	wendeWort: string;
+	/**
+	 * Schräglage der Schrift in Grad wie im Original (0 = gerade). Die Tafeln stehen
+	 * dann wie schräg in den Raum gedreht, rechts näher. Jede Tafel weicht leicht
+	 * ab und schwenkt beim Erscheinen ein.
+	 */
+	textWinkel: number;
 	/** Kleine Quellenangabe am Ende */
 	quelle: string;
 	stimme: {
@@ -95,14 +101,16 @@ export const config: ZitatConfig = {
 
 	wendeWort: 'VERGEBEN',
 
+	textWinkel: 9,
+
 	quelle: 'Hadith Qudsi · at-Tirmidhi 3540',
 
 	stimme: {
-		tiefer: 4,
-		tempo: 0.9,
+		tiefer: 1,
+		tempo: 0.95,
 		hall: 0.35,
 		leiserUm: 3,
-		elevenlabs: {stimmeId: '', modell: 'eleven_multilingual_v2'},
+		elevenlabs: {stimmeId: 'nPczCjzI2devNBz1zQrb', modell: 'eleven_multilingual_v2'},
 	},
 
 	bild: {

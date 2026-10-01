@@ -39,6 +39,7 @@ Wortstile (in den Tafeln als `{WORT|stil}`):
      den gesprochenen Text ergeben (Satzzeichen und Groß/Klein egal), sonst bricht
      `npm run stimme` mit einer Meldung ab.
    - `wendeWort`: bei diesem Wort legt sich der Sturm.
+   - `textWinkel`: Schräglage der Schrift in Grad wie im Original (0 = gerade).
    - `quelle`, `farben`, `bild`, `stimme` (Tonhöhe, Tempo, Hall).
 2. Gesprochenen Text oder Pausen geändert: `npm run stimme` (siehe unten).
    Nur Tafeln, Akzente oder Farben geändert: direkt weiter mit Schritt 3.
@@ -60,12 +61,19 @@ Wort-Zeiten landen in `src/stimme/woerter.json`, das Video liest sie von dort.
   vom Sprecher für Sprachsynthese freigegeben). Alle Versuche liegen in
   `stimme/versuche/`. Klingt ein anderer besser:
   `npm run stimme -- --auswahl 3`. Mehr Versuche: `npm run stimme -- --versuche 8`.
-- **ElevenLabs**: Den API-Schlüssel in den Einstellungen der Umgebung als
-  `ELEVENLABS_API_KEY` hinterlegen (nie in Dateien schreiben), neue Sitzung starten.
-  Dann `npm run stimme:elevenlabs -- --suche` (tiefe deutsche Männerstimmen aus der
-  Bibliothek) oder `-- --liste` (eigene Stimmen), die ID in `stimme.elevenlabs.stimmeId`
-  eintragen, `npm run stimme:elevenlabs`. ElevenLabs-Stimmen sprechen oft schon ruhig:
-  dann `stimme.tempo` auf 1 und `stimme.tiefer` auf 0 bis 2 setzen.
+- **ElevenLabs** (aktuell eingestellt: „Brian“, tief und ruhig): Den API-Schlüssel in
+  den Einstellungen der Umgebung als `ELEVENLABS_API_KEY` hinterlegen (nie in Dateien
+  schreiben), neue Sitzung starten. Dann `npm run stimme:elevenlabs -- --liste` (Stimmen
+  im Konto) oder `-- --suche` (tiefe deutsche Männerstimmen aus der Bibliothek), die ID in
+  `stimme.elevenlabs.stimmeId` eintragen, `npm run stimme:elevenlabs`. ElevenLabs-Stimmen
+  sprechen schon ruhig: `stimme.tiefer` 0 bis 1, `stimme.tempo` 0,95 bis 1.
+  Mehrere Stimmen vergleichen, ohne das Projekt zu ändern:
+  `stimme_elevenlabs.py --stimme <id> --aus out/stimmen/x-roh.wav`, dann
+  `stimme_bearbeiten.py --roh out/stimmen/x-roh.wav --aus out/stimmen/x.wav --tiefer 1 --tempo 0.95`.
+  Gratis-Abo: nur die Standardstimmen (Brian, Bill, George …) gehen über die
+  Schnittstelle, Bibliotheksstimmen wie „Rob – Warm Bass German Narrator“ erst ab dem
+  kleinsten Bezahl-Abo. Gratis erzeugte Stimmen dürfen laut ElevenLabs nicht
+  kommerziell genutzt werden und brauchen den Hinweis „elevenlabs.io“ im Titel.
 - **Eigene Aufnahme**: den ganzen Text am Stück einsprechen, als `stimme/roh.wav`
   speichern, `npm run stimme:bearbeiten`.
 
