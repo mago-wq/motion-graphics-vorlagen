@@ -1,10 +1,10 @@
-"""05 Beat – kinetische Typo, ein Wort pro Schlag, Loop. Hook: Meine Routine in 6 Sekunden."""
+"""05 Beat – kinetische Typo, ein Wort pro Schlag, Loop. Hook: Die 6-Sekunden-Routine."""
 import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from engine import *
 
 BLUE, YEL, BLK, WHT, CORAL = (22, 62, 170), (255, 214, 0), (14, 14, 14), (255, 255, 255), (255, 107, 90)
 BEATS = [  # (Text, Klein, Hintergrund, Schrift, Dauer, Bild)
-    ('MEINE ROUTINE', 'in 6 Sekunden', BLK, WHT, 22, None),
+    ('DIE ROUTINE', 'in 6 Sekunden', BLK, WHT, 22, None),
     ('1 STICK.', '', YEL, BLK, 15, 'stick-pulver.png'),
     ('750 ML.', 'Wasser', BLUE, WHT, 15, None),
     ('SCHÜTTELN.', '', CORAL, BLK, 15, None),

@@ -1,4 +1,4 @@
-"""06 Notizen-App – Lifestyle/UGC-Look. Hook: Meine Morgenroutine, die ich wirklich durchziehe."""
+"""06 Notizen-App – Lifestyle/UGC-Look. Hook: Morgenroutine zum Abspeichern."""
 import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from engine import *
 
@@ -17,7 +17,7 @@ def check(d, x, y, on):
 def frame(i):
     cv = canvas(PAPER); d = ImageDraw.Draw(cv)
     d.text((70, 200), '‹ Notizen', font=F('med', 46), fill=ACC)
-    d.text((70, 300), 'Heute, 06:42', font=F('med', 34), fill=GRAY)
+    d.text((70, 300), 'Idee zum Nachmachen', font=F('med', 34), fill=GRAY)
     d.text((70, 350), 'Morgenroutine', font=F('bold', 84), fill=INK)
     y = 520
     for k, (t, fr) in enumerate(ITEMS):
@@ -42,7 +42,7 @@ def frame(i):
         product(cv, 'oceanmin.png', 300, 900, 1190, (f - 10) / 10, f, rot=-6, op=.2)
     # Hook-Overlay im TikTok-Textstil
     a = 1 - ease_out((i - 120) / 10)
-    for k, row in enumerate(['Meine Morgenroutine,', 'die ich wirklich durchziehe']):
+    for k, row in enumerate(['Morgenroutine', 'zum Abspeichern']):
         put(cv, text_img(row, 'black', 84, (255, 255, 255), INK, 24, 14), W / 2, 1150 + k * 120, back((i - k * 4) / 8), a * ease_out((i - k * 4) / 4))
     if i >= 230: pflicht(cv, ease_out((i - 230) / 8), GRAY, y=1590, size=22)
     if i >= 270:

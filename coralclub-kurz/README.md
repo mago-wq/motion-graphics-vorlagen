@@ -33,9 +33,13 @@ Vorschau mit `STILLS=10,100,200 python3 videos/...` (-> `out/<name>_sheet.png`).
 | 02 | Messenger-POV | POV: Sie fragt, was in deiner Flasche ist |
 | 03 | Warnung/Absperrband | STOPP. Kauf Oceanmin nicht zum Normalpreis. |
 | 04 | Quiz-Gameshow | Wie viel Magnesium steckt in 1 Stick? |
-| 05 | Kinetische Typo, 6-s-Loop | Meine Routine in 6 Sekunden |
-| 06 | Notizen-App, Lifestyle | Meine Morgenroutine, die ich wirklich durchziehe |
+| 05 | Kinetische Typo, 6-s-Loop | Die Routine in 6 Sekunden |
+| 06 | Notizen-App, Lifestyle | Morgenroutine zum Abspeichern |
 | 07 | Luxus/Editorial | Ein Stick. Ein Glas. Das ist alles. |
 | 08 | Terminal | Der Coral-Club-Spar-Hack |
 | 09 | Splitscreen-Vergleich | Gleiches Produkt. 114 € Unterschied. |
 | 10 | Unboxing, Pastell | Was steckt in dieser Packung? |
+
+**Hooks nur, wenn sie stimmen:** keine Ich-Aussagen („meine Routine“, „kommt in mein
+Wasser“), solange der Account-Inhaber das Produkt nicht wirklich so nutzt. Neutrale oder
+Du-Formulierungen nehmen („zum Abspeichern“, „Die Routine“).
