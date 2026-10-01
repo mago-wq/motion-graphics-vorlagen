@@ -1,0 +1,12 @@
+node_modules/
+# Render-Ausgaben: nur das fertige Video wird eingecheckt
+out/*
+!out/zitat-edit.mp4
+# Zwischenstände der Stimmerzeugung (roh.wav und referenz.flac werden eingecheckt)
+stimme/versuche/
+# Mixkit-Geräusche: Die Lizenz erlaubt die Nutzung im Video, nicht die Weitergabe
+# der Dateien selbst. npm run toene lädt sie. Eingecheckt sind nur die selbst erzeugten.
+public/sfx/*
+!public/sfx/neon.flac
+!public/sfx/glitch.flac
+__pycache__/

@@ -1,0 +1,57 @@
+{
+  "regen": {
+    "file": "sfx/regen.flac",
+    "duration": 26.0,
+    "anchor": 0.0
+  },
+  "wind": {
+    "file": "sfx/wind.flac",
+    "duration": 25.0,
+    "anchor": 0.0
+  },
+  "voegel": {
+    "file": "sfx/voegel.flac",
+    "duration": 26.0,
+    "anchor": 0.0
+  },
+  "donner": {
+    "file": "sfx/donner.flac",
+    "duration": 12.0,
+    "anchor": 0.0
+  },
+  "fluegel": {
+    "file": "sfx/fluegel.flac",
+    "duration": 1.5,
+    "anchor": 0.18
+  },
+  "whoosh_blitz": {
+    "file": "sfx/whoosh_blitz.flac",
+    "duration": 2.6,
+    "anchor": 1.265
+  },
+  "boom_blitz": {
+    "file": "sfx/boom_blitz.flac",
+    "duration": 4.8,
+    "anchor": 0.241
+  },
+  "swoosh": {
+    "file": "sfx/swoosh.flac",
+    "duration": 1.15,
+    "anchor": 0.206
+  },
+  "swoosh_tief": {
+    "file": "sfx/swoosh_tief.flac",
+    "duration": 1.3,
+    "anchor": 0.301
+  },
+  "neon": {
+    "file": "sfx/neon.flac",
+    "duration": 0.42,
+    "anchor": 0.0
+  },
+  "glitch": {
+    "file": "sfx/glitch.flac",
+    "duration": 0.207,
+    "anchor": 0.0
+  }
+}

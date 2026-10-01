@@ -1,0 +1,186 @@
+{
+ "dauer": 15.429,
+ "sprechEnde": 12.567,
+ "woerter": [
+  {
+   "wort": "O",
+   "abschnitt": 0,
+   "start": 0.095,
+   "ende": 0.117
+  },
+  {
+   "wort": "Sohn",
+   "abschnitt": 0,
+   "start": 0.339,
+   "ende": 0.607
+  },
+  {
+   "wort": "Adams,",
+   "abschnitt": 0,
+   "start": 0.763,
+   "ende": 1.208
+  },
+  {
+   "wort": "wenn",
+   "abschnitt": 1,
+   "start": 2.033,
+   "ende": 2.166
+  },
+  {
+   "wort": "deine",
+   "abschnitt": 1,
+   "start": 2.233,
+   "ende": 2.456
+  },
+  {
+   "wort": "Sünden",
+   "abschnitt": 1,
+   "start": 2.567,
+   "ende": 2.99
+  },
+  {
+   "wort": "bis",
+   "abschnitt": 1,
+   "start": 3.191,
+   "ende": 3.346
+  },
+  {
+   "wort": "zu",
+   "abschnitt": 1,
+   "start": 3.502,
+   "ende": 3.591
+  },
+  {
+   "wort": "den",
+   "abschnitt": 1,
+   "start": 3.68,
+   "ende": 3.792
+  },
+  {
+   "wort": "Wolken",
+   "abschnitt": 1,
+   "start": 3.903,
+   "ende": 4.282
+  },
+  {
+   "wort": "des",
+   "abschnitt": 1,
+   "start": 4.348,
+   "ende": 4.46
+  },
+  {
+   "wort": "Himmels",
+   "abschnitt": 1,
+   "start": 4.504,
+   "ende": 4.838
+  },
+  {
+   "wort": "reichen",
+   "abschnitt": 1,
+   "start": 4.95,
+   "ende": 5.328
+  },
+  {
+   "wort": "würden",
+   "abschnitt": 1,
+   "start": 5.417,
+   "ende": 5.729
+  },
+  {
+   "wort": "und",
+   "abschnitt": 2,
+   "start": 6.014,
+   "ende": 6.125
+  },
+  {
+   "wort": "du",
+   "abschnitt": 2,
+   "start": 6.237,
+   "ende": 6.304
+  },
+  {
+   "wort": "Mich",
+   "abschnitt": 2,
+   "start": 6.415,
+   "ende": 6.548
+  },
+  {
+   "wort": "dann",
+   "abschnitt": 2,
+   "start": 6.638,
+   "ende": 6.86
+  },
+  {
+   "wort": "um",
+   "abschnitt": 2,
+   "start": 7.016,
+   "ende": 7.105
+  },
+  {
+   "wort": "Vergebung",
+   "abschnitt": 2,
+   "start": 7.172,
+   "ende": 7.639
+  },
+  {
+   "wort": "bittest,",
+   "abschnitt": 2,
+   "start": 7.729,
+   "ende": 8.085
+  },
+  {
+   "wort": "würde",
+   "abschnitt": 3,
+   "start": 8.737,
+   "ende": 8.994
+  },
+  {
+   "wort": "Ich",
+   "abschnitt": 3,
+   "start": 9.051,
+   "ende": 9.165
+  },
+  {
+   "wort": "dir",
+   "abschnitt": 3,
+   "start": 9.251,
+   "ende": 9.393
+  },
+  {
+   "wort": "vergeben.",
+   "abschnitt": 3,
+   "start": 9.507,
+   "ende": 10.05
+  },
+  {
+   "wort": "Und",
+   "abschnitt": 4,
+   "start": 11.182,
+   "ende": 11.305
+  },
+  {
+   "wort": "es",
+   "abschnitt": 4,
+   "start": 11.404,
+   "ende": 11.503
+  },
+  {
+   "wort": "kümmert",
+   "abschnitt": 4,
+   "start": 11.602,
+   "ende": 11.949
+  },
+  {
+   "wort": "Mich",
+   "abschnitt": 4,
+   "start": 12.048,
+   "ende": 12.196
+  },
+  {
+   "wort": "nicht.",
+   "abschnitt": 4,
+   "start": 12.32,
+   "ende": 12.567
+  }
+ ]
+}

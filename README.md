@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`zitat-edit/`](zitat-edit/) | Gesprochenes Zitat: tiefe Stimme mit Hall (kostenlos erzeugt, ElevenLabs oder eigene Aufnahme), Wort-für-Wort-Typo mit Neon, Glitch und Umriss, Tauben, Lichtblitz, Regen, der sich legt | nach Stimme, Beispiel 18,7 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
