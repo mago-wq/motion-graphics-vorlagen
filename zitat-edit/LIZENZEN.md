@@ -8,7 +8,7 @@ erlaubt kommerzielle Nutzung. Neue Bausteine bitte hier eintragen.
 | Was | Datei | Quelle | Lizenz |
 |---|---|---|---|
 | Schrift Montserrat (600, 900) | `public/fonts/` | The Montserrat Project Authors, über Fontsource | SIL Open Font License 1.1 (`public/fonts/OFL-Montserrat.txt`) |
-| Hintergrund (Platzhalter): einzelner Baum unter Sturmwolken | `public/bilder/hintergrund.jpg` | Rafel Jesús, [WordPress Photo Directory](https://wordpress.org/photos/photo/600622a634/), auf 9:16 zugeschnitten | CC0 1.0 |
+| Hintergrund: betende Gestalt mit Schwert im Nebel unter Sturmwolken | `public/bilder/hintergrund.jpg` | vom Nutzer mit einer Bild-KI erzeugt, auf 1080×1920 gebracht | nach den Bedingungen des genutzten Bild-KI-Dienstes |
 | Regen | `public/sfx/regen.flac` | Mixkit 1253 „Light rain loop“ | Mixkit Sound Effects Free License |
 | Wind | `public/sfx/wind.flac` | Mixkit 1237 „Wind in the forest“ | Mixkit Sound Effects Free License |
 | Vögel | `public/sfx/voegel.flac` | Mixkit 2467 „Morning birds singing“ | Mixkit Sound Effects Free License |
