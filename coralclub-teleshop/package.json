@@ -2,10 +2,12 @@
   "name": "coralclub-teleshop",
   "version": "1.0.0",
   "private": true,
-  "description": "30-Sekunden-Affiliate-Video (9:16) im Teleshopping-Stil der 2000er mit Sprecher, gebaut mit Remotion",
+  "description": "40-Sekunden-Affiliate-Video (9:16) im Teleshopping-Stil der 2000er mit Sprecher, gebaut mit Remotion",
   "scripts": {
     "render": "bash scripts/render.sh",
+    "render:4k": "NAME=coralclub-teleshop-4k bash scripts/render.sh --scale=2 --crf=17 --jpeg-quality=100 && bash scripts/fit-size.sh out/coralclub-teleshop-4k.mp4 95",
     "check": "python3 scripts/check_video.py",
+    "check:4k": "python3 scripts/check_video.py coralclub-teleshop-4k",
     "stills": "bash scripts/render-stills.sh",
     "sfx": "python3 scripts/generate_sfx.py",
     "musik": "python3 scripts/generate_music.py",

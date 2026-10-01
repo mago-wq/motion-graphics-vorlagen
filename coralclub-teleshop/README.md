@@ -3,7 +3,13 @@
 TikTok/Reels-Video für **Oceanmin** von Coral Club im Stil der Teleshopping-Werbung um 2000:
 begeisterter Werbesprecher, „Kennen Sie das?“ in Schwarzweiß, Störer, Chrom-Schrift,
 „Aber das ist noch nicht alles!“ und ein Bestell-Banner mit „Link in Bio“ statt Hotline.
-9:16, 1080×1920, 30 fps, 40,4 s. Das fertige Video liegt unter `out/coralclub-teleshop.mp4`.
+9:16, 30 fps, 40,4 s. Fertige Videos:
+
+- `out/coralclub-teleshop.mp4`: 1080×1920, H.264, zum direkten Hochladen.
+- `out/coralclub-teleshop-4k.mp4`: 2160×3840, gleiche Komposition doppelt so fein gezeichnet
+  (Schrift und Grafik scharf; die Produktfotos aus dem Shop sind kleiner als 4K und daher
+  minimal weicher). TikTok und Instagram rechnen auf 1080×1920 herunter, eine höher
+  aufgelöste Vorlage übersteht deren Kompression aber meist etwas besser.
 
 ## Warum so (gegenüber dem ersten Coral-Club-Video)
 
@@ -58,8 +64,11 @@ Claim im Wortlaut ist erlaubt. Begründung in `CLAUDE.md`.
 ```bash
 npm install
 npx remotion browser ensure   # einmalig
-npm run render   # -> out/coralclub-teleshop.mp4 (+ Ton als WAV), gemastert auf -14 LUFS
-npm run check    # Abnahme-Check (Format, Länge, Pegel, Lautheit, Sprache über Musik, Stille, Sync)
+npm run render     # -> out/coralclub-teleshop.mp4 (+ Ton als WAV), gemastert auf -14 LUFS
+npm run render:4k  # -> out/coralclub-teleshop-4k.mp4 (2160×3840, ~20 min; danach per
+                   #    scripts/fit-size.sh auf < 95 MB, damit GitHub die Datei annimmt)
+npm run check      # Abnahme-Check (Format, Länge, Pegel, Lautheit, Sprache über Musik, Stille, Sync)
+npm run check:4k
 npm run stills -- --safe      # Kontrollbilder mit Sicherheitszone
 FRAMES="$(python3 scripts/kontrollframes.py)" npm run stills && python3 scripts/contact_sheet.py
 npm run musik    # Musikbett neu (nach neuer Sprecherspur)

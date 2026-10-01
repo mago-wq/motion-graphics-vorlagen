@@ -84,6 +84,10 @@ nur `ChromeText`, `Sunburst`, `Starburst` und `VhsOverlay` tauschen.
 - **Clipping in der Summe:** Remotion schreibt 16-bit; Sprecher + Musik + Effekte liefen über
   0 dBFS. `SoundTrack` mischt mit `MIX_GAIN` 0,5, `scripts/master.py` hebt danach auf
   −14 LUFS an und begrenzt bei −1 dBFS (Remotions ffmpeg hat kein `loudnorm`).
+- **4K und GitHub:** `--scale=2` mit CRF 17 ergab 130 MB, GitHub nimmt höchstens 100 MB pro
+  Datei. `scripts/fit-size.sh` kodiert in zwei Durchgängen (x264 slow) auf < 95 MB; im
+  4K-Ausschnitt war kein Unterschied zum 130-MB-Master zu sehen. Braucht System-ffmpeg mit
+  libx264. Größere Fassungen gehören nicht ins Git (keine LFS-Einrichtung im Repo).
 - **Kontaktbogen:** Muster `frame-???.png` übersah vierstellige Frames; jetzt nach Zahl sortiert.
 - Übernommen aus barber-ad: `scripts/render.sh` (AAC-Versatz), `FontGate`; aus coralclub-ad:
   Freistellen der Shopfotos, Effekt-Generator, Packungsstreifen.

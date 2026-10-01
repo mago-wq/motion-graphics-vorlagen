@@ -6,7 +6,7 @@ dem Sprecher), AAC-Tonspur 44,1 kHz Stereo, Spitzenpegel um -1 dBFS,
 Gesamtlautheit grob um -14 LUFS (TikTok/Reels), Sprache hörbar über der
 Musik, letzte halbe Sekunde still und Synchronität der MP4-Tonspur gegenüber
 der verlustfreien WAV.
-Aufruf: npm run check   (Exit-Code 1, wenn etwas nicht passt)
+Aufruf: npm run check   bzw. npm run check:4k   (Exit-Code 1, wenn etwas nicht passt)
 """
 import json
 import subprocess
@@ -18,8 +18,10 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
-VIDEO = ROOT / "out" / "coralclub-teleshop.mp4"
-WAV = ROOT / "out" / "coralclub-teleshop-ton.wav"
+NAME = sys.argv[1] if len(sys.argv) > 1 else "coralclub-teleshop"
+VIDEO = ROOT / "out" / f"{NAME}.mp4"
+WAV = ROOT / "out" / f"{NAME}-ton.wav"
+SCALE = 2 if NAME.endswith("-4k") else 1
 EV = json.loads((ROOT / "src" / "musik-ereignisse.json").read_text())
 FRAMES = round(EV["dauer"] * 30)
 LENGTH = FRAMES / 30
@@ -52,7 +54,7 @@ audio = next((s for s in info["streams"] if s["codec_type"] == "audio"), None)
 
 print("Video")
 report(video is not None and video["codec_name"] == "h264", f"Codec {video and video['codec_name']}")
-report(video["width"] == 1080 and video["height"] == 1920, f"Format {video['width']}x{video['height']}")
+report(video["width"] == 1080 * SCALE and video["height"] == 1920 * SCALE, f"Format {video['width']}x{video['height']}")
 report(video["r_frame_rate"] == "30/1", f"Bildrate {video['r_frame_rate']}")
 report(int(video.get("nb_frames", 0)) == FRAMES, f"Frames {video.get('nb_frames')} (Soll {FRAMES})")
 report(video["pix_fmt"] == "yuv420p", f"Pixelformat {video['pix_fmt']}")
