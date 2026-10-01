@@ -106,11 +106,11 @@ export const config: ZitatConfig = {
 	quelle: 'Hadith Qudsi · at-Tirmidhi 3540',
 
 	stimme: {
-		tiefer: 1,
+		tiefer: 2,
 		tempo: 0.95,
 		hall: 0.35,
 		leiserUm: 3,
-		elevenlabs: {stimmeId: 'nPczCjzI2devNBz1zQrb', modell: 'eleven_multilingual_v2'},
+		elevenlabs: {stimmeId: '5euSC8RarC3AHrZ242sr', modell: 'eleven_multilingual_v2'},
 	},
 
 	bild: {

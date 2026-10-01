@@ -61,7 +61,7 @@ Wort-Zeiten landen in `src/stimme/woerter.json`, das Video liest sie von dort.
   vom Sprecher für Sprachsynthese freigegeben). Alle Versuche liegen in
   `stimme/versuche/`. Klingt ein anderer besser:
   `npm run stimme -- --auswahl 3`. Mehr Versuche: `npm run stimme -- --versuche 8`.
-- **ElevenLabs** (aktuell eingestellt: „Brian“, tief und ruhig): Den API-Schlüssel in
+- **ElevenLabs** (aktuell eingestellt: „Rob – Warm Bass German Narrator“): Den API-Schlüssel in
   den Einstellungen der Umgebung als `ELEVENLABS_API_KEY` hinterlegen (nie in Dateien
   schreiben), neue Sitzung starten. Dann `npm run stimme:elevenlabs -- --liste` (Stimmen
   im Konto) oder `-- --suche` (tiefe deutsche Männerstimmen aus der Bibliothek), die ID in
