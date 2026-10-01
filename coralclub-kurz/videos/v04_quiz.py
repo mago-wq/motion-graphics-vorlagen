@@ -21,7 +21,7 @@ def card(letter, text, state):
     d.ellipse([18, 18, 132, 132], fill=(YEL if state != 'no' else (120, 100, 160)) + (255,))
     d.text((75, 75), letter, font=F('black', 76), fill=(30, 20, 60), anchor='mm')
     d.text((180, 75), text, font=F('black', 84), fill=fg, anchor='lm')
-    if state == 'ok': d.text((800, 75), '✓', font=F('bold', 90), fill=WHT, anchor='mm')
+    if state == 'ok': d.line([(770, 78), (796, 104), (836, 52)], fill=WHT + (255,), width=16, joint='curve')
     return im
 
 def frame(i):
@@ -47,7 +47,6 @@ def frame(i):
     if i >= REVEAL + 60:
         f = i - REVEAL - 60
         put(cv, text_img(CTA_ZEILE.upper() + '  ↓', 'black', 100, (30, 20, 60), WHT, 34, 20), W / 2, 1650, back(f / 8), ease_out(f / 4))
-        product(cv, 'oceanmin.png', 300, 900, 1420, f / 10, f, rot=-8, op=.5)
         pflicht(cv, ease_out(f / 8), (200, 190, 230), y=1770, size=20)
     return cv
 
