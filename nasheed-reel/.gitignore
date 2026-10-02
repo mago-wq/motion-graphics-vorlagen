@@ -1,6 +1,6 @@
 node_modules/
-# Render-Ausgaben nicht einchecken, außer dem fertigen Video (nur in privatem Repo!)
-out/*
-!out/nasheed-reel.mp4
+# Render-Ausgaben nicht einchecken. Das fertige Video (out/nasheed-reel.mp4) erst
+# freigeben, wenn das Repo privat ist – es enthält den fremden Nasheed-Ton.
+out/
 # Nasheed-Ton (fremdes Material, nur lokal)
 public/ton/
