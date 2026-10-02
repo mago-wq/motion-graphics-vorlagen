@@ -59,3 +59,20 @@ Wirkversprechen; EU-Claims nur im exakten Wortlaut.
 | 3 | Was heißt NRV? | VO (EU) 1169/2011 Anh. XIII, DGE |
 | 4 | Viel hilft viel? | BfR-Höchstmengenvorschlag 2021 (250 mg/Tag aus NEM) |
 | 5 | Was Magnesium laut EU kann | VO (EU) 432/2012, VO (EU) 1169/2011 Art. 7 |
+
+## Serie: Produkte (`videos/p*.py`) – mit Sprecher
+
+`stimme.py`: Sprechertext (vidIQ-Voiceover, ElevenLabs-Stimmen) → `a/stimme/<name>.mp3` + `.txt`
+(Absätze = Szenen) → Whisper (`faster-whisper`, lokal) liefert Wortzeiten → `a/stimme/<name>.json`.
+Szenen wechseln an den Absatzgrenzen, Untertitel markieren das gesprochene Wort.
+
+| Nr. | Produkt | Format | Stimme |
+|---|---|---|---|
+| p1 | Coralbrite Zahnpasta | Werbung | Sarah |
+| p2 | O!Mega-3 TG | Wissen + Werbung | Daniel (1,15× beschleunigt) |
+| p3 | Coral-Mine | How-to | Liam |
+| p4 | Promarine Collagen Peptides | Werbung | Laura |
+| p5 | Spirulina vs. Chlorella | Quiz | – |
+| p6 | Kosten pro Tag | Ranking | – |
+
+Preise und Angaben: Produktseiten de.coral.club, Stand 02.10.2026.
