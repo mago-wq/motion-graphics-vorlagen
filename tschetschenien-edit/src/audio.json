@@ -1,0 +1,30 @@
+{
+  "_hinweis": "Gemeinsame Quelle für Bild (timing.ts) und Ton (scripts/prepare-audio.mjs). Zeiten in Sekunden der ROH-Datei.",
+  "source": "audio/nasheed-roh.mp3",
+  "output": "audio/nasheed-edit.wav",
+  "bpm": 140,
+  "firstBeat": 0.115,
+  "dynamics": {
+    "loudIntroUntilBeat": 9,
+    "quietUntilBeat": 28,
+    "quietVolume": 0.5,
+    "quietLowpassHz": 1800,
+    "gapBeforeDropBeats": 0.5,
+    "bassGainDb": 9,
+    "bassFreqHz": 90,
+    "punchBeats": [
+      28,
+      34,
+      39,
+      43,
+      49,
+      55
+    ],
+    "punchGainDb": 5,
+    "fadeOutSeconds": 1.4,
+    "echoMs": [
+      420,
+      760
+    ]
+  }
+}
