@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VIDEO = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / "out" / "nokhchi-edit-4k.mp4"
 _lang = VIDEO.stem.rsplit("-zitate-", 1)[1] if "-zitate-" in VIDEO.stem else None
 WAV = (ROOT / "public" / "audio" / f"mix_zitate_{_lang}.wav" if _lang
-       else VIDEO.with_name(VIDEO.stem + "-ton.wav"))
+       else ROOT / "out" / (VIDEO.stem + "-ton.wav"))
 SIZE = (2160, 3840) if "4k" in VIDEO.stem else (540, 960) if "entwurf" in VIDEO.stem else (1080, 1920)
 TL = json.loads((ROOT / "src" / "timeline.json").read_text())
 FRAMES = math.ceil(TL["duration"] * 30)
