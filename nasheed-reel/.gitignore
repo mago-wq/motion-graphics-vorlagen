@@ -1,0 +1,3 @@
+node_modules/
+# Render-Ausgaben und Referenzmaterial nicht einchecken
+out/

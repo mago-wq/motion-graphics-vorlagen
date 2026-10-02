@@ -1,0 +1,27 @@
+{
+  "name": "nasheed-reel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lyric-Reel (9:16) zu „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit Übersetzung, gebaut mit Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render NasheedReel out/nasheed-reel-stumm.mp4 --muted",
+    "preview-audio": "bash scripts/preview-with-audio.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/paths": "4.0.529",
+    "@remotion/transitions": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}
