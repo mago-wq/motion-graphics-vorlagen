@@ -1,0 +1,22 @@
+{
+  "name": "welt-laerm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "22-Sekunden-Reminder-Video (9:16) mit leuchtenden Piktogramm-Figuren und deutschen Untertiteln, gebaut mit Remotion",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "stills": "bash scripts/render-stills.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}
