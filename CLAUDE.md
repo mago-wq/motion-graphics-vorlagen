@@ -14,7 +14,8 @@ einen gemeinsamen Ordner auslagern, wenn die zweite Vorlage sie wirklich braucht
 
 1. **Zuerst ein schneller Entwurf in niedrigster sinnvoller Qualität** (z. B. 540×960,
    hohe CRF, ohne teure Nachbearbeitung) – so schnell wie möglich hochladen, damit früh
-   Feedback kommt. Datei klein halten: Uploads über ~60 MB kommen im Chat nicht an.
+   Feedback kommt. Datei klein halten: Uploads ab ~50 MB kommen im Chat nicht an (~29 MB
+   gehen; 1080p × 69 s per 2-Pass mit ~3,2 Mbit/s Video passt).
 2. Rückmeldungen einarbeiten.
 3. **Erst danach der eine Endrender** in voller Qualität (z. B. 4K).
 Lange Renders nie „auf Verdacht“ in voller Qualität starten.
