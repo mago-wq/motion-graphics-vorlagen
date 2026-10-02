@@ -11,17 +11,18 @@ from faster_whisper import WhisperModel
 ROOT = Path(__file__).resolve().parent.parent
 Q = ROOT / "assets-src" / "quotes"
 
-TEXTS = {
-    "pushkin": "Славный Бей-Булат, гроза Кавказа.",
-    "baysangur": "Вот с ними поговорите вы о вашем деле. Они вас услышат скорее, нежели я.",
-    "solzh": "Но была одна нация, которая совсем не поддалась психологии покорности. "
-             "Не одиночки, не бунтари, а вся нация целиком. Это — чечены.",
-    "grachev": "Грозный можно взять одним парашютно-десантным полком за два часа.",
-}
+
+
+# Wortlaute aus make_quotes.py (eine Quelle der Wahrheit)
+_src = Path(__file__).with_name("make_quotes.py").read_text()
+_ns: dict = {}
+exec(_src[_src.index("QUOTES = {"):_src.index("# Synthetische Referenzstimmen")], _ns)
+TEXTS = _ns["QUOTES"]
 
 
 def norm(t: str) -> str:
-    return " ".join(re.sub(r"[^а-я ]", " ", t.lower().replace("ё", "е")).split())
+    t = t.lower().replace("ё", "е")
+    return " ".join(re.sub(r"[^а-яa-zäöüß ]", " ", t).split())
 
 
 def cer(a: str, b: str) -> float:
@@ -34,22 +35,24 @@ def cer(a: str, b: str) -> float:
     return d[len(b)] / max(1, len(b))
 
 
-def main():
+def main(langs):
     model = WhisperModel("medium", device="cpu", compute_type="int8")
-    for name, text in TEXTS.items():
-        best = None
-        for f in sorted(Q.glob(f"{name}_take*.wav")):
-            segs, _ = model.transcribe(str(f), language="ru", beam_size=5)
-            heard = " ".join(s.text for s in segs)
-            dur = sf.info(f).duration
-            score = cer(text, heard)
-            print(f"{f.name}: {dur:5.2f} s  Fehlerquote {score:.2f}  „{heard.strip()}“", flush=True)
-            if best is None or score < best[0]:
-                best = (score, f)
-        if best:
-            shutil.copy2(best[1], Q / f"{name}.wav")
-            print(f"  → {name}.wav = {best[1].name}")
+    for lang in langs:
+        for name, text in TEXTS[lang].items():
+            best = None
+            for f in sorted(Q.glob(f"{name}_{lang}_take*.wav")):
+                segs, _ = model.transcribe(str(f), language=lang, beam_size=5)
+                heard = " ".join(seg.text for seg in segs)
+                dur = sf.info(f).duration
+                score = cer(text, heard)
+                print(f"{f.name}: {dur:5.2f} s  Fehlerquote {score:.2f}  „{heard.strip()}“", flush=True)
+                if best is None or score < best[0]:
+                    best = (score, f)
+            if best:
+                shutil.copy2(best[1], Q / f"{name}_{lang}.wav")
+                print(f"  → {name}_{lang}.wav = {best[1].name}")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1:] or ["ru", "de"])

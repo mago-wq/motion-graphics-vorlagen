@@ -249,9 +249,9 @@ ARR = [
     Seg("abrek", 144, 152, fx=dict(lp=16000, shelf=10, drive=2.8, gain=0, verb=0.12, sub=1.0),
         marks=dict(abrek=144, zelimkhan=148)),
     # 8  1944: tief, gedämpft, weit weg
-    # 16 Schläge (13 s): Platz für Geburt, Deportation und das Solschenizyn-Zitat
-    Seg("y1944", 148, 164, rate=(SLOW, SLOW), fx=dict(lp=(950, 700), shelf=6, drive=1.3, gain=(-10, -12), verb=(0.65, 0.7), sub=0.5),
-        marks=dict(born=148, deport=151, solzh=154)),
+    # 20 Schläge (16 s): Platz für Geburt, Deportation und das Solschenizyn-Zitat (deutsch 11,6 s)
+    Seg("y1944", 144, 164, rate=(SLOW, SLOW), fx=dict(lp=(950, 700), shelf=6, drive=1.3, gain=(-10, -12), verb=(0.65, 0.7), sub=0.5),
+        marks=dict(born=144, deport=148, solzh=151)),
     # 9  Aufstieg 1957: Band läuft an, Filter öffnet
     Seg("rise", 164, 167, rate=(SLOW * 0.75, BASE), curve=1.6, fx=dict(lp=(700, 16000), shelf=8, drive=1.3, gain=(-12, 0), verb=(0.5, 0.2), sub=0.6),
         marks=dict(return1957=164)),
@@ -600,9 +600,13 @@ def main():
     # Fassung 1: ohne Zitate
     loud = master(music, total, sections, out_dir / "mix.wav")
 
-    # Fassung 2: mit gesprochenen Zitaten – Musik weicht unter der Sprache aus
-    speech, spans = build_speech(N, T)
-    if spans:
+    # Fassungen 2 und 3: mit gesprochenen Zitaten (russisch / deutsch) – Musik weicht unter der Sprache aus
+    all_spans = {}
+    for lang in ("ru", "de"):
+        speech, spans = build_speech(N, T, lang)
+        all_spans[lang] = spans
+        if not spans:
+            continue
         env = np.zeros(N)
         for a_, b_ in spans.values():
             env[int(a_ * SR): int(b_ * SR)] = 1.0
@@ -610,18 +614,18 @@ def main():
         att, rel = np.exp(-1 / (0.08 * SR)), np.exp(-1 / (0.30 * SR))
         sm = np.zeros(N)
         acc = 0.0
-        for i in range(N):  # einmalig, ~2,6 Mio. Samples
+        for i in range(N):  # ~2,6 Mio. Samples, wenige Sekunden
             k = att if env[i] > acc else rel
             acc = k * acc + (1 - k) * env[i]
             sm[i] = acc
         ducked = music * (1 - 0.62 * sm)[:, None]  # ~ -8,4 dB unter der Stimme
-        master(ducked + 1.05 * speech, total, sections, out_dir / "mix_zitate.wav")
+        master(ducked + 1.05 * speech, total, sections, out_dir / f"mix_zitate_{lang}.wav")
 
     tl = dict(
         fps=30, duration=round(total, 4), beatLen=round(beat_out, 5), base=BASE,
         sections={k: [round(a, 4), round(b, 4)] for k, (a, b) in sections.items()},
         marks={k: float(x) for k, x in marks.items()},
-        quotes={k: [round(a_, 4), round(b_, 4)] for k, (a_, b_) in spans.items()},
+        quotes={lang: {k: [round(a_, 4), round(b_, 4)] for k, (a_, b_) in sp.items()} for lang, sp in all_spans.items()},
         beats=beats,
         hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
     )
@@ -629,7 +633,8 @@ def main():
     print(f"mix.wav (+ mix_zitate.wav): {total:.2f} s, Lautheit vorher {loud:.1f} LUFS")
     for k, (a, b) in sections.items():
         print(f"  {k:10s} {a:6.2f} – {b:6.2f}")
-    print("  Zitate:", {k: [round(x, 2) for x in v] for k, v in spans.items()})
+    for lang, sp in all_spans.items():
+        print(f"  Zitate {lang}:", {k: [round(x, 2) for x in v] for k, v in sp.items()})
 
 
 def master(mix, total, sections, dest):
@@ -648,18 +653,18 @@ def master(mix, total, sections, dest):
     return loud
 
 
-def build_speech(N, T):
-    """Legt die gewählten Zitat-Takes an ihre Marken. Klang: unverzerrt, nur etwas tiefer."""
+def build_speech(N, T, lang):
+    """Legt die gewählten Zitat-Takes (<name>_<lang>.wav) an ihre Marken. Klang: unverzerrt, nur tiefer."""
     speech = np.zeros((N, 2))
     spans = {}
     qdir = SRC / "quotes"
     for name, (mark_name, offset) in QUOTES.items():
-        f = qdir / f"{name}.wav"
+        f = qdir / f"{name}_{lang}.wav"
         if not f.exists():
             continue
         y = load(f).mean(axis=1).astype(np.float32)
-        # etwas tiefer (−1,5 Halbtöne), Formanten erhalten – klingt dadurch nicht künstlich
-        y = ffmpeg_filter(y, "rubberband=pitch=0.917:formant=preserved")
+        # tiefer (−3 Halbtöne, Wunsch: „etwas tiefer“), Formanten erhalten – klingt nicht künstlich
+        y = ffmpeg_filter(y, "rubberband=pitch=0.841:formant=preserved")
         y = butter(butter(y, "high", 75, 2), "low", 11000, 2)
         # sanfte Kompression für gleichmäßige Verständlichkeit
         e = np.sqrt(signal.lfilter([0.01], [1, -0.99], y ** 2)) + 1e-6

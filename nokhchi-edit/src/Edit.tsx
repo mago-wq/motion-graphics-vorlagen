@@ -7,6 +7,7 @@ import {AbsoluteFill, Html5Audio, Img, interpolate, Sequence, staticFile, useCur
 import {cutout, img, place} from './assets';
 import {Photo} from './components/Photo';
 import {PopOut} from './components/PopOut';
+import {MapCaucasus} from './components/MapCaucasus';
 import {Counter, Kicker, Quote, Slam, Typed} from './components/Text';
 import {F} from './fonts';
 import {BeatPulse, HitFlash, Letterbox, useShake, Vignette} from './fx/Overlays';
@@ -59,56 +60,51 @@ function buildShots(): Shot[] {
 		</>
 	));
 
-	// ------------------------------------------------------------------ 1 Dzurdzuketien (Chant, gedämpft → offen)
-	add(ch[0], ch[2], (
+	// ------------------------------------------------------------------ 1 Dzurdzuketien → Simsir → 1395 (animierte Karte)
+	// Die Karte läuft durchgehend; beim Öffnen des Chants (Donner) schneiden kurz die Türme dazwischen.
+	add(ch[0], ch[12], <MapCaucasus b={ch.map((x) => x - ch[0])} />);
+	add(ch[0], ch[4], (
 		<>
-			<Photo src={img('mountains_kezenoyam')} grade="cold" zoom={[1.18, 1.3]} drift={[-40, 0]} punch={0.05} />
-			<Slam text="Dzurdzuketien" at={2} y={Y_TITLE} size={170} />
-			<Kicker text="Land der Vorfahren · georgische Chroniken" at={10} y={Y_KICK} />
+			<Slam text="Dzurdzuketien" at={2} y={300} size={150} />
+			<Kicker text="3. Jh. v. Chr. · nach den georgischen Chroniken" at={ch[2] - ch[0]} y={420} />
 		</>
 	));
-	add(ch[2], ch[3], (
-		<>
-			<Photo src={img('koban_axes')} grade="warm" focus={[0.5, 0.5]} zoom={[1.3, 1.45]} rgbIn={6} trail />
-			<Kicker text="Bronzeäxte aus dem Kaukasus · 2. Jt. v. Chr." at={2} y={Y_KICK} />
-		</>
-	));
-	add(ch[3], ch[4], <Photo src={img('lake_kezenoyam')} grade="cold" zoom={[1.2, 1.32]} drift={[30, 0]} punch={0.2} />);
-	// Chant öffnet sich: Donner, Blitz, Türme
 	add(ch[4], ch[6], (
 		<>
-			<Photo src={img('towers_ushkaloy')} grade="paint" focus={[0.5, 0.35]} zoom={[1.0, 1.12]} drift={[0, 60]} punch={0.22} trail rgbIn={10} />
+			<Photo src={img('towers_ushkaloy')} grade="paint" focus={[0.5, 0.4]} zoom={[1.0, 1.06]} drift={[0, 40]} punch={0.15} trail rgbIn={10} />
 			<Slam text="Türme aus Stein" at={1} y={Y_TITLE} size={150} />
 			<Kicker text="Wehrtürme der Wainachen · Mittelalter" at={8} y={Y_KICK} />
 		</>
 	));
-	add(ch[6], ch[7], <Photo src={img('tower_komalkhi')} grade="paint" zoom={[1.1, 1.22]} rgbIn={8} />);
-	add(ch[7], ch[8], <Photo src={img('tower_khambetar')} grade="paint" zoom={[1.05, 1.2]} drift={[0, -50]} trail />);
-	// Simsir 1395 – Miniaturen aus dem Zafarnama
-	add(ch[8], ch[10], (
+	add(ch[6], ch[8], (
 		<>
-			<Photo src={img('zafar_tokhtamysh')} grade="paint" focus={[0.5, 0.45]} zoom={[1.12, 1.25]} punch={0.25} trail />
-			<Slam text="Simsir · 1395" at={1} y={Y_TITLE} size={170} />
-			<Kicker text="Khour II. stellt sich gegen Timur" at={9} y={Y_KICK} />
+			<Slam text="Simsir" at={0} y={300} size={170} />
+			<Kicker text="1362–1395 · Hauptort Simsir" at={6} y={420} />
 		</>
 	));
-	add(ch[10], ch[12], (
+	add(ch[8], ch[11], (
 		<>
-			<Photo src={img('zafar_battle')} grade="paint" focus={[0.5, 0.55]} zoom={[1.2, 1.4]} rgbIn={12} glitch={4} />
-			<Kicker text="Zafarnama · Chronik der Feldzüge Timurs" at={2} y={Y_KICK} />
+			<Slam text="1395" at={0} y={300} size={170} />
+			<Kicker text="Khour II. kämpft an Tokhtamyschs Seite gegen Timur" at={6} y={420} />
 		</>
 	));
-	add(ch[12], ch[13], <Photo src={img('zafar_kaf_mountains')} grade="paint" zoom={[1.15, 1.3]} punch={0.25} rgbIn={10} />);
-	add(ch[13], ch[14], <Photo src={img('zafar_before_battle')} grade="paint" zoom={[1.2, 1.32]} punch={0.25} trail />);
+	add(ch[11], ch[12], (
+		<>
+			<Slam text="1395" at={-20} y={300} size={170} echo={false} />
+			<Kicker text="Timur zieht nach Simsir" at={0} y={420} color={C.red} />
+		</>
+	));
+	add(ch[12], ch[13], <Photo src={img('zafar_kaf_mountains')} grade="paint" zoom={[1.0, 1.08]} punch={0.2} rgbIn={10} />);
+	add(ch[13], ch[14], <Photo src={img('zafar_before_battle')} grade="paint" zoom={[1.0, 1.08]} punch={0.2} trail />);
 	add(ch[14], ch[15], (
 		<>
-			<Photo src={img('towers_chechnya')} grade="blood" zoom={[1.1, 1.2]} punch={0.2} />
+			<Photo src={img('towers_chechnya')} grade="blood" zoom={[1.0, 1.1]} punch={0.2} />
 			<Slam text="Simsir fällt." at={0} y={Y_TITLE} size={150} />
 		</>
 	));
 	add(ch[15], vs[0], (
 		<>
-			<Photo src={img('valley_chinakha')} grade="paint" zoom={[1.15, 1.25]} punch={0.2} rgbIn={8} />
+			<Photo src={img('valley_chinakha')} grade="paint" zoom={[1.05, 1.12]} punch={0.2} rgbIn={8} />
 			<Slam text="Die Berge bleiben." at={0} y={Y_TITLE} size={130} />
 		</>
 	));

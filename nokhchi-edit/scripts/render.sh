@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# Rendert das Bild EINMAL und legt beide Tonfassungen darunter:
-#   out/nokhchi-edit-4k.mp4          ohne gesprochene Zitate
-#   out/nokhchi-edit-4k-zitate.mp4   mit gesprochenen Zitaten
-# Vorschau in 1080p (≈ 4× schneller):  bash scripts/render.sh --preview
+# Rendert das Bild EINMAL und legt die Tonfassungen darunter:
+#   out/<name>.mp4             ohne gesprochene Zitate
+#   out/<name>-zitate-de.mp4   Zitate deutsch
+#   out/<name>-zitate-ru.mp4   Zitate russisch (Original)
+# Endfassung 4K:            bash scripts/render.sh
+# Vorschau 1080p:           bash scripts/render.sh --preview
+# Schneller Entwurf 540p:   bash scripts/render.sh --draft   (erst den zeigen, dann Endrender)
 #
 # Ton wie in barber-ad: Remotion gibt WAV aus, ffmpeg kodiert AAC selbst ins MP4 –
 # sonst fehlt die Edit-List und der Ton läuft ~46 ms hinter dem Bild.
@@ -17,6 +20,11 @@ if [[ "${1:-}" == "--preview" ]]; then
 	NAME=nokhchi-edit-vorschau-1080p
 	EXTRA=(--scale=1 --crf=18)
 	export CRF_OUT=20
+	shift
+elif [[ "${1:-}" == "--draft" ]]; then
+	NAME=nokhchi-edit-entwurf
+	EXTRA=(--scale=0.5 --crf=26 --jpeg-quality=80 --concurrency=4)
+	export CRF_OUT=30
 	shift
 fi
 
@@ -46,6 +54,8 @@ mux() { # $1 = Ton-WAV, $2 = Ziel
 		-movflags +faststart "$2"
 }
 mux "out/$NAME-ton.wav" "out/$NAME.mp4"
-mux public/audio/mix_zitate.wav "out/$NAME-zitate.mp4"
+for lang in de ru; do
+	[[ -f "public/audio/mix_zitate_$lang.wav" ]] && mux "public/audio/mix_zitate_$lang.wav" "out/$NAME-zitate-$lang.mp4"
+done
 rm -f "out/.$NAME-korn.mp4"
-echo "Fertig: out/$NAME.mp4 und out/$NAME-zitate.mp4"
+echo "Fertig: out/$NAME.mp4 (+ -zitate-de / -zitate-ru)"
