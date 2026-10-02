@@ -46,8 +46,10 @@ Du-Formulierungen nehmen („zum Abspeichern“, „Die Routine“).
 
 ## Serie: Magnesium-Wissen (`wissen.py`, `videos/w*.py`)
 
-Folien-Engine: jedes Video ist eine Liste von Folien (`titel`, `balken`, `zahl`, `liste`,
-`ende`) mit Quelle pro Folie. Produkt nur am Ende. Fakten mit Quelle, keine eigenen
+Version 2 (02.10.2026): jede Folge eigener Stil und ein Foto ab Frame 0 mit Soundeffekt
+(`bild.py`: Ken-Burns-Fotos, Kontur-Untertitel). Stile: 1 Foto-Pop, 2 Aqua, 3 Blaupause,
+4 Dramatisch, 5 Riff + Amtlich. Bildnachweis in `a/BILDNACHWEIS.md`. `wissen.py` (Folien-Engine
+der ersten Fassung) bleibt als einfache Variante. Produkt nur am Ende. Fakten mit Quelle, keine eigenen
 Wirkversprechen; EU-Claims nur im exakten Wortlaut.
 
 | Nr. | Thema | Quelle |
