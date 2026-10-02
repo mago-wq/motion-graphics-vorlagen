@@ -1,0 +1,24 @@
+{
+  "name": "zitat-reel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ruhiges Zitat-/Vers-Reel (9:16): Regen am nächtlichen Fenster, Arabisch + Übersetzung, gebaut mit Remotion",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "ambience": "python3 scripts/generate_rain.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/amiri": "5.3.0",
+    "@fontsource/eb-garamond": "5.3.0",
+    "@remotion/cli": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

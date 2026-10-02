@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`zitat-reel/`](zitat-reel/) | Vers/Zitat-Reel: Regen an nächtlicher Scheibe, Arabisch + Übersetzung, nahtloser Loop | 15 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
