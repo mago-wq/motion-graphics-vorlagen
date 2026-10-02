@@ -4,6 +4,7 @@
 #   out/<name>-zitate-de.mp4   Zitate deutsch
 #   out/<name>-zitate-ru.mp4   Zitate russisch (Original)
 # Endfassung 4K:            bash scripts/render.sh
+# Endfassung 1080p:         bash scripts/render.sh --hd
 # Vorschau 1080p:           bash scripts/render.sh --preview
 # Schneller Entwurf 540p:   bash scripts/render.sh --draft   (erst den zeigen, dann Endrender)
 #
@@ -20,6 +21,11 @@ if [[ "${1:-}" == "--preview" ]]; then
 	NAME=nokhchi-edit-vorschau-1080p
 	EXTRA=(--scale=1 --crf=18)
 	export CRF_OUT=20
+	shift
+elif [[ "${1:-}" == "--hd" ]]; then
+	NAME=nokhchi-edit-1080p
+	EXTRA=(--scale=1 --crf=14 --jpeg-quality=95)
+	export CRF_OUT=18
 	shift
 elif [[ "${1:-}" == "--draft" ]]; then
 	NAME=nokhchi-edit-entwurf

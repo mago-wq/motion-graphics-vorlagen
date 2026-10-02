@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -42,6 +43,15 @@ QUOTES = {
 }
 # Etwas schneller sprechen, wo die deutsche Fassung länger ist als ihr Abschnitt (Tonhöhe bleibt)
 QUOTE_TEMPO = {("solzh", "de"): 1.07, ("grachev", "de"): 1.05}
+# Stimmlage je Sprache – nicht nur heruntergestimmt, sondern als andere, tiefere Stimme
+# (Rückmeldung: −3 Halbtöne bei gleicher Klangfarbe klangen bloß „runtergedreht“, deutsch zu tief).
+# Praat „Change gender“ verschiebt getrennt: Grundton (Median in Hz), Formanten = Klangfarbe
+# (< 1: größerer Resonanzraum, dunkler, voller) und Tonhöhenspanne = Satzmelodie
+# (< 1: weniger Singsang, ruhiger und bestimmter). Rohe Takes: deutsch ~125 Hz, russisch ~178 Hz.
+QUOTE_VOICE = {
+    "ru": dict(median=150, formant=0.92, range=0.80),
+    "de": dict(median=116, formant=0.93, range=0.75),
+}
 COLD_OPEN = 1.0  # Sekunden ohne Gesang am Anfang (nur Wind und Wolf)
 
 rng = np.random.default_rng(7)
@@ -599,8 +609,8 @@ def main():
     out_dir = ROOT / "public" / "audio"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Fassung 1: ohne Zitate
-    loud = master(music, total, sections, out_dir / "mix.wav")
+    # Fassung 1: ohne Zitate (--nur-zitate lässt sie unangetastet, z. B. während ein Render sie liest)
+    loud = None if "--nur-zitate" in sys.argv else master(music, total, sections, out_dir / "mix.wav")
 
     # Fassungen 2 und 3: mit gesprochenen Zitaten (russisch / deutsch) – Musik weicht unter der Sprache aus
     all_spans = {}
@@ -632,7 +642,8 @@ def main():
         hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
     )
     (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
-    print(f"mix.wav (+ mix_zitate_ru.wav, mix_zitate_de.wav): {total:.2f} s, Lautheit vorher {loud:.1f} LUFS")
+    print(f"mix.wav (+ mix_zitate_ru.wav, mix_zitate_de.wav): {total:.2f} s"
+          + (f", Lautheit vorher {loud:.1f} LUFS" if loud is not None else " (mix.wav unverändert)"))
     for k, (a, b) in sections.items():
         print(f"  {k:10s} {a:6.2f} – {b:6.2f}")
     for lang, sp in all_spans.items():
@@ -655,8 +666,16 @@ def master(mix, total, sections, dest):
     return loud
 
 
+def change_voice(y: np.ndarray, v: dict, tempo=1.0) -> np.ndarray:
+    """Grundton, Klangfarbe und Satzmelodie getrennt setzen (Praat, PSOLA – keine Verzerrung)."""
+    import parselmouth  # pip install praat-parselmouth
+    s = parselmouth.Sound(y.astype(np.float64), sampling_frequency=SR)
+    out = parselmouth.praat.call(s, "Change gender", 60, 320, v["formant"], v["median"], v["range"], 1 / tempo)
+    return out.values[0].astype(np.float32)
+
+
 def build_speech(N, T, lang):
-    """Legt die gewählten Zitat-Takes (<name>_<lang>.wav) an ihre Marken. Klang: unverzerrt, nur tiefer."""
+    """Legt die gewählten Zitat-Takes (<name>_<lang>.wav) an ihre Marken. Klang: unverzerrt, eigene Stimmlage."""
     speech = np.zeros((N, 2))
     spans = {}
     qdir = SRC / "quotes"
@@ -665,9 +684,7 @@ def build_speech(N, T, lang):
         if not f.exists():
             continue
         y = load(f).mean(axis=1).astype(np.float32)
-        # tiefer (−3 Halbtöne, Wunsch: „etwas tiefer“), Formanten erhalten – klingt nicht künstlich
-        tempo = QUOTE_TEMPO.get((name, lang), 1.0)
-        y = ffmpeg_filter(y, f"rubberband=pitch=0.841:tempo={tempo}:formant=preserved")
+        y = change_voice(y, QUOTE_VOICE[lang], QUOTE_TEMPO.get((name, lang), 1.0))
         y = butter(butter(y, "high", 75, 2), "low", 11000, 2)
         # sanfte Kompression für gleichmäßige Verständlichkeit
         e = np.sqrt(signal.lfilter([0.01], [1, -0.99], y ** 2)) + 1e-6
