@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Abnahme-Check für out/nokhchi-edit-4k.mp4.
+"""Abnahme-Check für ein fertiges Video (Standard: out/nokhchi-edit-4k.mp4).
 
-Prüft: H.264 2160×3840 (4K hochkant) @ 30 fps, Frame-Anzahl wie die Komposition,
+Prüft: H.264 im passenden Format (4K 2160×3840, 1080p 1080×1920, Entwurf 540×960) @ 30 fps,
+Frame-Anzahl wie die Komposition,
 AAC 44,1 kHz Stereo, Länge passend zur Tonspur, Spitzenpegel ≤ -0,5 dBFS und
 Synchronität der MP4-Tonspur gegenüber der verlustfreien WAV (Versatz < 5 ms).
-Aufruf: npm run check   (Exit-Code 1, wenn etwas nicht passt)
+Aufruf: npm run check [-- out/<name>.mp4]   (Exit-Code 1, wenn etwas nicht passt)
+Zitatfassungen (…-zitate-de/-ru.mp4) werden gegen public/audio/mix_zitate_<sprache>.wav geprüft.
 """
 import json
 import math
@@ -17,8 +19,11 @@ import numpy as np
 import soundfile as sf
 
 ROOT = Path(__file__).resolve().parent.parent
-VIDEO = ROOT / "out" / "nokhchi-edit-4k.mp4"
-WAV = ROOT / "out" / "nokhchi-edit-ton.wav"
+VIDEO = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / "out" / "nokhchi-edit-4k.mp4"
+_lang = VIDEO.stem.rsplit("-zitate-", 1)[1] if "-zitate-" in VIDEO.stem else None
+WAV = (ROOT / "public" / "audio" / f"mix_zitate_{_lang}.wav" if _lang
+       else VIDEO.with_name(VIDEO.stem + "-ton.wav"))
+SIZE = (2160, 3840) if "4k" in VIDEO.stem else (540, 960) if "entwurf" in VIDEO.stem else (1080, 1920)
 TL = json.loads((ROOT / "src" / "timeline.json").read_text())
 FRAMES = math.ceil(TL["duration"] * 30)
 ok = True
@@ -31,7 +36,7 @@ def report(passed, text):
 
 
 if not VIDEO.exists():
-    sys.exit("out/nokhchi-edit-4k.mp4 fehlt – erst npm run render")
+    sys.exit(f"{VIDEO.name} fehlt – erst npm run render")
 
 probe = subprocess.run(["ffprobe", "-v", "error", "-count_frames", "-show_streams", "-show_format", "-of", "json", str(VIDEO)],
                        check=True, capture_output=True, text=True).stdout
@@ -40,7 +45,7 @@ v = next(s for s in info["streams"] if s["codec_type"] == "video")
 a = next((s for s in info["streams"] if s["codec_type"] == "audio"), None)
 print("Video")
 report(v["codec_name"] == "h264", f"Codec {v['codec_name']}")
-report((v["width"], v["height"]) == (2160, 3840), f"Format {v['width']}×{v['height']}")
+report((v["width"], v["height"]) == SIZE, f"Format {v['width']}×{v['height']} (soll {SIZE[0]}×{SIZE[1]})")
 report(v["r_frame_rate"] == "30/1", f"Bildrate {v['r_frame_rate']}")
 report(int(v.get("nb_read_frames", 0)) == FRAMES, f"Frames {v.get('nb_read_frames')} (soll {FRAMES})")
 report(v["pix_fmt"] == "yuv420p", f"Pixelformat {v['pix_fmt']}")

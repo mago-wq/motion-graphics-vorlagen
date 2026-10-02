@@ -46,4 +46,14 @@ Bedienung steht in `README.md`.
 ## Prüfen
 
 `npm run typecheck`, `npm run stills` (Kontaktbogen `out/stills/_sheet.png`),
-`npm run render`, `npm run check`.
+`npm run render`, `npm run check -- out/<name>.mp4` (Standard: die 4K-Datei; Zitatfassungen
+werden gegen `public/audio/mix_zitate_<sprache>.wav` geprüft).
+
+## Zitatstimme nachjustieren (ohne neuen Bildrender)
+
+Stimmlage je Sprache steht in `QUOTE_VOICE` (`scripts/build_audio.py`): Grundton-Median in Hz,
+Formanten (Klangfarbe, < 1 = dunkler/voller) und Tonhöhenspanne (Satzmelodie) – über Praat
+„Change gender“, also getrennt verstellbar statt nur heruntergestimmt (Rückmeldung des
+Auftraggebers). Danach `python3 scripts/build_audio.py --nur-zitate` (lässt `mix.wav` und damit
+das Bild unberührt) und `SKIP_RENDER=1 bash scripts/render.sh --hd` – dauert Minuten statt
+eines Renders. Benötigt `pip install praat-parselmouth`.
