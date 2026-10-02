@@ -1,0 +1,7 @@
+node_modules/
+out/
+# Das Nasheed ist urheberrechtlich geschützt: weder die Quelle noch die daraus
+# gebaute Tonspur kommen ins Repo. Wiederherstellen: scripts/fetch_nasheed.sh, dann npm run audio.
+assets-src/nasheed/
+public/audio/
+__pycache__/

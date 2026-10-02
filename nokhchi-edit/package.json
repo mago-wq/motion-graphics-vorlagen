@@ -1,0 +1,26 @@
+{
+  "name": "nokhchi-edit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schnelles 4K-History-Edit (9:16) über tschetschenische Geschichte, geschnitten auf ein Nasheed (nur Stimme), gebaut mit Remotion",
+  "scripts": {
+    "audio": "python3 scripts/build_audio.py",
+    "cutouts": "python3 scripts/make_cutouts.py",
+    "render": "bash scripts/render.sh",
+    "stills": "bash scripts/render-stills.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "remotion": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

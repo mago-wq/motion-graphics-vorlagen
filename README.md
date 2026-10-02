@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`nokhchi-edit/`](nokhchi-edit/) | History-Edit tschetschenische Geschichte, Nasheed nur Stimme, 4K (in Arbeit) | ~58 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
