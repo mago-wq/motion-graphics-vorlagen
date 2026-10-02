@@ -65,13 +65,13 @@ function buildShots(): Shot[] {
 			<Kicker text="Land der Vorfahren · georgische Chroniken" at={10} y={Y_KICK} />
 		</>
 	));
-	add(ch[2], ch[3], <Photo src={img('koban_axes')} grade="warm" focus={[0.5, 0.5]} zoom={[1.3, 1.45]} rgbIn={6} trail />);
-	add(ch[3], ch[4], (
+	add(ch[2], ch[3], (
 		<>
-			<Photo src={img('koban_axe_klinyar')} grade="warm" zoom={[1.15, 1.3]} punch={0.2} />
-			<Kicker text="Bronzeäxte aus dem Kaukasus · 2. Jt. v. Chr." at={1} y={Y_KICK} />
+			<Photo src={img('koban_axes')} grade="warm" focus={[0.5, 0.5]} zoom={[1.3, 1.45]} rgbIn={6} trail />
+			<Kicker text="Bronzeäxte aus dem Kaukasus · 2. Jt. v. Chr." at={2} y={Y_KICK} />
 		</>
 	));
+	add(ch[3], ch[4], <Photo src={img('lake_kezenoyam')} grade="cold" zoom={[1.2, 1.32]} drift={[30, 0]} punch={0.2} />);
 	// Chant öffnet sich: Donner, Blitz, Türme
 	add(ch[4], ch[6], (
 		<>

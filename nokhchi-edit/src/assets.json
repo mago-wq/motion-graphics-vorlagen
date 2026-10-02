@@ -16,6 +16,10 @@
    "path": "img/hist/baysangur_order1861.jpg",
    "aspect": 1.1852
   },
+  "bibolt_pushkin": {
+   "path": "img/hist/bibolt_pushkin.jpg",
+   "aspect": 1.0163
+  },
   "chechen_deniker": {
    "path": "img/hist/chechen_deniker.jpg",
    "aspect": 0.664
@@ -26,7 +30,7 @@
   },
   "chechens_kennan": {
    "path": "img/hist/chechens_kennan.jpg",
-   "aspect": 0.5995
+   "aspect": 0.5996
   },
   "dudayev_1991": {
    "path": "img/hist/dudayev_1991.png",
@@ -35,6 +39,10 @@
   "dudayev_signature": {
    "path": "img/hist/dudayev_signature.png",
    "aspect": 2.5253
+  },
+  "koban_axes": {
+   "path": "img/hist/koban_axes.jpg",
+   "aspect": 0.7553
   },
   "lake_kezenoyam": {
    "path": "img/hist/lake_kezenoyam.jpg",
@@ -54,11 +62,11 @@
   },
   "sharoi_1800": {
    "path": "img/hist/sharoi_1800.jpg",
-   "aspect": 1.2152
+   "aspect": 1.2153
   },
   "shida": {
    "path": "img/hist/shida.jpg",
-   "aspect": 0.6297
+   "aspect": 0.6296
   },
   "tower_khambetar": {
    "path": "img/hist/tower_khambetar.jpg",
@@ -75,6 +83,10 @@
   "towers_ushkaloy": {
    "path": "img/hist/towers_ushkaloy.jpg",
    "aspect": 0.75
+  },
+  "valley_chinakha": {
+   "path": "img/hist/valley_chinakha.jpg",
+   "aspect": 1.7778
   },
   "war_dargo_roubaud": {
    "path": "img/hist/war_dargo_roubaud.jpg",
@@ -96,6 +108,22 @@
    "path": "img/hist/war_vedeno_horschelt.jpg",
    "aspect": 0.7143
   },
+  "zafar_battle": {
+   "path": "img/hist/zafar_battle.jpg",
+   "aspect": 0.5684
+  },
+  "zafar_before_battle": {
+   "path": "img/hist/zafar_before_battle.jpg",
+   "aspect": 0.6819
+  },
+  "zafar_kaf_mountains": {
+   "path": "img/hist/zafar_kaf_mountains.jpg",
+   "aspect": 0.7586
+  },
+  "zafar_tokhtamysh": {
+   "path": "img/hist/zafar_tokhtamysh.jpg",
+   "aspect": 0.5382
+  },
   "zelimkhan": {
    "path": "img/hist/zelimkhan.jpg",
    "aspect": 0.8312
@@ -106,9 +134,25 @@
    "path": "img/cut/baysangur.png",
    "aspect": 0.8895
   },
+  "chechen_yermakov": {
+   "path": "img/cut/chechen_yermakov.png",
+   "aspect": 0.8308
+  },
+  "dudayev_1991": {
+   "path": "img/cut/dudayev_1991.png",
+   "aspect": 0.6723
+  },
   "mansur_1787": {
    "path": "img/cut/mansur_1787.png",
    "aspect": 0.9488
+  },
+  "shida": {
+   "path": "img/cut/shida.png",
+   "aspect": 0.6296
+  },
+  "zelimkhan": {
+   "path": "img/cut/zelimkhan.png",
+   "aspect": 0.8312
   }
  }
 }

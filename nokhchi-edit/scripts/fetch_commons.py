@@ -50,7 +50,6 @@ FILES = {
     "zafar_before_battle": "\"Timur before Battle\", Folio from a Dispersed Copy of the Zafarnama (Book of Victories) of Sharaf al-din 'Ali Yazdi MET DP164663.jpg",
     # Dzurdzuketien: Bronzefunde der Koban-Kultur
     "koban_axes": "Axes Caucasus 2 mill BC GIM.jpg",
-    "koban_axe_klinyar": "Bronze axe from Klin-Yar grave 362.jpg",
 }
 
 # upload.wikimedia.org liefert nur Standard-Vorschaugrößen ohne Drosselung aus;
