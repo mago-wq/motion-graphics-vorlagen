@@ -72,7 +72,7 @@ export const SCENES: Scene[] = [
 	// „Sorgen beschwerten mein Herz“ – dunkle Magenta-Orchidee
 	{clip: '38387.mp4', from: 11.65, clipStart: 0, rate: 2.5, focusX: 50, zoom: 1.0, glow: 0.25},
 	// Wiederholung: Moschee bei Nacht
-	{clip: '4312.mp4', from: 15.7, clipStart: 1, rate: 1, focusX: 69, zoom: 1.0, glow: 0.33},
+	{clip: '4312.mp4', from: 15.7, clipStart: 1, rate: 1, focusX: 69, zoom: 1.0, glow: 0.22},
 	// Flug durch die Wolken zum Vollmond
 	{clip: '30316.mp4', from: 19.1, clipStart: 4, rate: 1, focusX: 50, zoom: 1.0, glow: 0.30},
 	// Blitze am Nachthimmel
@@ -92,6 +92,20 @@ export const STYLE = {
 	/** Textmitte (y in px bei 1920 Höhe). */
 	textY: 860,
 	textColor: '#f6f4ff',
+};
+
+/**
+ * Bildlook (Stimmung wie im Original, aber ohne Retro-Filter auf den Bildern):
+ * tieferes Schwarz, kräftigere Farben, mehr Leuchten, leichter Lila-/Magenta-Stich.
+ */
+export const GRADE = {
+	contrast: 1.18,
+	saturate: 1.45,
+	brightness: 0.9,
+	/** Faktor auf `SCENES.glow` (Leuchten um helle Bildteile). */
+	glow: 1.7,
+	/** Deckkraft des Farbstichs (soft-light), 0–1. */
+	tint: 0.35,
 };
 
 /**
@@ -149,7 +163,7 @@ export const SFX: Sfx[] = [
 	{file: 'wind.wav', at: 19.1, until: 23.0, volume: 0.6, fadeIn: 0.5, fadeOut: 0.8},
 	// Gewitter: Grollen, Regen, Donnerschlag auf den Blitz
 	{file: 'donnergrollen.wav', at: 22.7, until: 27.5, volume: 0.6, fadeIn: 0.5, fadeOut: 1.2},
-	{file: 'regen.wav', at: 22.6, until: 31.07, volume: 0.7, fadeIn: 1.0, fadeOut: 1.5},
+	{file: 'regen.wav', at: 22.6, until: 31.07, volume: 0.35, fadeIn: 1.0, fadeOut: 1.5},
 	{file: 'donnerschlag.wav', at: 24.9, until: 31.07, volume: 1.0, fadeOut: 1.0},
 	// Ende: „Sorgen beschwerten mein Herz“ noch einmal mit Herzschlag
 	{file: 'herzschlag.wav', at: 26.7, until: 31.07, volume: 0.55, fadeIn: 0.3, fadeOut: 1.0},

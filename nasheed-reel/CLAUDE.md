@@ -1,11 +1,14 @@
 # CLAUDE.md – nasheed-reel
 
-Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, gerendert mit
-`--scale=2` in 4K, 30 fps, 31 s, **mit Ton** (Nasheed + Geräusche). Bedienung in
-`README.md`.
+Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, ausgeliefert in 4K
+(2160×3840), 30 fps, 31 s, **mit Ton** (Nasheed + Geräusche). Bedienung in `README.md`.
 
 - **Immer nur eine Datei rendern: `npm run render` → `out/nasheed-reel.mp4` mit Ton.**
-  Keine stumme Zweitversion (Wunsch des Nutzers).
+  Keine stumme Zweitversion (Wunsch des Nutzers). Standard ist schnell: 1080 rendern,
+  mit Lanczos auf 4K hochrechnen (~10 min). `--echt-4k` rendert nativ (~30 min hier).
+- **Auslieferung über das Repo** (`out/nasheed-reel.mp4` ist eingecheckt), weil der
+  Chat-Upload bei ~30 MB endet. Nur in ein **privates** Repo: das Video enthält den
+  fremden Nasheed-Ton.
 - **Übersetzung auf Deutsch** (`de` in `LINES`), nicht Englisch.
 
 ## Regeln
@@ -34,7 +37,8 @@ Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, gerendert mit
 - **Retro-Look nur auf der Schrift** (`RETRO` in `config.ts`): harte rot/blaue
   `text-shadow`-Säume, weichgezeichnete Halo-Kopie, Zeilenstreifen per Maske.
   **Kein Retro-Filter auf den Bildern** – Kanalversatz + Posterize ließ sie unklar
-  wirken (Nutzer-Feedback). Bilder nur mit leichtem Bloom (`SCENES.glow` ≈ 0,3).
+  wirken (Nutzer-Feedback). Stimmung stattdessen über `GRADE` (Kontrast, Sättigung,
+  Leuchten, leichter Lila-/Magenta-Stich) – „nicht zu natürlich, aber nicht übertreiben“.
 
 ## Bildquellen in diesem Container
 

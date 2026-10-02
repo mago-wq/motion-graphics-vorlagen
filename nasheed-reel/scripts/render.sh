@@ -2,6 +2,10 @@
 # Rendert das fertige Video: out/nasheed-reel.mp4, 4K (2160×3840), mit Ton
 # (Nasheed aus public/ton/nasheed.wav + Geräusche), Lautheit -14 LUFS.
 #
+# Standard (schnell, ~10 min): Remotion rendert 1080×1920, ffmpeg rechnet mit
+# Lanczos auf 4K hoch. Die Clips sind ohnehin 720p, die Schrift ist bewusst weich.
+# --echt-4k: Remotion rendert direkt in 4K (--scale=2), ~30 min in diesem Container.
+#
 # Ton wie in barber-ad/scripts/render.sh: Remotion gibt ihn als WAV aus, ffmpeg
 # kodiert ihn direkt ins MP4. Sonst fehlt die Edit-List und der Ton läuft 46 ms nach.
 set -euo pipefail
@@ -13,10 +17,18 @@ if [ ! -f public/ton/nasheed.wav ]; then
 	exit 1
 fi
 
+SCALE=1
+VF=(-vf "scale=2160:3840:flags=lanczos" -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p
+	-colorspace bt709 -color_primaries bt709 -color_trc bt709)
+if [ "${1:-}" = "--echt-4k" ]; then
+	SCALE=2
+	VF=(-c:v copy)
+	shift
+fi
+
 # --nur-ton: Rendern überspringen, nur Lautheit + Mux (wenn .video-ohne-ton.mp4 schon da ist)
 if [ "${1:-}" != "--nur-ton" ]; then
-# --scale=2: Komposition ist 1080×1920 gesetzt, gerendert wird in doppelter Auflösung
-npx remotion render NasheedReel out/.video-ohne-ton.mp4 --scale=2 \
+npx remotion render NasheedReel out/.video-ohne-ton.mp4 --scale=$SCALE \
 	--separate-audio-to="$PWD/out/.ton.wav" --audio-codec=pcm-16 "$@"
 fi
 
@@ -29,7 +41,7 @@ echo "Ton: $I LUFS -> Verstärkung $GAIN dB"
 
 ffmpeg -y -loglevel error \
 	-i out/.video-ohne-ton.mp4 -i out/.ton.wav \
-	-map 0:v:0 -map 1:a:0 -c:v copy \
+	-map 0:v:0 -map 1:a:0 "${VF[@]}" \
 	-af "volume=${GAIN}dB,alimiter=limit=0.75:level=false" \
 	-c:a aac -b:a 256k -ar 44100 -ac 2 \
 	-movflags +faststart out/nasheed-reel.mp4

@@ -4,8 +4,9 @@
 [@7.x2_1 / 7690661372060781832](https://www.tiktok.com/@7.x2_1/video/7690661372060781832):
 aufblühende Blumen und nächtliche, islamisch-romantische Traumbilder, darüber der
 Nasheed-Text arabisch mit deutscher Übersetzung. Die Schrift im Retro-/VHS-Look
-(Farbsaum rot/blau, weiches blaues Leuchten, Zeilenstreifen), die Bilder klar mit
-leichtem Glanz.
+(Farbsaum rot/blau, weiches blaues Leuchten, Zeilenstreifen), die Bilder klar, aber
+traumhaft abgestimmt (tiefes Schwarz, kräftige Farben, Leuchten, leichter Lila-Stich;
+`GRADE` in `src/config.ts`).
 
 **Es wird nur eine Datei gerendert: mit Ton.** Nasheed (`public/ton/nasheed.wav`,
 nicht eingecheckt) plus passende Geräusche, gemischt auf -14 LUFS.
@@ -62,7 +63,8 @@ Kashida-Dehnung „ـ“ wie im Original), Amiri (Deutsch). Der Retro-Look wird 
 npm install
 npx remotion browser ensure
 npx remotion studio      # Vorschau im Browser
-npm run render           # -> out/nasheed-reel.mp4 (4K, mit Ton)
+npm run render           # -> out/nasheed-reel.mp4 (4K, mit Ton), ~10 min
+npm run render -- --echt-4k   # nativ in 4K gerendert, ~30 min
 ```
 
 Vorher den Nasheed-Ton als `public/ton/nasheed.wav` ablegen (z. B. aus dem

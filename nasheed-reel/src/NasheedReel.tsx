@@ -14,7 +14,7 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {FPS, Line, LINES, MUSIC, RETRO, Scene, SCENES, Sfx, SFX, STYLE} from './config';
+import {FPS, GRADE, Line, LINES, MUSIC, RETRO, Scene, SCENES, Sfx, SFX, STYLE} from './config';
 import {ARABIC_FONT, fontsReady, LATIN_FONT} from './fonts';
 
 /** Überblendung zwischen Szenen (Frames). */
@@ -49,7 +49,10 @@ const SceneLayer: React.FC<{scene: Scene; isFirst: boolean; length: number}> = (
 		<AbsoluteFill style={{opacity, transform: `translateY(${scene.shiftY ?? 0}px) scale(${scale})`}}>
 			<OffthreadVideo
 				{...video}
-				style={{...fill, filter: 'contrast(1.06) saturate(1.1)'}}
+				style={{
+					...fill,
+					filter: `contrast(${GRADE.contrast}) saturate(${GRADE.saturate}) brightness(${GRADE.brightness})`,
+				}}
 			/>
 			{/* Bloom: weichgezeichnete, aufgehellte Kopie im Screen-Modus */}
 			<OffthreadVideo
@@ -58,9 +61,9 @@ const SceneLayer: React.FC<{scene: Scene; isFirst: boolean; length: number}> = (
 					...fill,
 					position: 'absolute',
 					inset: 0,
-					filter: 'blur(26px) brightness(1.35) saturate(1.3)',
+					filter: 'blur(28px) brightness(1.5) saturate(1.6)',
 					mixBlendMode: 'screen',
-					opacity: scene.glow,
+					opacity: scene.glow * GRADE.glow,
 				}}
 			/>
 		</AbsoluteFill>
@@ -342,6 +345,14 @@ export const NasheedReel: React.FC = () => {
 					);
 				})}
 			</AbsoluteFill>
+			{/* Traum-Farbstich wie im Original: Lila oben, Magenta unten */}
+			<AbsoluteFill
+				style={{
+					opacity: GRADE.tint,
+					mixBlendMode: 'soft-light',
+					background: 'linear-gradient(180deg, #5a2cff 0%, #b0207a 100%)',
+				}}
+			/>
 			<Flash />
 			<Motes />
 			<Vignette />

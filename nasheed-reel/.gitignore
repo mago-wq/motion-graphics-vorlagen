@@ -1,5 +1,6 @@
 node_modules/
-# Render-Ausgaben und Referenzmaterial nicht einchecken
-out/
+# Render-Ausgaben nicht einchecken, außer dem fertigen Video (nur in privatem Repo!)
+out/*
+!out/nasheed-reel.mp4
 # Nasheed-Ton (fremdes Material, nur lokal)
 public/ton/
