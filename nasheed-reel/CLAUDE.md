@@ -6,9 +6,11 @@ Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, ausgeliefert 
 - **Immer nur eine Datei rendern: `npm run render` → `out/nasheed-reel.mp4` mit Ton.**
   Keine stumme Zweitversion (Wunsch des Nutzers). Standard ist schnell: 1080 rendern,
   mit Lanczos auf 4K hochrechnen (~10 min). `--echt-4k` rendert nativ (~30 min hier).
-- **Auslieferung über das Repo** (`out/nasheed-reel.mp4` ist eingecheckt), weil der
-  Chat-Upload bei ~30 MB endet. Nur in ein **privates** Repo: das Video enthält den
-  fremden Nasheed-Ton.
+- **Auslieferung über ein privates Repo**, weil der Chat-Upload bei ~30 MB endet und
+  das Video den fremden Nasheed-Ton enthält. Dieses Repo ist **öffentlich** – hier
+  nie einchecken. Abgelegt im privaten `mago-wq/website` auf einem eigenen Branch
+  ohne gemeinsame Historie mit `main`, mit `vercel.json` `deploymentEnabled: false`
+  (nur mit ausdrücklicher Zustimmung des Nutzers).
 - **Übersetzung auf Deutsch** (`de` in `LINES`), nicht Englisch.
 
 ## Regeln
