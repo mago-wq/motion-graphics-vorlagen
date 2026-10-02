@@ -33,6 +33,13 @@ SRC = ROOT / "assets-src"
 SR = 44100
 BASE = 1.1825  # Tempo wie im TikTok-Sound (gemessen am Ausschnitt des Nutzers)
 SLOW = 0.80    # tiefe, langsame Fassung für 1944
+# Gesprochene Zitate (nur in der Fassung „mit Zitaten“): Name → (Marke, Versatz in s)
+QUOTES = {
+    "pushkin": ("bibolt", 0.12),
+    "baysangur": ("quote", 0.30),
+    "solzh": ("solzh", 0.15),
+    "grachev": ("grachev", 0.08),
+}
 COLD_OPEN = 1.0  # Sekunden ohne Gesang am Anfang (nur Wind und Wolf)
 
 rng = np.random.default_rng(7)
@@ -241,15 +248,16 @@ ARR = [
     Seg("abrek", 144, 152, fx=dict(lp=16000, shelf=10, drive=2.8, gain=0, verb=0.12, sub=1.0),
         marks=dict(abrek=144, zelimkhan=148)),
     # 8  1944: tief, gedämpft, weit weg
-    Seg("y1944", 152, 164, rate=(SLOW, SLOW), fx=dict(lp=(950, 700), shelf=6, drive=1.3, gain=(-10, -12), verb=(0.65, 0.7), sub=0.5),
-        marks=dict(born=152, deport=156, solzh=160)),
+    # 16 Schläge (13 s): Platz für Geburt, Deportation und das Solschenizyn-Zitat
+    Seg("y1944", 148, 164, rate=(SLOW, SLOW), fx=dict(lp=(950, 700), shelf=6, drive=1.3, gain=(-10, -12), verb=(0.65, 0.7), sub=0.5),
+        marks=dict(born=148, deport=151, solzh=154)),
     # 9  Aufstieg 1957: Band läuft an, Filter öffnet
     Seg("rise", 164, 167, rate=(SLOW * 0.75, BASE), curve=1.6, fx=dict(lp=(700, 16000), shelf=8, drive=1.3, gain=(-12, 0), verb=(0.5, 0.2), sub=0.6),
         marks=dict(return1957=164)),
     Seg("stutter2", 167, 167.25, repeats=4, fx=dict(lp=(3000, 16000), shelf=9, drive=2.4, gain=(0, 1), verb=0.2, sub=0.3)),
     # 10 FINALE – Dzhokhar Dudayev, Rückblick, NOKHCHI
     Seg("finale", 168, 183, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=(0.12, 0.15), sub=1.0),
-        marks=dict(drop2=168, dudayev=168, freedom=172, recap=176, nokhchi=180)),
+        marks=dict(drop2=168, dudayev=168, grachev=172, recap=176, nokhchi=180)),
     Seg("stutter3", 183, 183.25, repeats=4, fx=dict(lp=(16000, 2500), shelf=11, drive=3.0, gain=(0, -2), verb=(0.2, 0.5), sub=0.6)),
     # 11 Ende: letzter Schlag, Nachhall, Wolf
     Seg("end", 0, 0, gap=2.6),
@@ -566,7 +574,7 @@ def main():
     place(fx, reverse_swell(1.0), T("drop2") - 1.0, 0.8)
     place(fx, sfx("thunder_b.mp3"), T("drop2") - 0.01, 1.0)
     place(fx, sfx("stone_a.mp3"), T("drop2"), 0.85)
-    place(fx, sfx("horses_a.mp3"), T("freedom") - 0.2, 0.45)
+    place(fx, sfx("horses_a.mp3"), T("recap") + 0.3, 0.4)
     place(fx, clashes[2], T("recap"), 0.6)
     place(fx, sfx("thunder_b.mp3"), T("nokhchi"), 0.8)
     # Ende: letzter Schlag, Nachhall, Wolf
@@ -576,37 +584,87 @@ def main():
     place(fx, reverb(stretch(sfx("wolf_b.mp3"), tempo=0.5, pitch=0.95), IR_HALL)[: 3 * SR], end0 + 0.45, 0.25, pan=-0.2)
     place(fx, wind, end0 + 0.2, 0.35)
 
-    # --- Summe
-    mix = 0.9 * v + 0.34 * verb + 1.35 * stereo(perc) + 0.8 * sub + 0.85 * fx
-    mix = butter(mix, "high", 22, 2)
-    # Bus-Kompression (sanft) über RMS-Hüllkurve
-    env = np.sqrt(signal.lfilter([0.002], [1, -0.998], (mix ** 2).mean(axis=1)))
-    thr = db(-14)
-    g = np.where(env > thr, (thr / np.maximum(env, 1e-9)) ** 0.45, 1.0)
-    mix *= g[:, None]
-    # Lautheit wie üblich bei Edits: kräftig, aber mit Luft für die Schläge
-    meter = pyloudnorm.Meter(SR)
-    loud = meter.integrated_loudness(mix[: int(sections["end"][0] * SR)])
-    mix *= db(-9.5 - loud)
-    mix = limiter(mix, db(-1.0))
+    # --- Summe (ohne Mastering)
+    music = 0.9 * v + 0.34 * verb + 1.35 * stereo(perc) + 0.8 * sub + 0.85 * fx
     total = sections["end"][1] + 0.4
-    mix = fade(mix[: int(total * SR)], 0.002, 0.25)
-    out = ROOT / "public" / "audio" / "mix.wav"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    sf.write(out, mix.astype(np.float32), SR, subtype="PCM_24")
+    out_dir = ROOT / "public" / "audio"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Fassung 1: ohne Zitate
+    loud = master(music, total, sections, out_dir / "mix.wav")
+
+    # Fassung 2: mit gesprochenen Zitaten – Musik weicht unter der Sprache aus
+    speech, spans = build_speech(N, T)
+    if spans:
+        env = np.zeros(N)
+        for a_, b_ in spans.values():
+            env[int(a_ * SR): int(b_ * SR)] = 1.0
+        # weich ein- und ausblenden (80 ms an, 300 ms ab)
+        att, rel = np.exp(-1 / (0.08 * SR)), np.exp(-1 / (0.30 * SR))
+        sm = np.zeros(N)
+        acc = 0.0
+        for i in range(N):  # einmalig, ~2,6 Mio. Samples
+            k = att if env[i] > acc else rel
+            acc = k * acc + (1 - k) * env[i]
+            sm[i] = acc
+        ducked = music * (1 - 0.62 * sm)[:, None]  # ~ -8,4 dB unter der Stimme
+        master(ducked + 1.05 * speech, total, sections, out_dir / "mix_zitate.wav")
 
     tl = dict(
         fps=30, duration=round(total, 4), beatLen=round(beat_out, 5), base=BASE,
         sections={k: [round(a, 4), round(b, 4)] for k, (a, b) in sections.items()},
-        marks=marks,
+        marks={k: float(x) for k, x in marks.items()},
+        quotes={k: [round(a_, 4), round(b_, 4)] for k, (a_, b_) in spans.items()},
         beats=beats,
         hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
     )
     (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
-    print(f"mix.wav: {total:.2f} s, Lautheit vorher {loud:.1f} LUFS, Spitze {20*np.log10(np.abs(mix).max()):.1f} dBFS")
+    print(f"mix.wav (+ mix_zitate.wav): {total:.2f} s, Lautheit vorher {loud:.1f} LUFS")
     for k, (a, b) in sections.items():
         print(f"  {k:10s} {a:6.2f} – {b:6.2f}")
-    print("  Marken:", {k: round(x, 2) for k, x in marks.items()})
+    print("  Zitate:", {k: [round(x, 2) for x in v] for k, v in spans.items()})
+
+
+def master(mix, total, sections, dest):
+    """Bus-Kompression, Lautheit −9,5 LUFS, Limiter −1 dBFS, Ausblendung, schreiben."""
+    mix = butter(mix, "high", 22, 2)
+    env = np.sqrt(signal.lfilter([0.002], [1, -0.998], (mix ** 2).mean(axis=1)))
+    thr = db(-14)
+    g = np.where(env > thr, (thr / np.maximum(env, 1e-9)) ** 0.45, 1.0)
+    mix = mix * g[:, None]
+    meter = pyloudnorm.Meter(SR)
+    loud = meter.integrated_loudness(mix[: int(sections["end"][0] * SR)])
+    mix = mix * db(-9.5 - loud)
+    mix = limiter(mix, db(-1.0))
+    mix = fade(mix[: int(total * SR)], 0.002, 0.25)
+    sf.write(dest, mix.astype(np.float32), SR, subtype="PCM_24")
+    return loud
+
+
+def build_speech(N, T):
+    """Legt die gewählten Zitat-Takes an ihre Marken. Klang: unverzerrt, nur etwas tiefer."""
+    speech = np.zeros((N, 2))
+    spans = {}
+    qdir = SRC / "quotes"
+    for name, (mark_name, offset) in QUOTES.items():
+        f = qdir / f"{name}.wav"
+        if not f.exists():
+            continue
+        y = load(f).mean(axis=1).astype(np.float32)
+        # etwas tiefer (−1,5 Halbtöne), Formanten erhalten – klingt dadurch nicht künstlich
+        y = ffmpeg_filter(y, "rubberband=pitch=0.917:formant=preserved")
+        y = butter(butter(y, "high", 75, 2), "low", 11000, 2)
+        # sanfte Kompression für gleichmäßige Verständlichkeit
+        e = np.sqrt(signal.lfilter([0.01], [1, -0.99], y ** 2)) + 1e-6
+        y = y * np.where(e > 0.08, (0.08 / e) ** 0.35, 1.0)
+        y = y / (np.abs(y).max() + 1e-9) * 0.8
+        dry = stereo(y)
+        wet = reverb(y, IR_ROOM)[: len(y) + int(0.6 * SR)]
+        t0 = T(mark_name) + offset
+        place(speech, dry, t0, 1.0)
+        place(speech, wet, t0, 0.18)
+        spans[name] = (t0, t0 + len(y) / SR)
+    return speech, spans
 
 
 if __name__ == "__main__":

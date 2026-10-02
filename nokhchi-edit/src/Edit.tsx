@@ -200,8 +200,8 @@ function buildShots(): Shot[] {
 		<>
 			<Photo src={img('baysangur_churt')} grade="cold" focus={[0.5, 0.4]} zoom={[1.15, 1.32]} punch={0.06} />
 			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.75) 75%)'}} />
-			<Quote at={4} y={1040} size={64} wordsPerSec={5} lines={['„Redet mit ihnen –', 'sie hören euch besser', 'als ich.“']}
-				source="Baysangur, als man ihm die Kapitulation anbot – er zeigte auf die Gräber" />
+			<Quote at={4} y={1000} size={60} wordsPerSec={6} lines={['„Redet mit ihnen', 'über eure Sache –', 'sie hören euch eher als ich.“']}
+				source="Baysangur zu den Gesandten, die ihm die Kapitulation anboten – er zeigte auf die Gräber" />
 		</>
 	));
 
@@ -228,8 +228,8 @@ function buildShots(): Shot[] {
 
 	// ------------------------------------------------------------------ 5 1944 (tief, gedämpft, Schnee)
 	const born = mark('born');
-	const deport = born + 88;
-	const solzh = born + 172;
+	const deport = mark('deport');
+	const solzh = mark('solzh');
 	add(y44.from, y44.to, <Photo src={img('valley_chinakha')} grade="cold" zoom={[1.3, 1.45]} opacity={0.22} punch={0} blur={2} />);
 	add(born, deport, (
 		<>
@@ -246,8 +246,8 @@ function buildShots(): Shot[] {
 		</>
 	));
 	add(solzh, y44.to, (
-		<Quote at={2} y={920} size={58} wordsPerSec={7}
-			lines={['„Es gab eine Nation,', 'die sich der Psychologie', 'der Unterwerfung nicht ergab …', 'Das waren die Tschetschenen.“']}
+		<Quote at={2} y={880} size={54} wordsPerSec={5}
+			lines={['„Aber es gab eine Nation,', 'die der Psychologie der Unterwerfung', 'überhaupt nicht erlag – nicht Einzelne,', 'nicht Aufrührer, sondern die ganze Nation.', 'Das waren die Tschetschenen.“']}
 			source="Alexander Solschenizyn · Der Archipel GULAG" />
 	));
 	// 1957: Rückkehr – Band läuft an, Bild wird hell
@@ -269,27 +269,34 @@ function buildShots(): Shot[] {
 		<>
 			<PopOut src={img('dudayev_1991')} cut={cutout('dudayev_1991')} noFrame img={place('dudayev_1991', 0.62, 0.33, 560, 760, 1500)} behind="DUDAYEV" behindY={560} behindSize={300} grade="bw" bgDim={0.7} />
 			<Kicker text="Dzhokhar Dudayev · 1944–1996" at={4} y={1450} />
+			<SignatureWipe src={img('dudayev_signature')} at={12} />
 		</>
 	));
 	add(fin[2], fin[4], (
 		<>
 			<PopOut src={img('dudayev_1991')} cut={cutout('dudayev_1991')} img={place('dudayev_1991', 0.62, 0.33, 560, 640, 1250)} frameRect={{x: 150, y: 600, w: 780, h: 780}} grade="bw" tilt={-2.5} />
-			<Kicker text="Generalmajor · 1991 Präsident" at={4} y={1450} />
+			<Slam text="къоман турпал" cyr at={0} y={1450} size={120} />
+			<Kicker text="„Held des Volkes“ – aus dem Nasheed" at={6} y={300} color={C.bone} />
 		</>
 	));
-	add(fin[4], fin[6], (
+	// Gratschow 1994: die Ansage – darauf antwortet 1996 und der Rückblick
+	add(fin[4], fin[8], (
 		<>
-			<Photo src={img('mountains_kezenoyam')} grade="warm" zoom={[1.2, 1.32]} punch={0.25} rgbIn={10} trail />
-			<Slam text="маршонан некъ" cyr at={0} y={880} size={150} />
-			<Kicker text="„der Weg der Freiheit“ – aus dem Nasheed" at={6} y={1020} color={C.bone} />
-			<SignatureWipe src={img('dudayev_signature')} at={10} />
+			<Photo src={img('valley_chinakha')} grade="blood" zoom={[1.3, 1.4]} punch={0.2} opacity={0.35} blur={4} />
+			<Kicker text="Dezember 1994" at={0} y={560} color={C.red} line={false} />
+			<Quote at={2} y={760} size={40} wordsPerSec={5.5} color={C.boneDim}
+				lines={['„Грозный можно взять одним', 'парашютно-десантным полком за два часа.“']} />
+			<Quote at={6} y={1010} size={58} wordsPerSec={5.5}
+				lines={['„Grosny nehmen wir mit einem', 'Fallschirmjäger-Regiment', 'in zwei Stunden.“']}
+				source="Pawel Gratschow · russ. Verteidigungsminister · sinngemäß" />
 		</>
 	));
-	add(fin[6], fin[8], (
+	// August 1996: Chassawjurt – die Armee zieht ab
+	add(fin[8], fin[9], (
 		<>
-			<Photo src={img('towers_ushkaloy')} grade="warm" focus={[0.5, 0.4]} zoom={[1.15, 1.3]} punch={0.25} rgbIn={10} />
-			<Slam text="къоман турпал" cyr at={0} y={880} size={150} />
-			<Kicker text="„Held des Volkes“ – aus dem Nasheed" at={6} y={1020} color={C.bone} />
+			<Photo src={img('towers_ushkaloy')} grade="blood" zoom={[1.2, 1.3]} punch={0.35} trail rgbIn={14} />
+			<Slam text="1996" at={0} y={860} size={300} />
+			<Kicker text="Chassawjurt · die russische Armee zieht ab" at={3} y={1060} color={C.bone} />
 		</>
 	));
 	// Rückblick: alle Helden im Halbtakt
@@ -298,8 +305,8 @@ function buildShots(): Shot[] {
 		img('war_roubaud_scene'), img('baysangur'), img('zelimkhan'), img('dudayev_1991'),
 	];
 	recap.forEach((src, i) => {
-		const a = fin[8] + Math.round((i * (fin[12] - fin[8])) / recap.length);
-		const b = fin[8] + Math.round(((i + 1) * (fin[12] - fin[8])) / recap.length);
+		const a = fin[9] + Math.round((i * (fin[12] - fin[9])) / recap.length);
+		const b = fin[9] + Math.round(((i + 1) * (fin[12] - fin[9])) / recap.length);
 		add(a, b, <Photo src={src} grade={i % 2 ? 'bw' : 'warm'} focus={[0.5, 0.3]} zoom={[1.35, 1.45]} punch={0.3} rgbIn={12} trail={i % 3 === 0} />);
 	});
 	add(fin[12], st3.from, (
@@ -363,7 +370,8 @@ function EndCard() {
 				<Slam text="МАРШО" cyr at={10} y={880} size={300} echo={false} />
 			</div>
 			<Kicker text="Freiheit" at={24} y={1060} color={C.bone} />
-			<Kicker text="„Marsha woghiyla“ – Komm in Freiheit · der Gruß der Tschetschenen" at={36} y={1180} size={22} line={false} />
+			<Kicker text="„маршонан некъ“ – der Weg der Freiheit" at={34} y={1170} size={26} line={false} />
+			<Kicker text="„Marsha woghiyla“ – Komm in Freiheit · der Gruß der Tschetschenen" at={44} y={1240} size={22} line={false} />
 		</AbsoluteFill>
 	);
 }
