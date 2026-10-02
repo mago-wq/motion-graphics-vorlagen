@@ -1,3 +1,5 @@
 node_modules/
 # Render-Ausgaben und Referenzmaterial nicht einchecken
 out/
+# Nasheed-Ton (fremdes Material, nur lokal)
+public/ton/

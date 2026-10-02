@@ -1,7 +1,12 @@
 # CLAUDE.md – nasheed-reel
 
-Remotion-Projekt (TypeScript), Lyric-Reel 1080×1920, 30 fps, 31 s, **ohne Ton** (die
-Musik kommt in TikTok dazu). Bedienung in `README.md`.
+Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, gerendert mit
+`--scale=2` in 4K, 30 fps, 31 s, **mit Ton** (Nasheed + Geräusche). Bedienung in
+`README.md`.
+
+- **Immer nur eine Datei rendern: `npm run render` → `out/nasheed-reel.mp4` mit Ton.**
+  Keine stumme Zweitversion (Wunsch des Nutzers).
+- **Übersetzung auf Deutsch** (`de` in `LINES`), nicht Englisch.
 
 ## Regeln
 
@@ -11,8 +16,10 @@ Musik kommt in TikTok dazu). Bedienung in `README.md`.
   Zeiten neu ablesen: Referenz mit `yt-dlp --impersonate chrome` laden (braucht
   `curl_cffi`), dann Textbereich mit ffmpeg in 0,25-s-Schritten kacheln
   (`fps=4,crop=…,drawtext=text='%{pts\:hms}',tile=6x21`).
-- **Ton nie einchecken.** Der Referenzton ist fremdes Material und dient nur der
-  Vorschau (`scripts/preview-with-audio.sh`, Ausgabe in `out/`, gitignored).
+- **Nasheed-Ton nie einchecken** (`public/ton/`, gitignored, fremdes Material).
+  Geräusche in `public/sfx/` sind Mixkit (frei) und eingecheckt, auf -31 LUFS
+  angeglichen; Mischung wird in `scripts/render.sh` auf -14 LUFS gehoben.
+- **Geräusche ohne Instrumente/Klangspiele** (Nasheeds sind oft bewusst ohne).
 - **Arabisch:** Wörter in Lesereihenfolge im Array, Container `dir="rtl"`. Wort für
   Wort einblenden (rechts beginnend), Englisch läuft parallel von links ein. Jede
   Zeile bleibt einzeilig: `fitText` verkleinert auf `STYLE.textWidth`, gemessen erst
@@ -24,9 +31,10 @@ Musik kommt in TikTok dazu). Bedienung in `README.md`.
   „your rise“ wie in der Referenz. Schreibung mit ة (حسافة, بليلة).
 - **Kein CSS-`filter` auf fertigen Wort-Spans** (nur während der Einblendung): Filter
   können überhängende Glyphen am Elementrand beschneiden.
-- **Retro-Look** nur über `RETRO` in `config.ts`: SVG-Filter `#retro` (Kanalversatz +
-  Posterize) auf den Szenen, harte rot/blaue `text-shadow`-Säume plus weichgezeichnete
-  Halo-Kopie der Schrift, Scanlines über allem.
+- **Retro-Look nur auf der Schrift** (`RETRO` in `config.ts`): harte rot/blaue
+  `text-shadow`-Säume, weichgezeichnete Halo-Kopie, Zeilenstreifen per Maske.
+  **Kein Retro-Filter auf den Bildern** – Kanalversatz + Posterize ließ sie unklar
+  wirken (Nutzer-Feedback). Bilder nur mit leichtem Bloom (`SCENES.glow` ≈ 0,3).
 
 ## Bildquellen in diesem Container
 

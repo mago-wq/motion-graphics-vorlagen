@@ -2,6 +2,7 @@ import {fitText} from '@remotion/layout-utils';
 import React, {useEffect, useState} from 'react';
 import {
 	AbsoluteFill,
+	Audio,
 	continueRender,
 	delayRender,
 	Easing,
@@ -13,7 +14,7 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {FPS, Line, LINES, RETRO, Scene, SCENES, STYLE} from './config';
+import {FPS, Line, LINES, MUSIC, RETRO, Scene, SCENES, Sfx, SFX, STYLE} from './config';
 import {ARABIC_FONT, fontsReady, LATIN_FONT} from './fonts';
 
 /** Überblendung zwischen Szenen (Frames). */
@@ -48,7 +49,7 @@ const SceneLayer: React.FC<{scene: Scene; isFirst: boolean; length: number}> = (
 		<AbsoluteFill style={{opacity, transform: `translateY(${scene.shiftY ?? 0}px) scale(${scale})`}}>
 			<OffthreadVideo
 				{...video}
-				style={{...fill, filter: 'contrast(1.12) saturate(1.18) brightness(0.92)'}}
+				style={{...fill, filter: 'contrast(1.06) saturate(1.1)'}}
 			/>
 			{/* Bloom: weichgezeichnete, aufgehellte Kopie im Screen-Modus */}
 			<OffthreadVideo
@@ -124,7 +125,7 @@ const Motes: React.FC = () => {
 const Grain: React.FC = () => {
 	const frame = useCurrentFrame();
 	return (
-		<AbsoluteFill style={{opacity: 0.09, mixBlendMode: 'overlay'}}>
+		<AbsoluteFill style={{opacity: 0.05, mixBlendMode: 'overlay'}}>
 			<svg width="100%" height="100%">
 				<filter id="g">
 					<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={frame % 24} />
@@ -140,51 +141,6 @@ const Vignette: React.FC = () => (
 		style={{
 			background:
 				'radial-gradient(ellipse 75% 60% at 50% 45%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 78%, rgba(0,0,0,0.92) 100%)',
-		}}
-	/>
-);
-
-// ---------- Retro (VHS) ----------
-
-/**
- * Bildfilter wie im Original: Farbkanäle gegeneinander versetzt (rot nach links,
- * blau nach rechts unten) und leichte Farbstufen (Posterize).
- */
-const RetroDefs: React.FC = () => {
-	const steps = (n: number) =>
-		new Array(n)
-			.fill(0)
-			.map((_, i) => (i / (n - 1)).toFixed(3))
-			.join(' ');
-	return (
-		<svg style={{position: 'absolute', width: 0, height: 0}}>
-			<defs>
-				<filter id="retro" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
-					<feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
-					<feOffset in="r" dx={-RETRO.imageSplit} dy={0} result="r2" />
-					<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g" />
-					<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b" />
-					<feOffset in="b" dx={RETRO.imageSplit} dy={RETRO.imageSplit * 0.4} result="b2" />
-					<feBlend in="r2" in2="g" mode="screen" result="rg" />
-					<feBlend in="rg" in2="b2" mode="screen" result="rgb" />
-					<feComponentTransfer in="rgb">
-						<feFuncR type="discrete" tableValues={steps(RETRO.levels)} />
-						<feFuncG type="discrete" tableValues={steps(RETRO.levels)} />
-						<feFuncB type="discrete" tableValues={steps(RETRO.levels)} />
-					</feComponentTransfer>
-				</filter>
-			</defs>
-		</svg>
-	);
-};
-
-/** Zeilenraster über allem, auch über der Schrift (die gestreiften Buchstaben im Original). */
-const Scanlines: React.FC = () => (
-	<AbsoluteFill
-		style={{
-			opacity: RETRO.scanlines,
-			mixBlendMode: 'multiply',
-			background: 'repeating-linear-gradient(to bottom, #000 0px, #000 2px, #fff 2px, #fff 6px)',
 		}}
 	/>
 );
@@ -206,7 +162,7 @@ const LyricText: React.FC<{line: Line; halo?: boolean}> = ({line, halo}) => {
 	const frame = useCurrentFrame();
 	const t = frame / FPS;
 	const first = line.words[0];
-	// Englisch schreibt sich von links ein, fertig kurz nach dem letzten arabischen Wort
+	// Deutsch schreibt sich von links ein, fertig kurz nach dem letzten arabischen Wort
 	const enEnd = line.words[line.words.length - 1] + 0.45;
 	const enP = interpolate(t, [first, enEnd], [0, 118], {...clamp, easing: Easing.out(Easing.quad)});
 	const color = halo ? 'rgb(150,185,255)' : STYLE.textColor;
@@ -219,6 +175,10 @@ const LyricText: React.FC<{line: Line; halo?: boolean}> = ({line, halo}) => {
 			fontFamily: ARABIC_FONT,
 			fontWeight: 700,
 		}).fontSize,
+	);
+	const subSize = Math.min(
+		STYLE.subSize,
+		fitText({text: line.de, withinWidth: STYLE.subWidth, fontFamily: LATIN_FONT}).fontSize,
 	);
 
 	return (
@@ -273,7 +233,8 @@ const LyricText: React.FC<{line: Line; halo?: boolean}> = ({line, halo}) => {
 			<div
 				style={{
 					fontFamily: LATIN_FONT,
-					fontSize: STYLE.englishSize,
+					fontSize: subSize,
+					whiteSpace: 'nowrap',
 					lineHeight: 1.25,
 					marginTop: 12,
 					color,
@@ -283,11 +244,13 @@ const LyricText: React.FC<{line: Line; halo?: boolean}> = ({line, halo}) => {
 					maskImage: `linear-gradient(to right, black ${enP - 18}%, transparent ${enP}%)`,
 				}}
 			>
-				{line.en}
+				{line.de}
 			</div>
 		</div>
 	);
 };
+
+const scanMask = `repeating-linear-gradient(to bottom, rgba(0,0,0,${1 - RETRO.textScanlines}) 0px, rgba(0,0,0,${1 - RETRO.textScanlines}) 2px, #000 2px, #000 6px)`;
 
 const LyricLine: React.FC<{line: Line}> = ({line}) => {
 	const frame = useCurrentFrame();
@@ -313,7 +276,14 @@ const LyricLine: React.FC<{line: Line}> = ({line}) => {
 			>
 				<LyricText line={line} halo />
 			</AbsoluteFill>
-			<AbsoluteFill style={{filter: `blur(${RETRO.textSoftness + outBlur}px)`}}>
+			<AbsoluteFill
+				style={{
+					filter: `blur(${RETRO.textSoftness + outBlur}px)`,
+					// Zeilenstreifen nur in der Schrift, nicht im Bild
+					WebkitMaskImage: scanMask,
+					maskImage: scanMask,
+				}}
+			>
 				<LyricText line={line} />
 			</AbsoluteFill>
 		</AbsoluteFill>
@@ -329,6 +299,23 @@ const TextShade: React.FC = () => (
 	/>
 );
 
+// ---------- Ton ----------
+
+const SfxTrack: React.FC<{sfx: Sfx}> = ({sfx}) => {
+	const len = (sfx.until - sfx.at) * FPS;
+	const fi = (sfx.fadeIn ?? 0) * FPS;
+	const fo = (sfx.fadeOut ?? 0.15) * FPS;
+	return (
+		<Audio
+			src={staticFile(`sfx/${sfx.file}`)}
+			volume={(f) =>
+				sfx.volume *
+				Math.min(fi > 0 ? Math.min(1, f / fi) : 1, Math.max(0, Math.min(1, (len - f) / fo)))
+			}
+		/>
+	);
+};
+
 export const NasheedReel: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {durationInFrames} = useVideoConfig();
@@ -343,8 +330,7 @@ export const NasheedReel: React.FC = () => {
 	}, [gate]);
 	return (
 		<AbsoluteFill style={{backgroundColor: '#000'}}>
-			<RetroDefs />
-			<AbsoluteFill style={{filter: 'url(#retro)'}}>
+			<AbsoluteFill>
 				{SCENES.map((s, i) => {
 					const start = Math.max(0, Math.round(s.from * FPS) - (i === 0 ? 0 : XF / 2));
 					const next = SCENES[i + 1];
@@ -365,8 +351,19 @@ export const NasheedReel: React.FC = () => {
 				const to = Math.round((l.out + 0.45) * FPS);
 				return fontsOk && frame >= from && frame < to ? <LyricLine key={i} line={l} /> : null;
 			})}
-			<Scanlines />
 			<Grain />
+			<Audio src={staticFile(MUSIC.file)} volume={MUSIC.volume} />
+			{SFX.map((x, i) => (
+				<Sequence
+					key={`sfx${i}`}
+					from={Math.round(x.at * FPS)}
+					durationInFrames={Math.round((x.until - x.at) * FPS)}
+					name={`SFX ${x.file}`}
+					layout="none"
+				>
+					<SfxTrack sfx={x} />
+				</Sequence>
+			))}
 		</AbsoluteFill>
 	);
 };

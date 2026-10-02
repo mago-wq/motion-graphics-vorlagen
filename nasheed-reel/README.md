@@ -1,24 +1,26 @@
 # nasheed-reel – „Ya Hasafa“ Lyric-Reel (Prototyp)
 
-31-s-Hochkantvideo (1080×1920, 30 fps) im Stil des Referenz-TikToks
+31-s-Hochkantvideo in 4K (2160×3840, 30 fps) im Stil des Referenz-TikToks
 [@7.x2_1 / 7690661372060781832](https://www.tiktok.com/@7.x2_1/video/7690661372060781832):
 aufblühende Blumen und nächtliche, islamisch-romantische Traumbilder, darüber der
-Nasheed-Text arabisch mit englischer Übersetzung, im Retro-/VHS-Look (Farbsaum
-rot/blau, weiches blaues Leuchten, Zeilenraster, Farbstufen).
+Nasheed-Text arabisch mit deutscher Übersetzung. Die Schrift im Retro-/VHS-Look
+(Farbsaum rot/blau, weiches blaues Leuchten, Zeilenstreifen), die Bilder klar mit
+leichtem Glanz.
 
-**Das Video hat keinen Ton.** Die Musik („Ya Hasafa“) wird in TikTok hinzugefügt.
+**Es wird nur eine Datei gerendert: mit Ton.** Nasheed (`public/ton/nasheed.wav`,
+nicht eingecheckt) plus passende Geräusche, gemischt auf -14 LUFS.
 
 ## Text und Timing
 
 Zeitpunkte aus dem Referenzvideo abgelesen, stehen in `src/config.ts` (`LINES`):
 
-| Zeit | Arabisch | Englisch |
+| Zeit | Arabisch | Deutsch |
 |---|---|---|
-| 0,75 s | يا حسافة! | Oh, what a pity! |
-| 2,5 s | وين قولك؟ | Where is your promise? |
-| 4,35 s | أرفعك فوق النجوم | “I’ll raise you above the stars.” |
-| 8,2 s | راحت أحلامي بليلة | My dreams vanished in a single night. |
-| 11,9 s | وأثقلت قلبي هموم | And worries weighed down my heart. |
+| 0,75 s | يا حسافة! | Ach, wie schade! |
+| 2,5 s | وين قولك؟ | Wo ist dein Versprechen? |
+| 4,35 s | أرفعك فوق النجوم | „Ich erhebe dich über die Sterne.“ |
+| 8,2 s | راحت أحلامي بليلة | Meine Träume vergingen in einer Nacht. |
+| 11,9 s | وأثقلت قلبي هموم | Und Sorgen beschwerten mein Herz. |
 | 15,8 s – 30,6 s | dieselben fünf Zeilen noch einmal | |
 
 Das Nasheed heißt „يا حسافة وين قولك“. Zeile 2 und 3 gehören zusammen: „Wo ist dein
@@ -26,10 +28,13 @@ Wort: ‚Ich erhebe dich über die Sterne‘?“ Deshalb steht Zeile 3 in Anfüh
 Das Referenzvideo übersetzt „قولك“ falsch mit „your rise“ (der Ersteller schreibt selbst
 „إن شاء الله الترجمه صح“, also „hoffentlich stimmt die Übersetzung“).
 
-**Synchron bleibt es nur mit demselben Tonausschnitt.** Am sichersten in TikTok im
-Referenzvideo auf den Sound tippen („Original-Sound“) und „Diesen Sound verwenden“,
-dann beginnt der Gesang an derselben Stelle. Bei einer anderen Version von
-„Ya Hasafa“ alle Zeiten in `LINES` und `SCENES` um den Versatz verschieben.
+## Geräusche
+
+Mixkit-Soundeffekte (freie Lizenz) in `public/sfx/`, auf -31 LUFS angeglichen
+(= Pegel des Nasheeds), Einsätze in `src/config.ts` (`SFX`): Wind zu Blüten und
+Wolken, Luftzug bei Szenenwechseln, Herzschlag zu „Sorgen beschwerten mein Herz“,
+Grillen bei der Moschee, Gewitter mit Regen und einem Donnerschlag genau auf dem
+stärksten Blitz (25,66 s). Bewusst keine Instrumente oder Klangspiele.
 
 ## Bilder
 
@@ -48,7 +53,7 @@ kommerziell nutzbar, ohne Namensnennung), liegen in `public/clips/`:
 | 26,6–31 s | 17835 | Helle Orchidee öffnet sich |
 
 Schriften (SIL OFL, in `public/fonts/`): Scheherazade New Bold (Arabisch, mit
-Kashida-Dehnung „ـ“ wie im Original), Amiri (Englisch). Der Retro-Look wird in
+Kashida-Dehnung „ـ“ wie im Original), Amiri (Deutsch). Der Retro-Look wird in
 `src/config.ts` unter `RETRO` eingestellt.
 
 ## Bedienung
@@ -56,9 +61,12 @@ Kashida-Dehnung „ـ“ wie im Original), Amiri (Englisch). Der Retro-Look wird
 ```bash
 npm install
 npx remotion browser ensure
-npx remotion studio                 # Vorschau im Browser
-npx remotion render NasheedReel out/nasheed-reel-stumm.mp4 --muted
+npx remotion studio      # Vorschau im Browser
+npm run render           # -> out/nasheed-reel.mp4 (4K, mit Ton)
 ```
 
-Vorschau mit Ton zum Prüfen der Synchronität (Ton aus dem Referenzvideo, nur lokal,
-nicht hochladen): `bash scripts/preview-with-audio.sh <ton.wav>`.
+Vorher den Nasheed-Ton als `public/ton/nasheed.wav` ablegen (z. B. aus dem
+Referenz-TikTok mit `yt-dlp` laden und mit ffmpeg nach WAV wandeln).
+
+Die Clips sind 720p (Mixkit ohne Login); das 4K-Rendering macht Schrift, Leuchten
+und Lichtpunkte gestochen scharf, die Filmaufnahmen selbst bleiben hochskaliert.
