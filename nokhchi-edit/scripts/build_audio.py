@@ -36,9 +36,9 @@ SLOW = 0.80    # tiefe, langsame Fassung für 1944
 # Gesprochene Zitate (nur in der Fassung „mit Zitaten“): Name → (Marke, Versatz in s)
 QUOTES = {
     "pushkin": ("bibolt", 0.12),
-    "baysangur": ("quote", 0.30),
+    "baysangur": ("quote", -0.45),  # setzt schon im letzten Bild vor dem Grab ein (J-Schnitt)
     "solzh": ("solzh", 0.15),
-    "grachev": ("grachev", 0.08),
+    "grachev": ("grachev", 0.03),
 }
 COLD_OPEN = 1.0  # Sekunden ohne Gesang am Anfang (nur Wind und Wolf)
 
@@ -242,7 +242,8 @@ ARR = [
     Seg("drop1", 128, 140, fx=dict(lp=16000, shelf=10, drive=2.8, gain=0, verb=0.12, sub=1.0),
         marks=dict(drop1=128, arm=132, eye=134, leg=136, fought=137)),
     # 6  Tief und langsam: Zitat am Grab
-    Seg("deep", 140, 144, rate=(0.86, 0.86), fx=dict(lp=5000, shelf=11, drive=2.4, gain=-1, verb=(0.35, 0.45), sub=1.0),
+    # sehr tief (≈ eine Oktave unter dem TikTok-Tempo) – Platz für Baysangurs Worte
+    Seg("deep", 140, 144, rate=(0.62, 0.62), fx=dict(lp=4500, shelf=11, drive=2.2, gain=-1, verb=(0.35, 0.45), sub=1.0),
         marks=dict(quote=140)),
     # 7  Abreken / Zelimkhan
     Seg("abrek", 144, 152, fx=dict(lp=16000, shelf=10, drive=2.8, gain=0, verb=0.12, sub=1.0),
@@ -255,9 +256,15 @@ ARR = [
     Seg("rise", 164, 167, rate=(SLOW * 0.75, BASE), curve=1.6, fx=dict(lp=(700, 16000), shelf=8, drive=1.3, gain=(-12, 0), verb=(0.5, 0.2), sub=0.6),
         marks=dict(return1957=164)),
     Seg("stutter2", 167, 167.25, repeats=4, fx=dict(lp=(3000, 16000), shelf=9, drive=2.4, gain=(0, 1), verb=0.2, sub=0.3)),
-    # 10 FINALE – Dzhokhar Dudayev, Rückblick, NOKHCHI
-    Seg("finale", 168, 183, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=(0.12, 0.15), sub=1.0),
-        marks=dict(drop2=168, dudayev=168, grachev=172, recap=176, nokhchi=180)),
+    # 10 FINALE – Dzhokhar Dudayev
+    Seg("finale", 168, 172, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=0.12, sub=1.0),
+        marks=dict(drop2=168, dudayev=168)),
+    # Breakdown: Gratschows Ansage 1994 – tief, langsam, dunkel
+    Seg("grachev", 172, 176, rate=(0.62, 0.62), fx=dict(lp=3800, shelf=11, drive=2.0, gain=-3, verb=(0.4, 0.5), sub=0.9),
+        marks=dict(grachev=172)),
+    # letzter Drop: 1996, Rückblick, НОХЧИ
+    Seg("finale2", 176, 183, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=(0.12, 0.15), sub=1.0),
+        marks=dict(recap=176, nokhchi=180)),
     Seg("stutter3", 183, 183.25, repeats=4, fx=dict(lp=(16000, 2500), shelf=11, drive=3.0, gain=(0, -2), verb=(0.2, 0.5), sub=0.6)),
     # 11 Ende: letzter Schlag, Nachhall, Wolf
     Seg("end", 0, 0, gap=2.6),
@@ -484,7 +491,7 @@ def main():
         if i % 2 == 0 or i >= 12:
             place(perc, DUM_HALF if i < 12 else DUM, t, 1.0)
             hits.append((t, "dum"))
-    for name in ("verse", "build", "drop1", "deep", "abrek", "finale"):
+    for name in ("verse", "build", "drop1", "deep", "abrek", "finale", "grachev", "finale2"):
         for t in sec_beats(name):
             place(perc, DUM, t, 1.0)
             hits.append((t, "dum"))

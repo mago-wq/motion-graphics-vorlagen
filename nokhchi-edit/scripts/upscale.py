@@ -52,8 +52,8 @@ def main(names):
         if orig.exists():
             continue  # schon hochgerechnet (Original liegt in assets-src/hist-orig)
         im = Image.open(p)
-        if min(im.size) >= MIN_SIDE:
-            continue
+        if min(im.size) >= MIN_SIDE or im.mode in ("RGBA", "LA", "P"):
+            continue  # groß genug – oder mit Transparenz (z. B. Unterschrift), die ESRGAN nicht kennt
         shutil.copy2(p, orig)
         big = upscale(im, sess)
         scale = min(1.0, MAX_SIDE / max(big.size))

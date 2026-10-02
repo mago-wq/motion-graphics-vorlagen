@@ -34,6 +34,8 @@ const rise = section('rise');
 const st2 = section('stutter2');
 const fin = beatsOf('finale');
 const finale = section('finale');
+const grSec = section('grachev');
+const fin2 = beatsOf('finale2');
 const st3 = section('stutter3');
 const end = section('end');
 
@@ -126,18 +128,14 @@ function buildShots(): Shot[] {
 			<Kicker text="Sieg an der Sunscha · erster vereinter Widerstand" at={6} y={Y_KICK} />
 		</>
 	));
-	add(vs[4], vs[6], (
+	add(vs[4], vs[8], (
 		<>
-			<Photo src={img('bibolt_pushkin')} grade="warm" contain zoom={[1.0, 1.08]} punch={0.15} style={{backgroundColor: '#2a2118'}} />
-			<Slam text="Taimi Bibolt" at={1} y={Y_TITLE} size={170} />
-			<Kicker text="Skizze von Alexander Puschkin · 1829" at={8} y={Y_KICK} />
-		</>
-	));
-	add(vs[6], vs[8], (
-		<>
-			<Photo src={img('bibolt_pushkin')} grade="warm" zoom={[1.4, 1.5]} opacity={0.3} blur={6} />
-			<Quote at={1} y={900} size={60} wordsPerSec={9} lines={['„Славный Бей-Булат,', 'гроза Кавказа“']} />
-			<Quote at={14} y={1180} size={44} wordsPerSec={12} color={C.boneDim} lines={['Der ruhmreiche Bei-Bulat,', 'der Schrecken des Kaukasus.']} source="A. Puschkin · Reise nach Arzrum" />
+			<Photo src={img('bibolt_pushkin')} grade="warm" focus={[0.66, 0.3]} zoom={[1.0, 1.12]} punch={0.15} />
+			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 28%, rgba(0,0,0,0.05) 46%, rgba(0,0,0,0.88) 60%, rgba(0,0,0,0.95) 100%)'}} />
+			<Slam text="Taimi Bibolt" at={1} y={360} size={160} />
+			<Kicker text="Skizze von Alexander Puschkin · 1829" at={8} y={470} />
+			<Quote at={6} y={1180} size={54} wordsPerSec={1.6} lines={['„Славный Бей-Булат,', 'гроза Кавказа“']} />
+			<Quote at={14} y={1360} size={38} wordsPerSec={4} color={C.boneDim} lines={['Der ruhmreiche Bei-Bulat, der Schrecken des Kaukasus.']} />
 		</>
 	));
 	const war = [img('war_roubaud_scene'), img('war_valerik_lermontov'), img('war_faesi_1836'), img('war_dargo_roubaud')];
@@ -272,27 +270,27 @@ function buildShots(): Shot[] {
 			<SignatureWipe src={img('dudayev_signature')} at={12} />
 		</>
 	));
-	add(fin[2], fin[4], (
+	add(fin[2], grSec.from, (
 		<>
 			<PopOut src={img('dudayev_1991')} cut={cutout('dudayev_1991')} img={place('dudayev_1991', 0.62, 0.33, 560, 640, 1250)} frameRect={{x: 150, y: 600, w: 780, h: 780}} grade="bw" tilt={-2.5} />
 			<Slam text="къоман турпал" cyr at={0} y={1450} size={120} />
 			<Kicker text="„Held des Volkes“ – aus dem Nasheed" at={6} y={300} color={C.bone} />
 		</>
 	));
-	// Gratschow 1994: die Ansage – darauf antwortet 1996 und der Rückblick
-	add(fin[4], fin[8], (
+	// Breakdown, Dezember 1994: Gratschows Ansage – tief, langsam, dunkel
+	add(grSec.from, grSec.to, (
 		<>
-			<Photo src={img('valley_chinakha')} grade="blood" zoom={[1.3, 1.4]} punch={0.2} opacity={0.35} blur={4} />
-			<Kicker text="Dezember 1994" at={0} y={560} color={C.red} line={false} />
-			<Quote at={2} y={760} size={40} wordsPerSec={5.5} color={C.boneDim}
+			<Photo src={img('valley_chinakha')} grade="blood" zoom={[1.25, 1.45]} punch={0.1} opacity={0.32} blur={4} />
+			<Kicker text="Dezember 1994" at={0} y={520} color={C.red} line={false} />
+			<Quote at={2} y={720} size={40} wordsPerSec={3.2} color={C.boneDim}
 				lines={['„Грозный можно взять одним', 'парашютно-десантным полком за два часа.“']} />
-			<Quote at={6} y={1010} size={58} wordsPerSec={5.5}
+			<Quote at={8} y={1000} size={62} wordsPerSec={3.2}
 				lines={['„Grosny nehmen wir mit einem', 'Fallschirmjäger-Regiment', 'in zwei Stunden.“']}
 				source="Pawel Gratschow · russ. Verteidigungsminister · sinngemäß" />
 		</>
 	));
 	// August 1996: Chassawjurt – die Armee zieht ab
-	add(fin[8], fin[9], (
+	add(fin2[0], fin2[1], (
 		<>
 			<Photo src={img('towers_ushkaloy')} grade="blood" zoom={[1.2, 1.3]} punch={0.35} trail rgbIn={14} />
 			<Slam text="1996" at={0} y={860} size={300} />
@@ -301,15 +299,15 @@ function buildShots(): Shot[] {
 	));
 	// Rückblick: alle Helden im Halbtakt
 	const recap = [
-		img('mountains_kezenoyam'), img('zafar_battle'), img('mansur_1787'), img('bibolt_pushkin'),
+		img('mountains_kezenoyam'), img('zafar_battle'), img('mansur_1787'), img('chechen_yermakov'),
 		img('war_roubaud_scene'), img('baysangur'), img('zelimkhan'), img('dudayev_1991'),
 	];
 	recap.forEach((src, i) => {
-		const a = fin[9] + Math.round((i * (fin[12] - fin[9])) / recap.length);
-		const b = fin[9] + Math.round(((i + 1) * (fin[12] - fin[9])) / recap.length);
+		const a = fin2[1] + Math.round((i * (fin2[4] - fin2[1])) / recap.length);
+		const b = fin2[1] + Math.round(((i + 1) * (fin2[4] - fin2[1])) / recap.length);
 		add(a, b, <Photo src={src} grade={i % 2 ? 'bw' : 'warm'} focus={[0.5, 0.3]} zoom={[1.35, 1.45]} punch={0.3} rgbIn={12} trail={i % 3 === 0} />);
 	});
-	add(fin[12], st3.from, (
+	add(fin2[4], st3.from, (
 		<>
 			<Photo src={img('towers_ushkaloy')} grade="blood" focus={[0.5, 0.35]} zoom={[1.05, 1.2]} punch={0.3} trail />
 			<Slam text="НОХЧИ" cyr at={0} y={900} size={360} />
@@ -391,7 +389,9 @@ export const Edit: React.FC = () => {
 				))}
 			</AbsoluteFill>
 			<Particles kind="ember" from={vs[8]} to={breath.from} count={60} />
-			<Particles kind="ember" from={finale.from} to={st3.from} count={70} />
+			<Particles kind="ember" from={finale.from} to={grSec.from} count={70} />
+			<Particles kind="ember" from={fin2[0]} to={st3.from} count={80} />
+			<Letterbox from={grSec.from} to={grSec.to} />
 			<Particles kind="snow" from={y44.from} to={rise.to} count={110} />
 			<Letterbox from={deep.from} to={deep.to} />
 			<Letterbox from={y44.from} to={rise.from} size={180} />
