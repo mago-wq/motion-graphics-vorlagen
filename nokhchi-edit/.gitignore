@@ -5,3 +5,5 @@ out/
 assets-src/nasheed/
 public/audio/
 __pycache__/
+# Zitat-Takes sind Zwischenstände; eingecheckt wird nur der gewählte Take (<name>.wav)
+assets-src/quotes/*_take*.wav
