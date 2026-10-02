@@ -3,7 +3,8 @@
 31-s-Hochkantvideo (1080×1920, 30 fps) im Stil des Referenz-TikToks
 [@7.x2_1 / 7690661372060781832](https://www.tiktok.com/@7.x2_1/video/7690661372060781832):
 aufblühende Blumen und nächtliche, islamisch-romantische Traumbilder, darüber der
-Nasheed-Text arabisch (Ruqaa-Kalligrafie) mit englischer Übersetzung, leuchtend.
+Nasheed-Text arabisch mit englischer Übersetzung, im Retro-/VHS-Look (Farbsaum
+rot/blau, weiches blaues Leuchten, Zeilenraster, Farbstufen).
 
 **Das Video hat keinen Ton.** Die Musik („Ya Hasafa“) wird in TikTok hinzugefügt.
 
@@ -13,12 +14,17 @@ Zeitpunkte aus dem Referenzvideo abgelesen, stehen in `src/config.ts` (`LINES`):
 
 | Zeit | Arabisch | Englisch |
 |---|---|---|
-| 0,75 s | يا حسافه! | Alas, what a pity. |
-| 2,5 s | وين قومتك؟ | Where is your rise? |
-| 4,35 s | أرفعك فوق النجوم | I'll raise you above the stars. |
-| 8,2 s | راحت أحلامي بليله | My dreams vanished in a single night. |
+| 0,75 s | يا حسافة! | Oh, what a pity! |
+| 2,5 s | وين قولك؟ | Where is your promise? |
+| 4,35 s | أرفعك فوق النجوم | “I’ll raise you above the stars.” |
+| 8,2 s | راحت أحلامي بليلة | My dreams vanished in a single night. |
 | 11,9 s | وأثقلت قلبي هموم | And worries weighed down my heart. |
 | 15,8 s – 30,6 s | dieselben fünf Zeilen noch einmal | |
+
+Das Nasheed heißt „يا حسافة وين قولك“. Zeile 2 und 3 gehören zusammen: „Wo ist dein
+Wort: ‚Ich erhebe dich über die Sterne‘?“ Deshalb steht Zeile 3 in Anführungszeichen.
+Das Referenzvideo übersetzt „قولك“ falsch mit „your rise“ (der Ersteller schreibt selbst
+„إن شاء الله الترجمه صح“, also „hoffentlich stimmt die Übersetzung“).
 
 **Synchron bleibt es nur mit demselben Tonausschnitt.** Am sichersten in TikTok im
 Referenzvideo auf den Sound tippen („Original-Sound“) und „Diesen Sound verwenden“,
@@ -41,7 +47,9 @@ kommerziell nutzbar, ohne Namensnennung), liegen in `public/clips/`:
 | 22,8–26,6 s | 25081 | Blitze am Nachthimmel |
 | 26,6–31 s | 17835 | Helle Orchidee öffnet sich |
 
-Schriften (SIL OFL, in `public/fonts/`): Aref Ruqaa (Arabisch), Amiri (Englisch).
+Schriften (SIL OFL, in `public/fonts/`): Scheherazade New Bold (Arabisch, mit
+Kashida-Dehnung „ـ“ wie im Original), Amiri (Englisch). Der Retro-Look wird in
+`src/config.ts` unter `RETRO` eingestellt.
 
 ## Bedienung
 

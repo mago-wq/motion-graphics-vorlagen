@@ -14,7 +14,19 @@ Musik kommt in TikTok dazu). Bedienung in `README.md`.
 - **Ton nie einchecken.** Der Referenzton ist fremdes Material und dient nur der
   Vorschau (`scripts/preview-with-audio.sh`, Ausgabe in `out/`, gitignored).
 - **Arabisch:** Wörter in Lesereihenfolge im Array, Container `dir="rtl"`. Wort für
-  Wort einblenden (rechts beginnend), Englisch läuft parallel von links ein.
+  Wort einblenden (rechts beginnend), Englisch läuft parallel von links ein. Jede
+  Zeile bleibt einzeilig: `fitText` verkleinert auf `STYLE.textWidth`, gemessen erst
+  nach dem FontGate in `NasheedReel.tsx`.
+- **Kein Ruqaa.** Aref Ruqaa staffelt Buchstaben schräg („النجوم“) und macht aus den
+  ق-Punkten einen Strich („فوق“ sah wie „فوه“ aus); der Nutzer las das als verrutschte,
+  abgeschnittene Buchstaben. Jetzt Scheherazade New Bold.
+- **Text geprüft:** Nasheed „يا حسافة وين قولك“. „قولك“ = dein Wort/Versprechen, nicht
+  „your rise“ wie in der Referenz. Schreibung mit ة (حسافة, بليلة).
+- **Kein CSS-`filter` auf fertigen Wort-Spans** (nur während der Einblendung): Filter
+  können überhängende Glyphen am Elementrand beschneiden.
+- **Retro-Look** nur über `RETRO` in `config.ts`: SVG-Filter `#retro` (Kanalversatz +
+  Posterize) auf den Szenen, harte rot/blaue `text-shadow`-Säume plus weichgezeichnete
+  Halo-Kopie der Schrift, Scanlines über allem.
 
 ## Bildquellen in diesem Container
 

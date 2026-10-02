@@ -1,6 +1,9 @@
-import React from 'react';
+import {fitText} from '@remotion/layout-utils';
+import React, {useEffect, useState} from 'react';
 import {
 	AbsoluteFill,
+	continueRender,
+	delayRender,
 	Easing,
 	interpolate,
 	OffthreadVideo,
@@ -10,8 +13,8 @@ import {
 	useCurrentFrame,
 	useVideoConfig,
 } from 'remotion';
-import {FPS, Line, LINES, Scene, SCENES, STYLE} from './config';
-import {ARABIC_FONT, LATIN_FONT} from './fonts';
+import {FPS, Line, LINES, RETRO, Scene, SCENES, STYLE} from './config';
+import {ARABIC_FONT, fontsReady, LATIN_FONT} from './fonts';
 
 /** Überblendung zwischen Szenen (Frames). */
 const XF = 10;
@@ -42,7 +45,7 @@ const SceneLayer: React.FC<{scene: Scene; isFirst: boolean; length: number}> = (
 		objectPosition: `${scene.focusX}% 50%`,
 	};
 	return (
-		<AbsoluteFill style={{opacity, transform: `scale(${scale})`}}>
+		<AbsoluteFill style={{opacity, transform: `translateY(${scene.shiftY ?? 0}px) scale(${scale})`}}>
 			<OffthreadVideo
 				{...video}
 				style={{...fill, filter: 'contrast(1.12) saturate(1.18) brightness(0.92)'}}
@@ -141,99 +144,178 @@ const Vignette: React.FC = () => (
 	/>
 );
 
+// ---------- Retro (VHS) ----------
+
+/**
+ * Bildfilter wie im Original: Farbkanäle gegeneinander versetzt (rot nach links,
+ * blau nach rechts unten) und leichte Farbstufen (Posterize).
+ */
+const RetroDefs: React.FC = () => {
+	const steps = (n: number) =>
+		new Array(n)
+			.fill(0)
+			.map((_, i) => (i / (n - 1)).toFixed(3))
+			.join(' ');
+	return (
+		<svg style={{position: 'absolute', width: 0, height: 0}}>
+			<defs>
+				<filter id="retro" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
+					<feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
+					<feOffset in="r" dx={-RETRO.imageSplit} dy={0} result="r2" />
+					<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g" />
+					<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b" />
+					<feOffset in="b" dx={RETRO.imageSplit} dy={RETRO.imageSplit * 0.4} result="b2" />
+					<feBlend in="r2" in2="g" mode="screen" result="rg" />
+					<feBlend in="rg" in2="b2" mode="screen" result="rgb" />
+					<feComponentTransfer in="rgb">
+						<feFuncR type="discrete" tableValues={steps(RETRO.levels)} />
+						<feFuncG type="discrete" tableValues={steps(RETRO.levels)} />
+						<feFuncB type="discrete" tableValues={steps(RETRO.levels)} />
+					</feComponentTransfer>
+				</filter>
+			</defs>
+		</svg>
+	);
+};
+
+/** Zeilenraster über allem, auch über der Schrift (die gestreiften Buchstaben im Original). */
+const Scanlines: React.FC = () => (
+	<AbsoluteFill
+		style={{
+			opacity: RETRO.scanlines,
+			mixBlendMode: 'multiply',
+			background: 'repeating-linear-gradient(to bottom, #000 0px, #000 2px, #fff 2px, #fff 6px)',
+		}}
+	/>
+);
+
 // ---------- Text ----------
 
-const glow = (strength: number) =>
+/** Harte Farbsäume (rot links oben, blau rechts unten) plus weiches blaues Leuchten. */
+const retroShadow = (k: number) =>
 	[
-		`-1.5px 0 rgba(255,90,170,${0.35 * strength})`,
-		`1.5px 0 rgba(90,210,255,${0.35 * strength})`,
-		`0 0 6px rgba(190,215,255,${0.95 * strength})`,
-		`0 0 22px ${STYLE.glowColor}`,
-		`0 0 54px rgba(70,110,255,${0.65 * strength})`,
+		`${-RETRO.textSplit * k}px ${-1 * k}px 0 rgba(255,45,110,0.9)`,
+		`${RETRO.textSplit * k}px ${RETRO.textSplit * 0.6 * k}px 0 rgba(35,105,255,1)`,
+		`0 0 ${8 * k}px rgba(175,205,255,0.95)`,
+		`0 0 ${24 * k}px rgba(70,120,255,0.95)`,
+		`0 0 ${56 * k}px rgba(45,75,255,0.75)`,
 	].join(', ');
 
-const LyricLine: React.FC<{line: Line}> = ({line}) => {
+/** Der Textblock. `halo` zeichnet die weichgezeichnete Leuchtkopie dahinter. */
+const LyricText: React.FC<{line: Line; halo?: boolean}> = ({line, halo}) => {
 	const frame = useCurrentFrame();
 	const t = frame / FPS;
 	const first = line.words[0];
-	const outF = line.out * FPS;
-	const out = interpolate(frame, [outF, outF + 9], [1, 0], {...clamp, easing: Easing.in(Easing.quad)});
-	const outBlur = interpolate(frame, [outF, outF + 9], [0, 10], clamp);
 	// Englisch schreibt sich von links ein, fertig kurz nach dem letzten arabischen Wort
 	const enEnd = line.words[line.words.length - 1] + 0.45;
 	const enP = interpolate(t, [first, enEnd], [0, 118], {...clamp, easing: Easing.out(Easing.quad)});
+	const color = halo ? 'rgb(150,185,255)' : STYLE.textColor;
+	// Jede Zeile einzeilig wie im Original: Schrift schrumpft, wenn die Zeile zu breit ist
+	const arabicSize = Math.min(
+		STYLE.arabicSize,
+		fitText({
+			text: line.ar.join(' '),
+			withinWidth: STYLE.textWidth,
+			fontFamily: ARABIC_FONT,
+			fontWeight: 700,
+		}).fontSize,
+	);
+
+	return (
+		<div
+			style={{
+				position: 'absolute',
+				left: 60,
+				right: 60,
+				top: STYLE.textY - 140,
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				gap: 0,
+			}}
+		>
+			<div
+				lang="ar"
+				dir="rtl"
+				style={{
+					display: 'flex',
+					flexWrap: 'nowrap',
+					justifyContent: 'center',
+					columnGap: '0.24em',
+					fontFamily: ARABIC_FONT,
+					fontWeight: 700,
+					fontSize: arabicSize,
+					lineHeight: 1.55,
+					color,
+					textShadow: halo ? undefined : retroShadow(1),
+				}}
+			>
+				{line.ar.map((w, i) => {
+					const f = frame - line.words[i] * FPS;
+					const p = interpolate(f, [0, 12], [0, 1], {...clamp, easing: ease});
+					return (
+						<span
+							key={i}
+							style={{
+								display: 'inline-block',
+								padding: '0 0.08em',
+								opacity: p,
+								// Bei p = 1 kein Filter mehr, damit nichts am Wortrand beschnitten wird
+								filter: p < 1 ? `blur(${(1 - p) * 14}px)` : undefined,
+								transform: `translateY(${(1 - p) * 22}px) scale(${1.1 - 0.1 * p})`,
+							}}
+						>
+							{w}
+						</span>
+					);
+				})}
+			</div>
+			<div
+				style={{
+					fontFamily: LATIN_FONT,
+					fontSize: STYLE.englishSize,
+					lineHeight: 1.25,
+					marginTop: 12,
+					color,
+					textAlign: 'center',
+					textShadow: halo ? undefined : retroShadow(0.55),
+					WebkitMaskImage: `linear-gradient(to right, black ${enP - 18}%, transparent ${enP}%)`,
+					maskImage: `linear-gradient(to right, black ${enP - 18}%, transparent ${enP}%)`,
+				}}
+			>
+				{line.en}
+			</div>
+		</div>
+	);
+};
+
+const LyricLine: React.FC<{line: Line}> = ({line}) => {
+	const frame = useCurrentFrame();
+	const outF = line.out * FPS;
+	const out = interpolate(frame, [outF, outF + 9], [1, 0], {...clamp, easing: Easing.in(Easing.quad)});
+	const outBlur = interpolate(frame, [outF, outF + 9], [0, 10], clamp);
 	const breathe = Math.sin(frame / 22) * 4;
+	// VHS-Zittern: alle 3 Frames ein kleiner Querversatz, selten ein stärkerer Ruck
+	const tick = Math.floor(frame / 3);
+	const glitch = random(`gl${tick}`) < 0.06 ? 1 : 0;
+	const jitter = (random(`j${tick}`) - 0.5) * (RETRO.jitter + glitch * 14);
 
 	return (
 		<AbsoluteFill
 			style={{
 				opacity: out,
-				filter: `blur(${outBlur}px)`,
-				transform: `translateY(${breathe}px)`,
+				transform: `translate(${jitter}px, ${breathe}px)`,
 			}}
 		>
-			<div
-				style={{
-					position: 'absolute',
-					left: 70,
-					right: 70,
-					top: STYLE.textY - 150,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					gap: 6,
-				}}
+			{/* Leuchtschleier: weichgezeichnete Kopie hinter dem Text */}
+			<AbsoluteFill
+				style={{filter: `blur(${18 + outBlur}px)`, opacity: RETRO.halo, mixBlendMode: 'screen'}}
 			>
-				<div
-					lang="ar"
-					dir="rtl"
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						justifyContent: 'center',
-						columnGap: '0.28em',
-						fontFamily: ARABIC_FONT,
-						fontWeight: 700,
-						fontSize: STYLE.arabicSize,
-						lineHeight: 1.5,
-						color: STYLE.textColor,
-						textShadow: glow(1),
-					}}
-				>
-					{line.ar.map((w, i) => {
-						const f = frame - line.words[i] * FPS;
-						const p = interpolate(f, [0, 12], [0, 1], {...clamp, easing: ease});
-						return (
-							<span
-								key={i}
-								style={{
-									display: 'inline-block',
-									opacity: p,
-									filter: `blur(${(1 - p) * 14}px)`,
-									transform: `translateY(${(1 - p) * 22}px) scale(${1.1 - 0.1 * p})`,
-								}}
-							>
-								{w}
-							</span>
-						);
-					})}
-				</div>
-				<div
-					style={{
-						fontFamily: LATIN_FONT,
-						fontStyle: 'italic',
-						fontSize: STYLE.englishSize,
-						lineHeight: 1.25,
-						color: STYLE.textColor,
-						textAlign: 'center',
-						textShadow: glow(0.75),
-						WebkitMaskImage: `linear-gradient(to right, black ${enP - 18}%, transparent ${enP}%)`,
-						maskImage: `linear-gradient(to right, black ${enP - 18}%, transparent ${enP}%)`,
-					}}
-				>
-					{line.en}
-				</div>
-			</div>
+				<LyricText line={line} halo />
+			</AbsoluteFill>
+			<AbsoluteFill style={{filter: `blur(${RETRO.textSoftness + outBlur}px)`}}>
+				<LyricText line={line} />
+			</AbsoluteFill>
 		</AbsoluteFill>
 	);
 };
@@ -250,18 +332,30 @@ const TextShade: React.FC = () => (
 export const NasheedReel: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {durationInFrames} = useVideoConfig();
+	// FontGate: Text erst zeichnen (und messen), wenn die Schriften geladen sind
+	const [fontsOk, setFontsOk] = useState(false);
+	const [gate] = useState(() => delayRender('FontGate'));
+	useEffect(() => {
+		fontsReady.then(() => {
+			setFontsOk(true);
+			continueRender(gate);
+		});
+	}, [gate]);
 	return (
 		<AbsoluteFill style={{backgroundColor: '#000'}}>
-			{SCENES.map((s, i) => {
-				const start = Math.max(0, Math.round(s.from * FPS) - (i === 0 ? 0 : XF / 2));
-				const next = SCENES[i + 1];
-				const end = next ? Math.round(next.from * FPS) + XF : durationInFrames;
-				return (
-					<Sequence key={i} from={start} durationInFrames={end - start} name={s.clip}>
-						<SceneLayer scene={s} isFirst={i === 0} length={end - start} />
-					</Sequence>
-				);
-			})}
+			<RetroDefs />
+			<AbsoluteFill style={{filter: 'url(#retro)'}}>
+				{SCENES.map((s, i) => {
+					const start = Math.max(0, Math.round(s.from * FPS) - (i === 0 ? 0 : XF / 2));
+					const next = SCENES[i + 1];
+					const end = next ? Math.round(next.from * FPS) + XF : durationInFrames;
+					return (
+						<Sequence key={i} from={start} durationInFrames={end - start} name={s.clip}>
+							<SceneLayer scene={s} isFirst={i === 0} length={end - start} />
+						</Sequence>
+					);
+				})}
+			</AbsoluteFill>
 			<Flash />
 			<Motes />
 			<Vignette />
@@ -269,8 +363,9 @@ export const NasheedReel: React.FC = () => {
 			{LINES.map((l, i) => {
 				const from = Math.round((l.words[0] - 0.1) * FPS);
 				const to = Math.round((l.out + 0.45) * FPS);
-				return frame >= from && frame < to ? <LyricLine key={i} line={l} /> : null;
+				return fontsOk && frame >= from && frame < to ? <LyricLine key={i} line={l} /> : null;
 			})}
+			<Scanlines />
 			<Grain />
 		</AbsoluteFill>
 	);
