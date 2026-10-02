@@ -9,7 +9,7 @@ import {Photo} from './components/Photo';
 import {PopOut} from './components/PopOut';
 import {Counter, Kicker, Quote, Slam, Typed} from './components/Text';
 import {F} from './fonts';
-import {BeatPulse, Grain, HitFlash, Letterbox, useShake, Vignette} from './fx/Overlays';
+import {BeatPulse, HitFlash, Letterbox, useShake, Vignette} from './fx/Overlays';
 import {Particles} from './fx/Particles';
 import {C} from './theme';
 import {beatsOf, mark, section} from './timeline';
@@ -398,7 +398,6 @@ export const Edit: React.FC = () => {
 			<BeatPulse from={0} to={DURATION} />
 			<HitFlash from={0} to={DURATION} />
 			<Vignette />
-			<Grain />
 			<Html5Audio src={staticFile('audio/mix.wav')} />
 		</AbsoluteFill>
 	);

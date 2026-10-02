@@ -9,7 +9,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 PUB = ROOT / "public"
 out = {}
-for kind in ("hist", "cut"):
+for kind in ("hist", "cut", "blur"):
     d = PUB / "img" / kind
     out[kind] = {}
     for p in sorted(d.glob("*")):

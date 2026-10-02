@@ -4,6 +4,7 @@ import type {CSSProperties} from 'react';
 import {AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {F} from '../fonts';
 import {C} from '../theme';
+import {blurredOf} from '../assets';
 import {Fallback, GRADE, type Grade} from './Photo';
 
 type Rect = {x: number; y: number; w: number; h: number};
@@ -54,8 +55,8 @@ export const PopOut: React.FC<{
 	return (
 		<AbsoluteFill style={{overflow: 'hidden', ...style}}>
 			{/* Hintergrund: dasselbe Bild, groß, dunkel, unscharf */}
-			<AbsoluteFill style={{filter: `${filter ?? ''} blur(18px) brightness(${1 - bgDim})`, transform: `scale(${1.25 + 0.05 * p})`}}>
-				<Img src={staticFile(src)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+			<AbsoluteFill style={{filter: `brightness(${1 - bgDim})`, transform: `scale(${1.25 + 0.05 * p})`}}>
+				<Img src={staticFile(blurredOf(src) ?? src)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
 			</AbsoluteFill>
 			<AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 40%, rgba(110,7,16,0.35), rgba(0,0,0,0.65))`}} />
 			{behind ? (
@@ -106,7 +107,7 @@ export const PopOut: React.FC<{
 			) : null}
 			{/* Freigestellte Person – nicht beschnitten, ragt über den Rahmen */}
 			<div style={{position: 'absolute', inset: 0, transform: `${noFrame ? '' : `scale(${0.88 + 0.12 * frameIn}) `}`, transformOrigin: `${fcx}px ${fcy}px`}}>
-				<div style={{position: 'absolute', inset: 0, transform: T, filter: `${filter ?? ''} drop-shadow(0 20px 40px rgba(0,0,0,0.7))`}}>
+				<div style={{position: 'absolute', inset: 0, transform: T, filter}}>
 					<Img src={staticFile(cut)} style={imgStyle} />
 				</div>
 			</div>

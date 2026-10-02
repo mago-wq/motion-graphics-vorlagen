@@ -1,30 +1,8 @@
-// Globale Ebenen über allem: Filmkorn, Vignette, Blitze auf Treffern, Kinobalken.
-import {AbsoluteFill, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
+// Globale Ebenen über allem: Vignette, Blitze auf Treffern, Kinobalken, Kamerawackler.
+// (Filmkorn kommt erst beim Muxen per ffmpeg dazu – im Browser wäre es pro Frame zu teuer.)
+import {AbsoluteFill, interpolate, random, useCurrentFrame} from 'remotion';
 import {C} from '../theme';
 import {lastHit} from '../timeline';
-
-/** Filmkorn: vorberechnete Rauschkacheln, jedes Frame anders versetzt */
-export const Grain: React.FC<{opacity?: number}> = ({opacity = 0.16}) => {
-	const frame = useCurrentFrame();
-	const tile = Math.floor(random(`g${frame}`) * 6);
-	const x = Math.floor(random(`gx${frame}`) * 360);
-	const y = Math.floor(random(`gy${frame}`) * 360);
-	return (
-		<AbsoluteFill style={{overflow: 'hidden', mixBlendMode: 'overlay', opacity, pointerEvents: 'none'}}>
-			<div
-				style={{
-					position: 'absolute',
-					left: -x,
-					top: -y,
-					width: 1080 + 720,
-					height: 1920 + 720,
-					backgroundImage: `url(${staticFile(`fx/grain_${tile}.png`)})`,
-					backgroundSize: '360px 360px',
-				}}
-			/>
-		</AbsoluteFill>
-	);
-};
 
 export const Vignette: React.FC<{strength?: number}> = ({strength = 0.85}) => (
 	<AbsoluteFill

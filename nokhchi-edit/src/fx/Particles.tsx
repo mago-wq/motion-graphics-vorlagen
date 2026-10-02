@@ -24,16 +24,17 @@ export const Particles: React.FC<{kind: 'ember' | 'snow'; count?: number; from: 
 					position: 'absolute',
 					left: x,
 					top: y,
-					width: size,
-					height: size,
+					width: kind === 'ember' ? size * 3 : size * 1.4,
+					height: kind === 'ember' ? size * 3 : size * 1.4,
 					borderRadius: '50%',
-					backgroundColor: kind === 'ember' ? '#ff7a2a' : '#eef3f8',
-					boxShadow: kind === 'ember' ? `0 0 ${size * 3}px ${size}px rgba(255,90,20,0.55)` : 'none',
-					filter: kind === 'snow' && size > 6 ? 'blur(2px)' : undefined,
+					// weicher Rand über Verlauf – billiger als box-shadow oder CSS blur()
+					background: kind === 'ember'
+						? 'radial-gradient(circle, #ffd2a0 0%, #ff7a2a 35%, rgba(255,90,20,0.35) 60%, rgba(255,90,20,0) 72%)'
+						: 'radial-gradient(circle, rgba(238,243,248,1) 0%, rgba(238,243,248,0.85) 45%, rgba(238,243,248,0) 72%)',
 					opacity: flicker,
 				}}
 			/>,
 		);
 	}
-	return <AbsoluteFill style={{opacity: fadeIn * fadeOut, mixBlendMode: kind === 'ember' ? 'screen' : 'normal', pointerEvents: 'none'}}>{items}</AbsoluteFill>;
+	return <AbsoluteFill style={{opacity: fadeIn * fadeOut, pointerEvents: 'none'}}>{items}</AbsoluteFill>;
 };

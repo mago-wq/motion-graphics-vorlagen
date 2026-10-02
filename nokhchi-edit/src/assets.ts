@@ -5,9 +5,16 @@ import assets from './assets.json';
 type Entry = {path: string; aspect: number};
 const hist = assets.hist as Record<string, Entry>;
 const cut = assets.cut as Record<string, Entry>;
+const blur = assets.blur as Record<string, Entry>;
 
 export const img = (key: string): string | null => hist[key]?.path ?? null;
 export const cutout = (key: string): string | null => cut[key]?.path ?? null;
+
+/** Stark weichgezeichnete Kleinfassung eines Bildes (vorberechnet, statt CSS blur() beim Rendern) */
+export const blurredOf = (path: string): string | null => {
+	const key = path.split('/').pop()?.replace(/\.[a-z]+$/i, '') ?? '';
+	return blur[key]?.path ?? null;
+};
 
 /**
  * Bildrahmen (px im 1080×1920-Raster), so dass Punkt (cx, cy) des Bildes (0–1, z. B. das Gesicht)

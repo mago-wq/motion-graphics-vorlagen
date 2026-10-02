@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Stellt Personen frei (BiRefNet über rembg, lokal) – für die „aus dem Bild heraus“-Effekte.
 
-Ergebnis: public/img/cut/<name>.png in derselben Größe wie das Original, mit Alphakanal.
+Ergebnis: assets-src/cut-raw/<name>.png in derselben Größe wie das Original, mit Alphakanal
+(scripts/bake_assets.py macht daraus public/img/cut/ mit eingerechnetem Schatten).
 Dadurch liegt die Freistellung pixelgenau über dem Bild, wenn beide gleich platziert werden.
 Modell: ~/.u2net/birefnet-general.onnx (rembg lädt es beim ersten Lauf selbst).
 """
@@ -14,7 +15,7 @@ from rembg import new_session, remove
 
 ROOT = Path(__file__).resolve().parent.parent
 HIST = ROOT / "public" / "img" / "hist"
-CUT = ROOT / "public" / "img" / "cut"
+CUT = ROOT / "assets-src" / "cut-raw"  # Rohfassung; scripts/bake_assets.py rechnet den Schatten ein
 
 # Bilder mit klar erkennbarer Person
 PORTRAITS = ["baysangur", "mansur_1787", "zelimkhan", "chechen_yermakov", "dudayev_1991", "shida"]

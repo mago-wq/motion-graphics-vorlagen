@@ -3,6 +3,7 @@
 import {useId} from 'react';
 import type {CSSProperties} from 'react';
 import {AbsoluteFill, Easing, Img, interpolate, random, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {blurredOf} from '../assets';
 
 export type Grade = 'paint' | 'bw' | 'warm' | 'cold' | 'blood' | 'none';
 
@@ -87,7 +88,9 @@ export const Photo: React.FC<PhotoProps> = ({
 		objectFit: contain ? 'contain' : 'cover',
 		objectPosition: `${focus[0] * 100}% ${focus[1] * 100}%`,
 	};
-	const url = staticFile(src);
+	// Weichzeichnen kostet im Browser pro Frame viel – dafür die vorberechnete Kleinfassung nehmen
+	const soft = blur > 0 ? blurredOf(src) : null;
+	const url = staticFile(soft ?? src);
 	const layer = (s: number, o: number, key: string, extra?: CSSProperties) => (
 		<div
 			key={key}
@@ -123,7 +126,7 @@ export const Photo: React.FC<PhotoProps> = ({
 		}
 	}
 
-	const filter = [GRADE[grade], split > 0.3 ? `url(#${fid})` : '', blur + fallBlur > 0 ? `blur(${blur + fallBlur}px)` : '']
+	const filter = [GRADE[grade], split > 0.3 ? `url(#${fid})` : '', (soft ? 0 : blur) + fallBlur > 0.5 ? `blur(${(soft ? 0 : blur) + fallBlur}px)` : '']
 		.filter((x) => x && x !== 'none')
 		.join(' ');
 
