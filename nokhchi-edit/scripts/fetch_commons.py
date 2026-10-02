@@ -8,7 +8,9 @@ import json, re, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
 UA = "NokhchiEdit/1.0 (https://github.com/mago-wq/motion-graphics-vorlagen)"
-API = "https://commons.wikimedia.org/w/api.php"
+# Mehrere API-Endpunkte: Commons drosselt geteilte IPs stark; jedes Wiki kann die
+# Commons-Dateien ebenfalls abfragen (gemeinsames Medien-Repository).
+APIS = ["https://commons.wikimedia.org/w/api.php", "https://ru.wikipedia.org/w/api.php", "https://en.wikipedia.org/w/api.php", "https://de.wikipedia.org/w/api.php"]
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "public" / "img" / "hist"
 
@@ -53,20 +55,22 @@ FILES = {
 
 # upload.wikimedia.org liefert nur Standard-Vorschaugrößen ohne Drosselung aus;
 # Originale und krumme Breiten werden mit 429/400 abgewiesen.
-STD_WIDTHS = [3840, 1920, 1280, 960, 500, 330, 250]
+STD_WIDTHS = [3840, 1920, 1280, 960, 500, 330, 250, 120]
+# Dateien, deren Original kleiner als 250 px ist bzw. die nur als Original kommen
+SMALL = {"bibolt_pushkin"}
 
 
 def api(params, tries=12):
-    url = API + "?" + urllib.parse.urlencode(dict(params, format="json"))
     for i in range(tries):
+        url = APIS[i % len(APIS)] + "?" + urllib.parse.urlencode(dict(params, format="json"))
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=40) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
             if e.code != 429:
                 raise
-            time.sleep(2 + 2 * i)
-    raise SystemExit("Commons antwortet dauerhaft mit 429")
+            time.sleep(1 + 2 * (i // len(APIS)))
+    raise RuntimeError("API antwortet dauerhaft mit 429")
 
 
 def download(url, dest, tries=14):
@@ -80,7 +84,7 @@ def download(url, dest, tries=14):
             if e.code != 429:
                 raise
             time.sleep(15 + 15 * i)
-    raise SystemExit(f"Download fehlgeschlagen: {url}")
+    raise RuntimeError(f"Download fehlgeschlagen: {url}")
 
 
 def clean(html):
@@ -89,35 +93,53 @@ def clean(html):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    credits = {}
-    for key, name in FILES.items():
-        d = api({"action": "query", "titles": "File:" + name, "prop": "imageinfo",
-                 "iiprop": "url|size|extmetadata"})
-        page = next(iter(d["query"]["pages"].values()))
-        ii = page["imageinfo"][0]
-        meta = ii.get("extmetadata", {})
-        get = lambda k: clean(meta.get(k, {}).get("value", ""))
-        width = next((w for w in STD_WIDTHS if w < ii["width"]), None)
-        if width:
-            d2 = api({"action": "query", "titles": "File:" + name, "prop": "imageinfo",
-                      "iiprop": "url", "iiurlwidth": width})
-            src = next(iter(d2["query"]["pages"].values()))["imageinfo"][0]["thumburl"]
-        else:
-            src = ii["url"]
-        ext = Path(urllib.parse.urlparse(src).path).suffix.lower() or ".jpg"
-        dest = OUT / f"{key}{ext}"
-        if not dest.exists():
-            download(src, dest)
-            time.sleep(6)
-        credits[key] = {
-            "file": f"img/hist/{dest.name}",
-            "commons": "https://commons.wikimedia.org/wiki/File:" + urllib.parse.quote(name.replace(" ", "_")),
-            "author": get("Artist"), "license": get("LicenseShortName"),
-            "date": get("DateTimeOriginal"), "width": ii["width"], "height": ii["height"],
-        }
-        print(f"{key:24s} {ii['width']}x{ii['height']:<5} {credits[key]['license']}")
-    (ROOT / "credits").mkdir(exist_ok=True)
-    (ROOT / "credits" / "commons.json").write_text(json.dumps(credits, ensure_ascii=False, indent=1))
+    out_json = ROOT / "credits" / "commons.json"
+    credits = json.loads(out_json.read_text()) if out_json.exists() else {}
+    missing = []
+    order = sorted(FILES.items(), key=lambda kv: kv[0] in SMALL)
+    for key, name in order:
+        if key in credits and (ROOT / "public" / credits[key]["file"]).exists():
+            continue
+        try:
+            credits[key] = fetch_one(key, name)
+        except RuntimeError as e:
+            missing.append(key)
+            print(f"{key:24s} FEHLT ({e})")
+            continue
+        (ROOT / "credits").mkdir(exist_ok=True)
+        out_json.write_text(json.dumps(credits, ensure_ascii=False, indent=1))
+    if missing:
+        print("Fehlend (später erneut starten):", ", ".join(missing))
+
+
+def fetch_one(key, name):
+    """Holt Metadaten und Bild einer Datei; gibt den Eintrag für credits/commons.json zurück."""
+    d = api({"action": "query", "titles": "File:" + name, "prop": "imageinfo",
+             "iiprop": "url|size|extmetadata"})
+    page = next(iter(d["query"]["pages"].values()))
+    ii = page["imageinfo"][0]
+    meta = ii.get("extmetadata", {})
+    get = lambda k: clean(meta.get(k, {}).get("value", ""))
+    width = next((w for w in STD_WIDTHS if w <= ii["width"]), None)
+    if width:
+        d2 = api({"action": "query", "titles": "File:" + name, "prop": "imageinfo",
+                  "iiprop": "url", "iiurlwidth": width})
+        src = next(iter(d2["query"]["pages"].values()))["imageinfo"][0]["thumburl"]
+    else:
+        src = ii["url"]
+    ext = Path(urllib.parse.urlparse(src).path).suffix.lower() or ".jpg"
+    dest = OUT / f"{key}{ext}"
+    if not dest.exists():
+        download(src, dest)
+        time.sleep(6)
+    entry = {
+        "file": f"img/hist/{dest.name}",
+        "commons": "https://commons.wikimedia.org/wiki/File:" + urllib.parse.quote(name.replace(" ", "_")),
+        "author": get("Artist"), "license": get("LicenseShortName"),
+        "date": get("DateTimeOriginal"), "width": ii["width"], "height": ii["height"],
+    }
+    print(f"{key:24s} {ii['width']}x{ii['height']:<5} {entry['license']}")
+    return entry
 
 
 if __name__ == "__main__":

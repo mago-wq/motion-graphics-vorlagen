@@ -1,0 +1,114 @@
+{
+ "hist": {
+  "baysangur": {
+   "path": "img/hist/baysangur.jpg",
+   "aspect": 0.8895
+  },
+  "baysangur_churt": {
+   "path": "img/hist/baysangur_churt.jpg",
+   "aspect": 0.6762
+  },
+  "baysangur_medal": {
+   "path": "img/hist/baysangur_medal.jpg",
+   "aspect": 0.9969
+  },
+  "baysangur_order1861": {
+   "path": "img/hist/baysangur_order1861.jpg",
+   "aspect": 1.1852
+  },
+  "chechen_deniker": {
+   "path": "img/hist/chechen_deniker.jpg",
+   "aspect": 0.664
+  },
+  "chechen_yermakov": {
+   "path": "img/hist/chechen_yermakov.jpg",
+   "aspect": 0.8308
+  },
+  "chechens_kennan": {
+   "path": "img/hist/chechens_kennan.jpg",
+   "aspect": 0.5995
+  },
+  "dudayev_1991": {
+   "path": "img/hist/dudayev_1991.png",
+   "aspect": 0.6723
+  },
+  "dudayev_signature": {
+   "path": "img/hist/dudayev_signature.png",
+   "aspect": 2.5253
+  },
+  "lake_kezenoyam": {
+   "path": "img/hist/lake_kezenoyam.jpg",
+   "aspect": 1.3333
+  },
+  "mansur_1787": {
+   "path": "img/hist/mansur_1787.png",
+   "aspect": 0.9488
+  },
+  "mountains_kezenoyam": {
+   "path": "img/hist/mountains_kezenoyam.jpg",
+   "aspect": 1.5
+  },
+  "murids_1902": {
+   "path": "img/hist/murids_1902.jpg",
+   "aspect": 1.2658
+  },
+  "sharoi_1800": {
+   "path": "img/hist/sharoi_1800.jpg",
+   "aspect": 1.2152
+  },
+  "shida": {
+   "path": "img/hist/shida.jpg",
+   "aspect": 0.6297
+  },
+  "tower_khambetar": {
+   "path": "img/hist/tower_khambetar.jpg",
+   "aspect": 0.75
+  },
+  "tower_komalkhi": {
+   "path": "img/hist/tower_komalkhi.jpg",
+   "aspect": 0.9169
+  },
+  "towers_chechnya": {
+   "path": "img/hist/towers_chechnya.jpg",
+   "aspect": 0.75
+  },
+  "towers_ushkaloy": {
+   "path": "img/hist/towers_ushkaloy.jpg",
+   "aspect": 0.75
+  },
+  "war_dargo_roubaud": {
+   "path": "img/hist/war_dargo_roubaud.jpg",
+   "aspect": 0.6925
+  },
+  "war_faesi_1836": {
+   "path": "img/hist/war_faesi_1836.jpg",
+   "aspect": 1.2225
+  },
+  "war_roubaud_scene": {
+   "path": "img/hist/war_roubaud_scene.jpg",
+   "aspect": 1.5202
+  },
+  "war_valerik_lermontov": {
+   "path": "img/hist/war_valerik_lermontov.jpg",
+   "aspect": 1.1415
+  },
+  "war_vedeno_horschelt": {
+   "path": "img/hist/war_vedeno_horschelt.jpg",
+   "aspect": 0.7143
+  },
+  "zelimkhan": {
+   "path": "img/hist/zelimkhan.jpg",
+   "aspect": 0.8312
+  }
+ },
+ "cut": {
+  "baysangur": {
+   "path": "img/cut/baysangur.png",
+   "aspect": 0.8895
+  },
+  "mansur_1787": {
+   "path": "img/cut/mansur_1787.png",
+   "aspect": 0.9488
+  }
+ }
+}

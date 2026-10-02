@@ -4,10 +4,12 @@
   "private": true,
   "description": "Schnelles 4K-History-Edit (9:16) über tschetschenische Geschichte, geschnitten auf ein Nasheed (nur Stimme), gebaut mit Remotion",
   "scripts": {
+    "images": "python3 scripts/fetch_commons.py && python3 scripts/upscale.py && python3 scripts/make_cutouts.py && python3 scripts/index_assets.py",
     "audio": "python3 scripts/build_audio.py",
-    "cutouts": "python3 scripts/make_cutouts.py",
-    "render": "bash scripts/render.sh",
     "stills": "bash scripts/render-stills.sh",
+    "render": "bash scripts/render.sh",
+    "check": "python3 scripts/check_video.py",
+    "credits": "python3 scripts/make_credits.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

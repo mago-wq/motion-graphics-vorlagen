@@ -13,9 +13,9 @@ export const DURATION = Math.ceil(timeline.duration * FPS);
  */
 export const SAFE = {
 	top: 260,
-	bottom: 1440,
+	bottom: 1480,
 	left: 80,
 	right: WIDTH - 130,
 	width: WIDTH - 210,
-	height: 1440 - 260,
+	height: 1480 - 260,
 } as const;

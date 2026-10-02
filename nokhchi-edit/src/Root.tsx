@@ -1,14 +1,11 @@
-import {AbsoluteFill, Composition, Html5Audio, staticFile} from 'remotion';
+import {Composition} from 'remotion';
 import {FontGate} from './components/FontGate';
-import {C} from './theme';
+import {Edit} from './Edit';
 import {DURATION, FPS, HEIGHT, WIDTH} from './video';
 
-// Vorläufig: nur Tonspur auf Schwarz – der Bildschnitt (Edit.tsx) folgt.
 const NokhchiEdit: React.FC = () => (
 	<FontGate>
-		<AbsoluteFill style={{backgroundColor: C.black}}>
-			<Html5Audio src={staticFile('audio/mix.wav')} />
-		</AbsoluteFill>
+		<Edit />
 	</FontGate>
 );
 
