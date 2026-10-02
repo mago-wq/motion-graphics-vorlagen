@@ -40,6 +40,8 @@ QUOTES = {
     "solzh": ("solzh", 0.15),
     "grachev": ("grachev", 0.03),
 }
+# Etwas schneller sprechen, wo die deutsche Fassung länger ist als ihr Abschnitt (Tonhöhe bleibt)
+QUOTE_TEMPO = {("solzh", "de"): 1.07, ("grachev", "de"): 1.05}
 COLD_OPEN = 1.0  # Sekunden ohne Gesang am Anfang (nur Wind und Wolf)
 
 rng = np.random.default_rng(7)
@@ -260,7 +262,7 @@ ARR = [
     Seg("finale", 168, 172, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=0.12, sub=1.0),
         marks=dict(drop2=168, dudayev=168)),
     # Breakdown: Gratschows Ansage 1994 – tief, langsam, dunkel
-    Seg("grachev", 172, 176, rate=(0.62, 0.62), fx=dict(lp=3800, shelf=11, drive=2.0, gain=-3, verb=(0.4, 0.5), sub=0.9),
+    Seg("grachev", 172, 176, rate=(0.56, 0.56), fx=dict(lp=3800, shelf=11, drive=2.0, gain=-3, verb=(0.4, 0.5), sub=0.9),
         marks=dict(grachev=172)),
     # letzter Drop: 1996, Rückblick, НОХЧИ
     Seg("finale2", 176, 183, fx=dict(lp=16000, shelf=11, drive=3.0, gain=0, verb=(0.12, 0.15), sub=1.0),
@@ -630,7 +632,7 @@ def main():
         hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
     )
     (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
-    print(f"mix.wav (+ mix_zitate.wav): {total:.2f} s, Lautheit vorher {loud:.1f} LUFS")
+    print(f"mix.wav (+ mix_zitate_ru.wav, mix_zitate_de.wav): {total:.2f} s, Lautheit vorher {loud:.1f} LUFS")
     for k, (a, b) in sections.items():
         print(f"  {k:10s} {a:6.2f} – {b:6.2f}")
     for lang, sp in all_spans.items():
@@ -664,7 +666,8 @@ def build_speech(N, T, lang):
             continue
         y = load(f).mean(axis=1).astype(np.float32)
         # tiefer (−3 Halbtöne, Wunsch: „etwas tiefer“), Formanten erhalten – klingt nicht künstlich
-        y = ffmpeg_filter(y, "rubberband=pitch=0.841:formant=preserved")
+        tempo = QUOTE_TEMPO.get((name, lang), 1.0)
+        y = ffmpeg_filter(y, f"rubberband=pitch=0.841:tempo={tempo}:formant=preserved")
         y = butter(butter(y, "high", 75, 2), "low", 11000, 2)
         # sanfte Kompression für gleichmäßige Verständlichkeit
         e = np.sqrt(signal.lfilter([0.01], [1, -0.99], y ** 2)) + 1e-6
