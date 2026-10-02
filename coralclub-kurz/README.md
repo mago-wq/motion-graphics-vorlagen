@@ -43,3 +43,17 @@ Vorschau mit `STILLS=10,100,200 python3 videos/...` (-> `out/<name>_sheet.png`).
 **Hooks nur, wenn sie stimmen:** keine Ich-Aussagen („meine Routine“, „kommt in mein
 Wasser“), solange der Account-Inhaber das Produkt nicht wirklich so nutzt. Neutrale oder
 Du-Formulierungen nehmen („zum Abspeichern“, „Die Routine“).
+
+## Serie: Magnesium-Wissen (`wissen.py`, `videos/w*.py`)
+
+Folien-Engine: jedes Video ist eine Liste von Folien (`titel`, `balken`, `zahl`, `liste`,
+`ende`) mit Quelle pro Folie. Produkt nur am Ende. Fakten mit Quelle, keine eigenen
+Wirkversprechen; EU-Claims nur im exakten Wortlaut.
+
+| Nr. | Thema | Quelle |
+|---|---|---|
+| 1 | Banane = Magnesium? | Nährwertdatenbanken (gerundet), DGE |
+| 2 | 2-Liter-Regel | DGE (rund 1,5 l Getränke) |
+| 3 | Was heißt NRV? | VO (EU) 1169/2011 Anh. XIII, DGE |
+| 4 | Viel hilft viel? | BfR-Höchstmengenvorschlag 2021 (250 mg/Tag aus NEM) |
+| 5 | Was Magnesium laut EU kann | VO (EU) 432/2012, VO (EU) 1169/2011 Art. 7 |
