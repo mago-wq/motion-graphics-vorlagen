@@ -1,0 +1,77 @@
+{
+  "style": {
+    "size": 149,
+    "squeeze": 0.53,
+    "max_width": 985,
+    "fill": [
+      244,
+      245,
+      248
+    ],
+    "navy": [
+      11,
+      16,
+      44
+    ],
+    "stroke": 4,
+    "glow_sigma": 9,
+    "glow_alpha": 1.0,
+    "rough": 0.18,
+    "cap_center_y": 969.5,
+    "notch_density": 0.008,
+    "fill_alpha": 0.97,
+    "tracking": 3
+  },
+  "segments": [
+    {
+      "start": 0,
+      "end": 145,
+      "text": "„ICH WAR EIN HAFIZ“"
+    },
+    {
+      "start": 145,
+      "end": 288,
+      "text": "„ICH HABE ZINA BEGANGEN“"
+    },
+    {
+      "start": 288,
+      "end": 432,
+      "text": "„MEIN GEHALT WAR..“"
+    },
+    {
+      "start": 432,
+      "end": 575,
+      "text": "„ICH WAR SCHÖN“"
+    },
+    {
+      "start": 575,
+      "end": 719,
+      "text": "„ICH WAR HÄSSLICH“"
+    },
+    {
+      "start": 719,
+      "end": 863,
+      "text": "„ICH WAR EIN EINSER-SCHÜLER“"
+    },
+    {
+      "start": 863,
+      "end": 1006,
+      "text": "„ICH WAR EIN GELEHRTER“"
+    },
+    {
+      "start": 1006,
+      "end": 1150,
+      "text": "„ICH TRUG DIE SCHÖNSTEN KLEIDER“"
+    },
+    {
+      "start": 1150,
+      "end": 1293,
+      "text": "„ICH MACHE MIR SO SORGEN UM..“"
+    },
+    {
+      "start": 1293,
+      "end": 1437,
+      "text": "„WAS, WENN SIE MICH AUSLACHEN“"
+    }
+  ]
+}
