@@ -1,6 +1,6 @@
 # nokhchi-edit
 
-Schnelles History-Edit (9:16, **4K 2160×3840**, ~58 s) über die Geschichte der Tschetschenen:
+Schnelles History-Edit (9:16, **4K 2160×3840** oder 1080p, ~69 s) über die Geschichte der Tschetschenen:
 Dzurdzuketien → Simsir 1395 → Sheikh Mansur → Taimi Bibolt → Kaukasuskrieg → Baysangur von
 Benoy → Abreken / Zelimkhan → 1944 → 1957 → Dzhokhar Dudayev → НОХЧИ → МАРШО.
 
@@ -17,8 +17,10 @@ bash scripts/fetch_nasheed.sh   # Nasheed holen, Stimme trennen, Takt messen (ni
 npm run images                  # Commons-Bilder → hochrechnen → freistellen → src/assets.json
 npm run audio                   # Tonspur → public/audio/mix.wav + src/timeline.json
 npm run stills                  # Kontrollbilder (halbe Auflösung) + Kontaktbogen
-npm run render                  # out/nokhchi-edit-4k.mp4
-npm run check                   # Format, Frames, Ton-Synchronität
+bash scripts/render.sh --draft   # schneller Entwurf 540p – erst den zeigen
+bash scripts/render.sh --hd      # Endfassung 1080p (je ohne Zitate, -zitate-de, -zitate-ru)
+npm run render                  # Endfassung 4K: out/nokhchi-edit-4k.mp4
+npm run check -- out/<name>.mp4 # Format, Frames, Ton-Synchronität
 npm run credits                 # CREDITS.md – Bildnachweise für die Videobeschreibung
 ```
 
