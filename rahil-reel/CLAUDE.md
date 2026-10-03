@@ -1,8 +1,10 @@
 # CLAUDE.md – rahil-reel
 
-Remotion-Projekt, Lyric-Reel 1080×1920, 30 fps, 15,7 s, mit Ton. Bedienung in `README.md`.
+Remotion-Projekt, zwei Reels auf denselben Ton (1080×1920, 30 fps, 15,7 s, mit Ton):
+`RahilReel` (`src/config.ts`) und `SommerReel` (`src/sommer/config.ts`). Bedienung in `README.md`.
+Gemeinsame Effekt-Helfer in `src/fx.ts`.
 
-- **Inhalte, Zeiten, Effektstärken nur in `src/config.ts`** (`LINES`, `SCENES`, `TINTS`, `FX`, `SFX`).
+- **Inhalte, Zeiten, Effektstärken nur in den config-Dateien** (`LINES`/`BLOCKS`, `SCENES`, `FX`, `LOOK`, `SFX`).
 - **Ton nie einchecken** (`public/ton/rahil.wav`, gitignored). Der Rohton des Nutzers hatte am
   Anfang eine Wiederholung: Schnitt ab 2,228 s (siehe README).
 - **Keine Widmungs-/Hook-Zeile** („für alle, die jemanden vermissen“) – Nutzer fand das kitschig.
@@ -13,3 +15,8 @@ Remotion-Projekt, Lyric-Reel 1080×1920, 30 fps, 15,7 s, mit Ton. Bedienung in `
 - **Kerze: Clip 48919, nicht 6925** – 6925 ist bei 9:16 so stark angeschnitten, dass die Flamme
   das Bild sprengt.
 - „قلبي“ in Zeile 2 ist unsicher (Whisper: „حرفي“), vor Veröffentlichung gegenhören lassen.
+- **SommerReel-Bildwunsch des Nutzers:** romantischer Sommer (Städte, Berge, Rosen, Sonnenuntergang),
+  aber nostalgisch-düster, „Dark Fantasy“, wie Vergangenheit – ähnlich `nasheed-reel`, nicht gleich.
+  Sonnenblumen und knallige Sommerbilder waren ihm zu wenig romantisch.
+- **Venedig-Clip 4646 nicht nehmen:** Gondoliere und Restaurantgäste im Bild (keine Menschen).
+- **Auslieferung im Chat:** `--1080` (≈ 8 MB). 4K-Dateien kommen über den Chat-Upload nicht an.

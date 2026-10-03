@@ -1,4 +1,7 @@
-# rahil-reel – „Ya Rahilan“ Lyric-Reel
+# rahil-reel – „Ya Rahilan“ Lyric-Reel (+ SommerReel)
+
+Zwei Kompositionen auf denselben Ton: `RahilReel` (Abschied, unten) und `SommerReel`
+(„und schon sind die Sommertage Vergangenheit“, Abschnitt am Ende).
 
 15,7-s-Hochkantvideo (9:16, 30 fps) zum Nasheed-Ausschnitt „يا راحلًا والله لن أنساك“.
 Die Bilder erzählen den Text, ganz ohne Menschen: Regen an der Scheibe (Abwesenheit, kalt) →
@@ -46,5 +49,28 @@ npx remotion browser ensure
 npx remotion studio                 # Vorschau
 npm run render -- --entwurf         # 540×960, schnell, für Feedback
 npm run render                      # Endfassung 4K (1080 gerendert, Lanczos hochgerechnet)
+npm run render -- --1080            # Endfassung 1080×1920 (für den Chat-Upload)
 npm run render -- --echt-4k         # nativ 4K
+KOMP=SommerReel npm run render -- --entwurf   # dasselbe für das SommerReel
 ```
+
+## SommerReel
+
+Gleicher Ton, andere Aussage: „يا راحلًا“ meint hier den Sommer. Deutsche Feststellung in
+Cormorant Garamond (SIL OFL), erst am Ende die gesungene Zeile auf Arabisch.
+Inhalte und Zeiten in `src/sommer/config.ts`.
+
+| Zeit | Text | Bild (Mixkit) |
+|---|---|---|
+| 0 s | und schon | 38365 Rosen gehen auf |
+| 1,6 s | sind die Sommertage | 15977 Schloss im Abendlicht, Spiegelung |
+| 3,7 s | *Vergangenheit.* (Farbe läuft aus, Sepia) | 4119 Sonne versinkt im Meer |
+| 6,35 s | die langen Abende, | 4353 Paris bei Nacht |
+| 8,1 s | das warme Licht, | 17848 Sonnenuntergang über Lavendel |
+| 10,05 s | *die Leichtigkeit.* | 34515 weiße Pfingstrose im Dunkeln |
+| 12,2 s | يا راحلًا… / Du, der du gegangen bist … | 29420 Rose fällt ins Dunkel (Aufprall auf „راحلًا“) |
+
+Look (`LOOK`): nostalgisch-düster – angehobene braune Schwärzen, Petrol in den Schatten,
+Bernstein in den Lichtern, rote Film-Halation, Korn, Projektorflackern, Bildstand-Wackeln,
+Staub und Kratzer, warme Lichtlecks an den Schnitten. Schrift-Effekte wie im RahilReel
+(Zittern mit der Stimme, Ruck, Farbversatz). Geräusche: Grillen (Sommerabend), Wind, Luftzug.

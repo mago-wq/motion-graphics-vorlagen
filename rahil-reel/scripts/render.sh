@@ -3,10 +3,12 @@
 #
 #   npm run render                 Endfassung: 1080 rendern, Lanczos auf 4K (2160×3840)
 #   npm run render -- --entwurf    schneller Entwurf 540×960, kleine Datei (für Feedback)
+#   npm run render -- --1080       Endfassung in 1080×1920 (passt in den Chat-Upload, < 30 MB)
 #   npm run render -- --echt-4k    nativ in 4K rendern (deutlich langsamer)
 #
 # Ton wie in barber-ad/scripts/render.sh: Remotion gibt ihn als WAV aus, ffmpeg
 # kodiert ihn direkt ins MP4. Sonst fehlt die Edit-List und der Ton läuft 46 ms nach.
+# Andere Komposition: KOMP=SommerReel npm run render -- --entwurf
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p out
@@ -17,15 +19,22 @@ if [ ! -f public/ton/rahil.wav ]; then
 fi
 command -v ffmpeg >/dev/null || { echo "Bitte ffmpeg installieren (für Lautheit/Mux)" >&2; exit 1; }
 
-OUT=out/rahil-reel.mp4
+KOMP=${KOMP:-RahilReel}
+NAME=$( [ "$KOMP" = SommerReel ] && echo sommer-reel || echo rahil-reel )
+OUT=out/$NAME.mp4
 SCALE=1
 VF=(-vf "scale=2160:3840:flags=lanczos" -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p
 	-colorspace bt709 -color_primaries bt709 -color_trc bt709)
 case "${1:-}" in
 --entwurf)
 	SCALE=0.5
-	OUT=out/rahil-reel-entwurf.mp4
+	OUT=out/$NAME-entwurf.mp4
 	VF=(-c:v libx264 -preset veryfast -crf 26 -pix_fmt yuv420p)
+	shift ;;
+--1080)
+	OUT=out/$NAME-1080p.mp4
+	VF=(-c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p
+		-colorspace bt709 -color_primaries bt709 -color_trc bt709)
 	shift ;;
 --echt-4k)
 	SCALE=2
@@ -33,7 +42,7 @@ case "${1:-}" in
 	shift ;;
 esac
 
-npx remotion render RahilReel out/.video-ohne-ton.mp4 --scale=$SCALE \
+npx remotion render "$KOMP" out/.video-ohne-ton.mp4 --scale=$SCALE \
 	--separate-audio-to="$PWD/out/.ton.wav" --audio-codec=pcm-16 "$@"
 
 # Auf -14 LUFS (TikTok-üblich), Spitzen begrenzen. System-ffmpeg nötig (ebur128, alimiter).

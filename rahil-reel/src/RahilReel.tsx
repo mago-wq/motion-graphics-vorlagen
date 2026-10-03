@@ -15,35 +15,15 @@ import {
 	useVideoConfig,
 } from 'remotion';
 import {FPS, FX, Line, LINES, MUSIC, Scene, SCENES, Sfx, SFX, STYLE, TINTS} from './config';
-import {ENVELOPE} from './envelope';
+import {clamp, env, noise, punchAt} from './fx';
 import {ARABIC_FONT, fontsReady, LATIN_FONT} from './fonts';
 
 /** Überblendung zwischen Szenen (Frames). Lang und weich: der Gesang fließt auch. */
 const XF = 16;
 const ease = Easing.bezier(0.22, 1, 0.36, 1);
-const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 
-/** Lautstärke des Gesangs an Frame f, 0–1 (vorberechnet, siehe envelope.ts). */
-const env = (f: number) => ENVELOPE[Math.max(0, Math.min(ENVELOPE.length - 1, Math.round(f)))] ?? 0;
-
-/** Weiches Zufallsrauschen (-1…1): zwischen zufälligen Stützwerten interpoliert, kein hartes Flackern. */
-const noise = (seed: string, x: number) => {
-	const i = Math.floor(x);
-	const t = x - i;
-	const k = t * t * (3 - 2 * t);
-	return (random(`${seed}${i}`) * 2 - 1) * (1 - k) + (random(`${seed}${i + 1}`) * 2 - 1) * k;
-};
-
-/** Stoß bei jedem Worteinsatz: schnell an, gedämpft abklingend (0–1). */
-const punch = (frame: number) => {
-	let v = 0;
-	for (const l of LINES)
-		for (const w of l.words) {
-			const d = frame - w * FPS;
-			if (d >= 0 && d < 20) v = Math.max(v, Math.exp(-d / 5));
-		}
-	return v;
-};
+const WORD_TIMES = LINES.flatMap((l) => l.words);
+const punch = (frame: number) => punchAt(frame, FPS, WORD_TIMES);
 
 const sceneBounds = (i: number, total: number) => {
 	const s = SCENES[i];
