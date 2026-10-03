@@ -7,7 +7,11 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
-| [`nasheed-reel/`](nasheed-reel/) | Lyric-Reel „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit englischer Übersetzung, ohne Ton | 31 s |
+| [`coralclub-kurz/`](coralclub-kurz/) | Coral Club: Werbe-, Wissens- und Produkt-Reels, teils mit Sprecher (Pillow + ffmpeg, Sekunden Renderzeit) | 6–46 s |
+| [`welt-laerm/`](welt-laerm/) | Reminder-Clip: Originalton, deutsche Untertitel Wort für Wort, leuchtende Piktogramm-Figuren | 22,6 s |
+| [`nokhchi-edit/`](nokhchi-edit/) | History-Edit tschetschenische Geschichte: Nasheed nur Stimme, animierte Karten, Tonfassungen ohne/mit Zitaten (de/ru); 1080p oder 4K | ~69 s |
+| [`grab-reminder-de/`](grab-reminder-de/) | Deutsche Fassung eines TikTok-Clips (Retusche: englischer Text → deutscher Text im Originalstil) | 24 s |
+| [`nasheed-reel/`](nasheed-reel/) | Lyric-Reel „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit deutscher Übersetzung (Retro-Glow), Nasheed + Geräusche; 4K | 31 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
