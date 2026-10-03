@@ -1,0 +1,5 @@
+# Rezitation aus dem Referenz-TikTok: fremdes Material, nie einchecken
+public/ton/
+# Render-Ausgaben enthalten den fremden Ton
+out/
+node_modules/

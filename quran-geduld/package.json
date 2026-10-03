@@ -1,0 +1,24 @@
+{
+  "name": "quran-geduld",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rezitation al-Baqara 2:152–154 mit deutscher Übersetzung und bewegten, leuchtenden Piktogramm-Figuren (9:16), gebaut mit Remotion",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "stills": "bash scripts/render-stills.sh",
+    "typecheck": "tsc --noEmit",
+    "check": "python3 scripts/check-text.py",
+    "entwurf": "bash scripts/render.sh --entwurf"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}
