@@ -1,32 +1,9 @@
-// Bildzeichen der Szenen (SVG): Figur am Boden, Allah-Emblem, rotes Kreuz, Sanduhr,
+// Bildzeichen der Szenen (SVG): Allah-Emblem, rotes Kreuz, Sanduhr,
 // Grabstein, Strahlen, Lichtfunken. Alles im Koordinatensystem 1080×1920.
 import {random} from 'remotion';
 import {CONFIG} from '../config';
 import {QURAN_FONT} from '../fonts';
-import type {Stance} from '../poses';
 import {GROUND} from '../video';
-import {Figure} from './Figure';
-
-/** Figur, deren Füße (bzw. Knie/Stirn) auf `ground` stehen. */
-export const Fig: React.FC<{
-	x: number;
-	stance: Stance;
-	scale?: number;
-	ground?: number;
-	color?: string;
-	far?: string;
-	flip?: boolean;
-	/** Zusätzliches Anheben (px), z. B. Schweben. */
-	rise?: number;
-	/** Schwarze Trennfuge; aus bei durchscheinenden Figuren. */
-	outline?: boolean;
-	children?: React.ReactNode;
-}> = ({x, stance, scale = 1.55, ground = GROUND, color = CONFIG.colors.ink, far = '#bfc6dc', flip = false, rise = 0, outline = true, children}) => (
-	<g transform={`translate(${x} ${ground - stance.lift * scale - rise}) scale(${flip ? -scale : scale} ${scale})`}>
-		<Figure pose={stance.pose} color={color} far={far} outline={outline} />
-		{children}
-	</g>
-);
 
 /** Achtzackiger Stern mit „ٱللَّه“ – wie im Vorbild, warm. */
 export const Emblem: React.FC<{x: number; y: number; size: number; rot?: number; color?: string; opacity?: number}> = ({
@@ -208,3 +185,32 @@ export const Motes: React.FC<{
 		})}
 	</g>
 );
+
+/**
+ * Gebetskette, hängt von der Hand herab (Figur-Koordinaten). Alle `click` Frames rückt
+ * eine Perle weiter – so sieht man, dass gezählt wird.
+ */
+export const Tasbih: React.FC<{hand: [number, number][]; f: number; color: string; opacity?: number; click?: number}> = ({
+	hand,
+	f,
+	color,
+	opacity = 1,
+	click = 9,
+}) => {
+	const [, , W] = hand;
+	const n = 15;
+	const step = Math.floor(f / click);
+	const t = Math.min(1, (f % click) / 4);
+	const cx = W[0] + 2;
+	const cy = W[1] + 30;
+	return (
+		<g opacity={opacity}>
+			<ellipse cx={cx} cy={cy} rx={11} ry={27} fill="none" stroke={color} strokeWidth={2} opacity={0.6} />
+			{Array.from({length: n}, (_, i) => {
+				const a = ((i + step + t) / n) * Math.PI * 2 - Math.PI / 2;
+				return <circle key={i} cx={cx + Math.cos(a) * 11} cy={cy + Math.sin(a) * 27} r={4.6} fill={color} />;
+			})}
+			<line x1={cx} y1={cy + 27} x2={cx} y2={cy + 42} stroke={color} strokeWidth={3} strokeLinecap="round" />
+		</g>
+	);
+};

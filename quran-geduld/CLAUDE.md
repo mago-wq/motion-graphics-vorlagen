@@ -21,10 +21,17 @@ al-Baqara 2:152–154 aus dem Referenz-TikTok). Bedienung in `README.md`. Aufbau
 - **Ton nie einchecken** (`public/ton/`, `out/` gitignored). Dieses Repo ist öffentlich.
 - **Keine Gesichter** an den Figuren (`face` bleibt `none`), keine Nahaufnahmen von Händen –
   Bittgebet als ganze Figur.
-- **Figuren-Gelenke:** Hand/Fuß als Ziel, Ellbogen/Knie per IK. Kippt ein Gelenk falsch,
-  das Vorzeichen in `bend` umdrehen. Ziele nah an der Schulter (Hand aufs Herz) lassen den
-  Ellbogen weit ausschlagen – Ziel weiter weg setzen. Niederwerfung (`SUJUD`) braucht
-  Bein-`bend` -1: Hüfte oben, Knie am Boden, Schienbein nach hinten.
+- **Figuren = massive Piktogramme mit Vorwärtskinematik** (`components/Body.tsx`), nicht die
+  Strichfigur aus `welt-laerm` (Nutzer: „bewegen sich unnatürlich, man erkennt nicht, was sie
+  machen, Hände komisch platziert“). Eine Pose ist ein Satz Gelenkwinkel (`poses.ts`):
+  Rumpfneigung, Kopf, Schulter/Ellbogen/Hand, Hüfte/Knie/Fuß. Übergänge mischen Winkel
+  (`mixProfile`, Rumpf führt, Arme/Kopf folgen), Abläufe mit Haltezeiten über `sequence`.
+- **Bodenkontakt automatisch** (`components/Person.tsx`): Hüfthöhe aus dem tiefsten Punkt der
+  Pose; beim Gebet bleibt der hintere Knöchel an Ort (`anchor="ankle"`), beim Gehen hält
+  `walkTravel` den Standfuß fest (kein Rutschen). Gehen startet/endet mit Übergang aus dem Stand.
+- **Unterarm quer zum Körper** (Hände auf der Brust) im Profil mit `fs` verkürzen, sonst ragt
+  die Hand weit nach vorn. Neue Posen erst im Prüfstand ansehen:
+  `npx remotion still src/lab-index.ts PoseLab out/poselab.png`.
 - **Leuchten nur über `Layer`/`Glow`**, Text-Leuchten per `text-shadow` (CSS-Filter auf
   fertigen Wörtern können arabische Glyphen beschneiden). Warm nur bei Emblem/Licht/Leben.
 - **Bildbereich unter dem Text:** zweizeiliges Arabisch + zweizeiliges Deutsch reichen bis

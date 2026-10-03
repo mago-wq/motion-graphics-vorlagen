@@ -1,11 +1,13 @@
 // Vers 154: „Und sagt nicht von denen, die auf Allahs Weg getötet werden, sie seien tot.
 // Nein, sie sind lebendig, doch ihr nehmt es nicht wahr.“
 import {CONFIG} from '../config';
-import type {Pose} from '../components/Figure';
-import {Emblem, Fig, Gravestone, Motes, Rays, RedX} from '../components/Props';
+import {Front, Profile} from '../components/Person';
+import {Emblem, Gravestone, Motes, Rays, RedX} from '../components/Props';
 import {Halo, Layer, SceneShell, useScene, type SceneProps} from '../components/Scene';
+import {mixFront} from '../components/Body';
 import {breathe, easeInOut, jitter, tween} from '../motion';
-import {mixStance, OPEN, STAND, walk} from '../poses';
+import {walkTravel} from '../motion2';
+import {BLIND_BASE, F_OPEN, F_STAND, walkPose} from '../poses';
 import {GROUND} from '../video';
 
 const {ink, warm, red} = CONFIG.colors;
@@ -75,7 +77,7 @@ export const Lebendig: React.FC<SceneProps> = (props) => {
 	const {f, level} = useScene(props);
 	if (level === 0) return null;
 	const light = tween(f, 0, 30, 0, 1, easeInOut);
-	const stance = mixStance(STAND, OPEN, tween(f, 12, 42, 0, 1, easeInOut));
+	const pose = mixFront(F_STAND, F_OPEN, tween(f, 14, 40, 0, 1, easeInOut));
 	return (
 		<SceneShell level={level} {...props}>
 			<Halo x={540} y={1200} r={480} color={warm} opacity={light} />
@@ -85,43 +87,50 @@ export const Lebendig: React.FC<SceneProps> = (props) => {
 				<Motes f={f} n={26} x={540} w={360} y0={GROUND} y1={850} color={warm} seed="lb" opacity={light} />
 			</Layer>
 			<Layer glow="#fff4dc">
-				<Fig x={540} stance={stance} color="#fff8ec" far="#f3dcb0" rise={tween(f, 0, 40, -30, 6) + breathe(f, 60, 4)} />
+				<Front pose={pose} x={540} scale={1.5} color="#fff8ec" rise={tween(f, 0, 40, -24, 4) + breathe(f, 60, 3)} />
 			</Layer>
 		</SceneShell>
 	);
 };
 
 /**
- * Ein Mensch mit Blindenstock geht vorbei. Hinter ihm steht – kaum sichtbar – die lebendige
- * Figur im Licht: Sie ist da, aber er nimmt sie nicht wahr.
+ * Ein Mensch mit Blindenstock geht langsam vorbei. Hinter ihm steht – kaum sichtbar – die
+ * lebendige Figur im Licht: Sie ist da, aber er nimmt sie nicht wahr.
  */
-/** Gehhaltung: Kopf leicht gesenkt, rechte Hand führt den Stock nach vorn. */
-const BLIND: Pose = {neck: [8, -114], head: [20, -158], lHand: [-10, -10], rHand: [54, -16], lFoot: [0, 160], rFoot: [0, 160], bend: {lArm: 1, rArm: -1}};
-
 export const Blind: React.FC<SceneProps> = (props) => {
-	const {f, level, len} = useScene(props);
+	const {f, level} = useScene(props);
 	if (level === 0) return null;
-	const STEP = 20;
+	const STEP = 24;
 	const phase = f / STEP;
-	const x = tween(f, 0, len, 150, 590, (t) => t);
-	const stance = walk(phase, BLIND);
-	// Stock pendelt vor ihm, tippt bei jedem Schritt auf
+	// Kurze, tastende Schritte
+	const poseAt = (p: number) => walkPose(p, BLIND_BASE, false, 13);
+	const SCALE = 1.5;
+	const x = 90 + walkTravel(phase, poseAt) * SCALE;
+	// Stock pendelt vor ihm und tippt bei jedem Schritt auf den Boden
 	const sweep = Math.cos(phase * Math.PI);
-	const tip: [number, number] = [118 + sweep * 30, 160 - Math.max(0, Math.sin(phase * Math.PI)) * 14];
+	const lift = Math.max(0, Math.sin(phase * Math.PI * 2)) * 10;
 	const ghost = 0.3 + 0.08 * Math.sin(f / 12);
 	return (
 		<SceneShell level={level} {...props}>
-			<Halo x={820} y={1180} r={300} color={warm} opacity={ghost} />
+			<Halo x={830} y={1180} r={300} color={warm} opacity={ghost} />
 			<Layer glow={warm} strength={0.6} opacity={ghost * 1.4}>
-				<Podium x={820} w={180} color={warm} />
+				<Podium x={830} w={180} color={warm} />
 			</Layer>
 			<Layer glow="#fff4dc" opacity={ghost}>
-				<Fig x={820} stance={OPEN} scale={1.25} color="#fff8ec" far="#f3dcb0" outline={false} rise={6 + breathe(f, 60, 4)} />
+				<Front pose={F_OPEN} x={830} scale={1.2} color="#fff8ec" rise={6 + breathe(f, 60, 4)} />
 			</Layer>
 			<Layer glow={ink}>
-				<Fig x={x} stance={stance}>
-					<line x1={54} y1={-16} x2={tip[0]} y2={tip[1]} stroke={ink} strokeWidth={9} strokeLinecap="round" />
-				</Fig>
+				<Profile
+					pose={poseAt(phase)}
+					x={x}
+					scale={SCALE}
+					handProp={(h) => {
+						const [, , W] = h;
+						// Stockspitze: vor der Figur auf Bodenhöhe (Figur-Einheiten, Boden ≈ 183 unter der Hüfte)
+						const tip: [number, number] = [W[0] + 70 + sweep * 18, 180 - lift];
+						return <line x1={W[0]} y1={W[1]} x2={tip[0]} y2={tip[1]} stroke={ink} strokeWidth={8} strokeLinecap="round" />;
+					}}
+				/>
 			</Layer>
 		</SceneShell>
 	);
