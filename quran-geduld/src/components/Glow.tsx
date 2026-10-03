@@ -3,9 +3,9 @@ import type {CSSProperties, ReactNode} from 'react';
 
 export const glowFilter = (color: string, strength = 1) =>
 	[
-		`drop-shadow(0 0 ${4 * strength}px ${color})`,
-		`drop-shadow(0 0 ${18 * strength}px ${color}cc)`,
-		`drop-shadow(0 0 ${55 * strength}px ${color}66)`,
+		`drop-shadow(0 0 ${5 * strength}px ${color})`,
+		`drop-shadow(0 0 ${22 * strength}px ${color}dd)`,
+		`drop-shadow(0 0 ${70 * strength}px ${color}88)`,
 	].join(' ');
 
 export const Glow: React.FC<{color: string; strength?: number; style?: CSSProperties; children: ReactNode}> = ({

@@ -37,12 +37,10 @@ export type SceneId =
 export const CONFIG = {
 	audio: {file: 'ton/rezitation.wav', volume: 1},
 	colors: {
-		ink: '#f3f6ff',
+		ink: '#ffffff',
 		/** Warmes Licht nur dort, wo Allahs Nähe bzw. das Leben gemeint ist. */
 		warm: '#ffd796',
 		red: '#ff3b3b',
-		skyTop: '#03050c',
-		skyHorizon: '#0d1530',
 	},
 	texts: [
 		{

@@ -2,7 +2,7 @@
 
 Remotion-Projekt (TypeScript), 1080×1920, 30 fps, 58,13 s, **mit Ton** (Rezitation
 al-Baqara 2:152–154 aus dem Referenz-TikTok). Bedienung in `README.md`. Aufbau aus
-`welt-laerm` übernommen (Figur mit IK, Flacker-Licht, Glow).
+`welt-laerm` übernommen (Flacker-Licht, Glow); Figuren und Hintergrund sind eigene.
 
 ## Regeln
 
@@ -29,9 +29,24 @@ al-Baqara 2:152–154 aus dem Referenz-TikTok). Bedienung in `README.md`. Aufbau
 - **Bodenkontakt automatisch** (`components/Person.tsx`): Hüfthöhe aus dem tiefsten Punkt der
   Pose; beim Gebet bleibt der hintere Knöchel an Ort (`anchor="ankle"`), beim Gehen hält
   `walkTravel` den Standfuß fest (kein Rutschen). Gehen startet/endet mit Übergang aus dem Stand.
+- **Keine Umrisslinien** an den Figuren (Nutzer), reine weiße Silhouetten mit Leuchten. Deshalb
+  müssen Arme/Hände in jeder Pose außerhalb des Rumpfs liegen, sonst verschwinden sie.
+- **Proportionen am Vorbild gemessen:** Kopf r 27 mit sichtbarer Lücke zum Rumpf (die runde
+  Rumpfkappe endet an der Schulterlinie), hängende Hände bis Mitte Oberschenkel, schlanke Arme,
+  kräftige Beine. Vergleich: Vorbild-Ausschnitt und `PoseLab` nebeneinander kacheln.
+- **Berührungen per `armTo`** (Hand auf Knie/Oberschenkel/Boden), einmal beim Laden berechnet.
+  Niederwerfung: **nur Hände** am Boden, Ellbogen oben (Nutzer), Brust hoch genug, dass der Arm
+  darunter sichtbar ist. Vom Stehen über `BEND_DOWN` → `KNEEL_UP` → `SUJUD`, sonst hüpft die Figur.
+- **Weggehen vorgebeugt** (`LEAVE`, Rumpf ~16°), nicht aufrecht/zurückgelehnt (Nutzer).
 - **Unterarm quer zum Körper** (Hände auf der Brust) im Profil mit `fs` verkürzen, sonst ragt
   die Hand weit nach vorn. Neue Posen erst im Prüfstand ansehen:
   `npx remotion still src/lab-index.ts PoseLab out/poselab.png`.
+- **Hintergrund wie im Vorbild, aber heller** (`components/Background.tsx`): schwarz-weiß,
+  Lichtsäule, Strahlen, Dunst, fallender Staub, Lichtfleck am Boden, Aufblitzen beim
+  Szenenwechsel; Licht folgt dem Flackern der Szenen. Keine gezeichnete Landschaft (Nutzer: wirkte
+  „generiert“).
+- **Sanduhr:** nur während des Umdrehens rotieren, danach wieder 0° – sonst fließt der Sand nach
+  oben.
 - **Leuchten nur über `Layer`/`Glow`**, Text-Leuchten per `text-shadow` (CSS-Filter auf
   fertigen Wörtern können arabische Glyphen beschneiden). Warm nur bei Emblem/Licht/Leben.
 - **Bildbereich unter dem Text:** zweizeiliges Arabisch + zweizeiliges Deutsch reichen bis

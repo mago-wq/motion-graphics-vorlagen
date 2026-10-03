@@ -11,7 +11,7 @@ import {SAFE, sec} from '../video';
 const AR_STAGGER = 5;
 const WORD_IN = 10;
 
-const glow = (c: string, s = 1) => `0 0 ${6 * s}px ${c}, 0 0 ${20 * s}px ${c}aa, 0 0 ${48 * s}px ${c}55`;
+const glow = (c: string, s = 1) => `0 0 ${6 * s}px ${c}, 0 0 ${22 * s}px ${c}cc, 0 0 ${56 * s}px ${c}77`;
 
 const reveal = (frame: number, start: number) => {
 	const p = tween(frame, start, start + WORD_IN, 0, 1);
@@ -105,9 +105,9 @@ export const TextBlock: React.FC<{block: Block}> = ({block}) => {
 					fontWeight: 600,
 					fontSize: deSize,
 					lineHeight: 1.2,
-					color: '#eef1ff',
+					color: '#ffffff',
 					textAlign: 'center',
-					textShadow: glow('#ffffff', 0.45),
+					textShadow: glow('#ffffff', 0.6),
 				}}
 			>
 				{block.parts.flatMap((part, pi) => {

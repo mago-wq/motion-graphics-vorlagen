@@ -7,11 +7,11 @@ import {Halo, Layer, SceneShell, useScene, type SceneProps} from '../components/
 import {CONFIG} from '../config';
 import {breathe, easeInOut, tween} from '../motion';
 import {sequence} from '../motion2';
-import {JALSA, KNEEL_DUA, KNEEL_UP, QIYAM, RUKU, SUJUD} from '../poses';
+import {BEND_DOWN, JALSA, KNEEL_DUA, KNEEL_UP, QIYAM, RUKU, SUJUD} from '../poses';
 import {GROUND} from '../video';
 
 const {ink, warm} = CONFIG.colors;
-const SCALE = 1.5;
+const SCALE = 1.65;
 
 /** Bittgebet mit ruhigem Atmen: Hände heben und senken sich kaum merklich. */
 const duaBreath = (f: number, up = 0): ProfilePose => ({
@@ -27,10 +27,11 @@ export const Geduld: React.FC<SceneProps> = (props) => {
 	if (level === 0) return null;
 	const CYCLE = 100;
 	const FLIP = 16;
-	const k = Math.floor(f / CYCLE);
 	const c = f % CYCLE;
 	const t = tween(c, 0, CYCLE - FLIP, 0, 1, (x) => x);
-	const rot = k * 180 + tween(c, CYCLE - FLIP, CYCLE, 0, 180, easeInOut);
+	// Nur während des Umdrehens rotieren; danach wieder 0°, denn die Uhr ist symmetrisch:
+	// die volle Kammer liegt nach dem Drehen oben, der Sand fließt nach unten.
+	const rot = tween(c, CYCLE - FLIP, CYCLE, 0, 180, easeInOut);
 	return (
 		<SceneShell level={level} {...props}>
 			<Layer glow={ink}>
@@ -41,7 +42,7 @@ export const Geduld: React.FC<SceneProps> = (props) => {
 	);
 };
 
-/** Gebetsablauf: Stehen – Verbeugen – Aufrichten – Niederwerfen – Sitzen – Niederwerfen. */
+/** Gebetsablauf: Stehen – Verbeugen – Aufrichten – in die Knie – Niederwerfen – Sitzen – Niederwerfen. */
 const PRAYER: [number, ProfilePose][] = [
 	[0, QIYAM],
 	[26, QIYAM],
@@ -49,8 +50,9 @@ const PRAYER: [number, ProfilePose][] = [
 	[76, RUKU],
 	[96, QIYAM],
 	[106, QIYAM],
-	[124, KNEEL_UP],
-	[146, SUJUD],
+	[118, BEND_DOWN],
+	[132, KNEEL_UP],
+	[150, SUJUD],
 	[178, SUJUD],
 	[198, JALSA],
 	[214, JALSA],

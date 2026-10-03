@@ -6,10 +6,10 @@ import {Halo, Layer, SceneShell, useScene, type SceneProps} from '../components/
 import {CONFIG} from '../config';
 import {breathe, easeInOut, tween} from '../motion';
 import {walkTravel} from '../motion2';
-import {KNEEL_DHIKR, KNEEL_DUA, PROUD, walkPose} from '../poses';
+import {KNEEL_DHIKR, KNEEL_DUA, LEAVE, walkPose} from '../poses';
 
 const {ink, warm, red} = CONFIG.colors;
-const SCALE = 1.5;
+const SCALE = 1.65;
 
 /** Dhikr mit leichtem Nicken im Zählrhythmus. */
 const dhikr = (f: number) => ({
@@ -75,7 +75,7 @@ export const Danken: React.FC<SceneProps> = (props) => {
 };
 
 /**
- * Undank: Licht rieselt vom Emblem herab, die Figur dreht sich weg und geht erhobenen Kinns davon.
+ * Undank: Licht rieselt vom Emblem herab, die Figur dreht sich weg und geht vorgebeugt davon.
  * Beim Wort „undankbar“ streicht ein rotes Kreuz sie durch, sie bleibt stehen.
  */
 export const Undank: React.FC<SceneProps> = (props) => {
@@ -90,14 +90,14 @@ export const Undank: React.FC<SceneProps> = (props) => {
 	const phase = Math.max(0, Math.min(f, walkEnd) - walkFrom) / STEP;
 	// Ausgehen aus dem Schritt: nach walkEnd zurück in den Stand
 	const settle = tween(f, walkEnd, walkEnd + 10, 0, 1, easeInOut);
-	const walking = walkPose(phase, PROUD);
+	const walking = walkPose(phase, LEAVE);
 	// Anlaufen aus dem Stand (halber Schritt), am Ende wieder in den Stand
 	const start = Math.min(1, phase * 2);
-	const pose = mixProfile(mixProfile(PROUD, walking, start), PROUD, settle);
-	const x = 470 + walkTravel(phase, (p) => walkPose(p, PROUD)) * SCALE;
+	const pose = mixProfile(mixProfile(LEAVE, walking, start), LEAVE, settle);
+	const x = 470 + walkTravel(phase, (p) => walkPose(p, LEAVE)) * SCALE;
 	const cross = tween(f, mark, mark + 16, 0, 1, easeInOut);
 	const dim = 1 - 0.45 * cross;
-	const crossX = 470 + walkTravel(Math.max(0, walkEnd - walkFrom) / STEP, (p) => walkPose(p, PROUD)) * SCALE;
+	const crossX = 470 + walkTravel(Math.max(0, walkEnd - walkFrom) / STEP, (p) => walkPose(p, LEAVE)) * SCALE;
 	return (
 		<SceneShell level={level} {...props}>
 			<Halo x={crossX} y={1200} r={400} color={red} opacity={cross * (0.8 + 0.2 * Math.sin(f / 5))} />

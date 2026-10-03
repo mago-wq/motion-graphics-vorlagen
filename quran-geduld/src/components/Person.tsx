@@ -19,7 +19,7 @@ export const Profile: React.FC<{
 	far?: string;
 	rise?: number;
 	handProp?: (hand: Pt[]) => React.ReactNode;
-}> = ({pose, x, anchor = 'pelvis', scale = 1.5, ground = GROUND, flip = false, color = CONFIG.colors.ink, far = '#aab3cc', rise = 0, turn, handProp}) => {
+}> = ({pose, x, anchor = 'pelvis', scale = 1.65, ground = GROUND, flip = false, color = CONFIG.colors.ink, far = '#d4d4d4', rise = 0, turn, handProp}) => {
 	const j = solveProfile(pose);
 	const low = lowestProfile(j);
 	const ax = anchor === 'ankle' ? j.leg.F[2][0] : 0;
@@ -34,7 +34,7 @@ export const Profile: React.FC<{
 export const Front: React.FC<{pose: FrontPose; x: number; scale?: number; ground?: number; color?: string; rise?: number}> = ({
 	pose,
 	x,
-	scale = 1.5,
+	scale = 1.65,
 	ground = GROUND,
 	color = CONFIG.colors.ink,
 	rise = 0,

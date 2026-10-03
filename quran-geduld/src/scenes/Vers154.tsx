@@ -87,7 +87,7 @@ export const Lebendig: React.FC<SceneProps> = (props) => {
 				<Motes f={f} n={26} x={540} w={360} y0={GROUND} y1={850} color={warm} seed="lb" opacity={light} />
 			</Layer>
 			<Layer glow="#fff4dc">
-				<Front pose={pose} x={540} scale={1.5} color="#fff8ec" rise={tween(f, 0, 40, -24, 4) + breathe(f, 60, 3)} />
+				<Front pose={pose} x={540} scale={1.65} color="#fff8ec" rise={tween(f, 0, 40, -24, 4) + breathe(f, 60, 3)} />
 			</Layer>
 		</SceneShell>
 	);
@@ -104,7 +104,7 @@ export const Blind: React.FC<SceneProps> = (props) => {
 	const phase = f / STEP;
 	// Kurze, tastende Schritte
 	const poseAt = (p: number) => walkPose(p, BLIND_BASE, false, 13);
-	const SCALE = 1.5;
+	const SCALE = 1.65;
 	const x = 90 + walkTravel(phase, poseAt) * SCALE;
 	// Stock pendelt vor ihm und tippt bei jedem Schritt auf den Boden
 	const sweep = Math.cos(phase * Math.PI);

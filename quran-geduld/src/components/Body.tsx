@@ -1,5 +1,5 @@
 // Piktogramm-Figur als massive Silhouette (wie im Vorbild): breiter Rumpf, kräftige,
-// sich verjüngende Gliedmaßen, schwebender Kopf, dunkle Trennfugen um die vorderen Glieder.
+// sich verjüngende Gliedmaßen, schwebender Kopf. Keine Umrisslinien (Wunsch des Nutzers).
 //
 // Vorwärtskinematik: Eine Pose ist eine Reihe von Gelenkwinkeln, keine Zielpunkte.
 // Dadurch laufen Übergänge auf Bögen, und kein Ellbogen kann umklappen.
@@ -11,24 +11,24 @@ export type Pt = [number, number];
 const dir = (a: number, len: number): Pt => [Math.sin((a * Math.PI) / 180) * len, Math.cos((a * Math.PI) / 180) * len];
 const add = (p: Pt, q: Pt): Pt => [p[0] + q[0], p[1] + q[1]];
 
-/** Maße in Figur-Einheiten (stehend ~355 hoch). */
+/** Maße in Figur-Einheiten (stehend ~370 hoch, Kopf ≈ 1/6). Hängende Hände reichen bis Mitte Oberschenkel. */
 export const DIM = {
-	torso: 108,
-	shoulderDrop: 14,
-	headGap: 47,
-	headR: 30,
-	upperArm: 56,
-	foreArm: 50,
-	hand: 18,
-	thigh: 86,
-	shin: 84,
-	foot: 24,
+	torso: 104,
+	shoulderDrop: 10,
+	headGap: 36,
+	headR: 27,
+	upperArm: 62,
+	foreArm: 54,
+	hand: 22,
+	thigh: 88,
+	shin: 86,
+	foot: 26,
 };
 
 /** Arm im Profil: s = Schulter relativ zum hängenden Arm entlang des Rumpfs (+ = nach vorn),
  *  e = Ellbogenbeugung (+ = Unterarm nach vorn/oben), h = Handwinkel relativ zum Unterarm,
  *  fs = Verkürzung von Unterarm+Hand (Unterarm zeigt quer zum Körper, z. B. Hände auf der Brust). */
-export type Arm = {s: number; e: number; h?: number; fs?: number};
+export type Arm = {s: number; e: number; h?: number; fs?: number; k?: number};
 /** Bein: h = Oberschenkel absolut (0 = senkrecht nach unten, + = nach vorn),
  *  k = Kniebeugung (+ = Unterschenkel nach hinten), f = Fuß relativ zum Unterschenkel (90 = nach vorn). */
 export type Leg = {h: number; k: number; f?: number};
@@ -62,10 +62,11 @@ export const solveProfile = (p: ProfilePose): ProfileJoints => {
 	const arm = (a: Arm): Pt[] => {
 		const up = -p.lean + a.s;
 		const fo = up + a.e;
-		const E = add(S, dir(up, DIM.upperArm));
-		const k = a.fs ?? 1;
+		const ka = a.k ?? 1;
+		const E = add(S, dir(up, DIM.upperArm * ka));
+		const k = (a.fs ?? 1) * ka;
 		const W = add(E, dir(fo, DIM.foreArm * k));
-		const H = add(W, dir(fo + (a.h ?? 0), DIM.hand * k));
+		const H = add(W, dir(fo + (a.h ?? 0), DIM.hand * (a.fs ?? 1)));
 		return [S, E, W, H];
 	};
 	const leg = (l: Leg): Pt[] => {
@@ -87,7 +88,7 @@ export const lowestProfile = (j: ProfileJoints) => {
 };
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const mixArm = (a: Arm, b: Arm, t: number): Arm => ({s: lerp(a.s, b.s, t), e: lerp(a.e, b.e, t), h: lerp(a.h ?? 0, b.h ?? 0, t), fs: lerp(a.fs ?? 1, b.fs ?? 1, t)});
+const mixArm = (a: Arm, b: Arm, t: number): Arm => ({s: lerp(a.s, b.s, t), e: lerp(a.e, b.e, t), h: lerp(a.h ?? 0, b.h ?? 0, t), fs: lerp(a.fs ?? 1, b.fs ?? 1, t), k: lerp(a.k ?? 1, b.k ?? 1, t)});
 const mixLeg = (a: Leg, b: Leg, t: number): Leg => ({h: lerp(a.h, b.h, t), k: lerp(a.k, b.k, t), f: lerp(a.f ?? 90, b.f ?? 90, t)});
 
 /**
@@ -125,7 +126,7 @@ const capsule = (a: Pt, b: Pt, wa: number, wb: number) => {
 	return `M${p1[0]} ${p1[1]} L${p2[0]} ${p2[1]} A${rb} ${rb} 0 0 0 ${p3[0]} ${p3[1]} L${p4[0]} ${p4[1]} A${ra} ${ra} 0 0 0 ${p1[0]} ${p1[1]} Z`;
 };
 
-const W = {upperArm: [27, 23], foreArm: [23, 20], hand: [21, 15], thigh: [40, 31], shin: [30, 24], foot: [20, 16]} as const;
+const W = {upperArm: [27, 23], foreArm: [23, 19], hand: [21, 15], thigh: [46, 34], shin: [32, 24], foot: [21, 16]} as const;
 
 const limbPaths = (pts: Pt[], widths: readonly (readonly [number, number])[]) =>
 	widths.map((w, i) => capsule(pts[i], pts[i + 1], w[0], w[1]));
@@ -134,42 +135,61 @@ export const ProfileBody: React.FC<{
 	pose: ProfilePose;
 	color: string;
 	far?: string;
-	gap?: string;
-	/** Füße zeichnen (stehend ja, kniend ebenfalls – liegen dann hinten auf). */
 	feet?: boolean;
 	/** Zusätzliches Bild an der vorderen Hand (z. B. Gebetskette, Stock), in Figur-Koordinaten. */
 	handProp?: (hand: Pt[]) => React.ReactNode;
-}> = ({pose, color, far = color, gap = '#05070d', feet = true, handProp}) => {
+}> = ({pose, color, far = color, feet = true, handProp}) => {
 	const j = solveProfile(pose);
 	const legW = feet ? [W.thigh, W.shin, W.foot] : [W.thigh, W.shin];
 	const armW = [W.upperArm, W.foreArm, W.hand];
-	const farLeg = limbPaths(j.leg.F, legW);
-	const nearLeg = limbPaths(j.leg.N, legW);
-	const farArm = limbPaths(j.arm.F, armW);
-	const nearArm = limbPaths(j.arm.N, armW);
-	// Rumpf: vorn etwas voller (Brust), hinten gerade
-	const torso = capsule(j.pelvis, j.neck, 50, 58);
-	const G = 7;
-	const draw = (ds: string[], fill: string, outline: boolean) => (
-		<g>
-			{outline && ds.map((d, i) => <path key={`o${i}`} d={d} fill={gap} stroke={gap} strokeWidth={G * 2} strokeLinejoin="round" />)}
-			{ds.map((d, i) => (
-				<path key={i} d={d} fill={fill} />
-			))}
-		</g>
-	);
+	const paths = (ds: string[], fill: string) => ds.map((d, i) => <path key={i} d={d} fill={fill} />);
 	return (
 		<g>
-			{draw(farArm, far, false)}
-			{draw(farLeg, far, false)}
-			{draw([torso], color, true)}
-			{draw(nearLeg, color, true)}
-			<circle cx={j.head[0]} cy={j.head[1]} r={DIM.headR + G} fill={gap} />
+			{paths(limbPaths(j.arm.F, armW), far)}
+			{paths(limbPaths(j.leg.F, legW), far)}
+			{/* Rumpf: Brust etwas breiter als die Hüfte. Die runde Kappe endet genau an der
+			    Schulterlinie, damit zwischen Rumpf und Kopf eine Lücke bleibt (wie im Vorbild). */}
+			<path d={capsule(j.pelvis, add(j.neck, dir(-pose.lean, 27)), 50, 54)} fill={color} />
+			{paths(limbPaths(j.leg.N, legW), color)}
 			<circle cx={j.head[0]} cy={j.head[1]} r={DIM.headR} fill={color} />
-			{draw(nearArm, color, true)}
+			{paths(limbPaths(j.arm.N, armW), color)}
 			{handProp?.(j.arm.N)}
 		</g>
 	);
+};
+
+/**
+ * Armwinkel, mit denen das Handgelenk der Pose genau auf `wrist` (relativ zur Hüfte) liegt.
+ * Nur zum Entwerfen von Posen (einmal beim Laden berechnet) – animiert wird weiter über Winkel,
+ * daher kein Umklappen. `up` wählt die Ellbogenlösung oberhalb der Linie Schulter–Hand.
+ * `k` < 1 verkürzt den Arm (Ellbogen zeigt zur Seite, z. B. in der Niederwerfung).
+ */
+export const armTo = (pose: ProfilePose, wrist: Pt, opts: {up?: boolean; k?: number; h?: number; handWorld?: number} = {}): Arm => {
+	const {up = true, k = 1} = opts;
+	const S = solveProfile(pose).shoulder;
+	const l1 = DIM.upperArm * k;
+	const l2 = DIM.foreArm * k;
+	const dx = wrist[0] - S[0];
+	const dy = wrist[1] - S[1];
+	const d = Math.min(Math.hypot(dx, dy), l1 + l2 - 0.01);
+	const a = (l1 * l1 - l2 * l2 + d * d) / (2 * d);
+	const hh = Math.sqrt(Math.max(0, l1 * l1 - a * a));
+	const ux = dx / Math.hypot(dx, dy);
+	const uy = dy / Math.hypot(dx, dy);
+	const bx = S[0] + a * ux;
+	const by = S[1] + a * uy;
+	const c1: Pt = [bx + hh * uy, by - hh * ux];
+	const c2: Pt = [bx - hh * uy, by + hh * ux];
+	const E = (up ? c1[1] <= c2[1] : c1[1] > c2[1]) ? c1 : c2;
+	const ang = (v: Pt) => (Math.atan2(v[0], v[1]) * 180) / Math.PI;
+	const upper = ang([E[0] - S[0], E[1] - S[1]]);
+	const fore = ang([wrist[0] - E[0], wrist[1] - E[1]]);
+	let e = fore - upper;
+	while (e > 180) e -= 360;
+	while (e < -180) e += 360;
+	// Handwinkel: relativ zum Unterarm oder absolut (z. B. 90 = flach nach vorn)
+	const h = opts.handWorld !== undefined ? opts.handWorld - fore : (opts.h ?? 0);
+	return {s: upper + pose.lean, e, h, fs: 1, k};
 };
 
 // ---------- Frontalansicht ----------
@@ -184,7 +204,7 @@ export const solveFront = (p: FrontPose) => {
 	const N: Pt = [0, -DIM.torso];
 	const head: Pt = [p.tilt ?? 0, -DIM.torso - DIM.headGap];
 	const arm = (side: 1 | -1, a: FArm): Pt[] => {
-		const S: Pt = [side * 31, -DIM.torso + 14];
+		const S: Pt = [side * 32, -DIM.torso + 12];
 		const E = add(S, [side * Math.sin((a.a * Math.PI) / 180) * DIM.upperArm, Math.cos((a.a * Math.PI) / 180) * DIM.upperArm]);
 		const fa = a.a + a.e;
 		const Wr = add(E, [side * Math.sin((fa * Math.PI) / 180) * DIM.foreArm, Math.cos((fa * Math.PI) / 180) * DIM.foreArm]);
@@ -192,7 +212,7 @@ export const solveFront = (p: FrontPose) => {
 		return [S, E, Wr, H];
 	};
 	const leg = (side: 1 | -1, a: number): Pt[] => {
-		const Hp: Pt = [side * 17, 0];
+		const Hp: Pt = [side * 18, 0];
 		const K = add(Hp, [side * Math.sin((a * Math.PI) / 180) * DIM.thigh, Math.cos((a * Math.PI) / 180) * DIM.thigh]);
 		const A = add(K, [side * Math.sin((a * Math.PI) / 180) * DIM.shin, Math.cos((a * Math.PI) / 180) * DIM.shin]);
 		return [Hp, K, A];
@@ -208,28 +228,20 @@ export const mixFront = (a: FrontPose, b: FrontPose, t: number): FrontPose => {
 /** Frontalfigur: Höhe der Füße unter der Hüfte. */
 export const FRONT_LIFT = DIM.thigh + DIM.shin + 13;
 
-export const FrontBody: React.FC<{pose: FrontPose; color: string; gap?: string}> = ({pose, color, gap = '#05070d'}) => {
+export const FrontBody: React.FC<{pose: FrontPose; color: string}> = ({pose, color}) => {
 	const j = solveFront(pose);
 	const armW = [W.upperArm, W.foreArm, W.hand];
-	const legW = [[42, 34], [34, 27]] as const;
+	const legW = [[46, 36], [36, 27]] as const;
 	// Rumpf als Trapez mit runden Ecken: Schultern breit, Hüfte schmaler
-	const torso = `M${-38} ${-DIM.torso + 6} Q 0 ${-DIM.torso - 8} 38 ${-DIM.torso + 6} L 30 12 Q 0 20 -30 12 Z`;
-	const G = 7;
-	const part = (ds: string[], outline: boolean) => (
-		<g>
-			{outline && ds.map((d, i) => <path key={`o${i}`} d={d} fill={gap} stroke={gap} strokeWidth={G * 2} strokeLinejoin="round" />)}
-			{ds.map((d, i) => (
-				<path key={i} d={d} fill={color} />
-			))}
-		</g>
-	);
+	const torso = `M${-40} ${-DIM.torso + 14} Q 0 ${-DIM.torso} 40 ${-DIM.torso + 14} L 31 12 Q 0 20 -31 12 Z`;
+	const paths = (ds: string[]) => ds.map((d, i) => <path key={i} d={d} fill={color} />);
 	return (
 		<g>
-			{part([...limbPaths(j.legL, legW), ...limbPaths(j.legR, legW)], false)}
+			{paths([...limbPaths(j.legL, legW), ...limbPaths(j.legR, legW)])}
 			<path d={torso} fill={color} stroke={color} strokeWidth={14} strokeLinejoin="round" />
 			<circle cx={j.head[0]} cy={j.head[1]} r={DIM.headR} fill={color} />
-			{part(limbPaths(j.armL, armW), true)}
-			{part(limbPaths(j.armR, armW), true)}
+			{paths(limbPaths(j.armL, armW))}
+			{paths(limbPaths(j.armR, armW))}
 		</g>
 	);
 };
