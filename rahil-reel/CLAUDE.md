@@ -17,6 +17,6 @@ Gemeinsame Effekt-Helfer in `src/fx.ts`.
 - „قلبي“ in Zeile 2 ist unsicher (Whisper: „حرفي“), vor Veröffentlichung gegenhören lassen.
 - **SommerReel-Bildwunsch des Nutzers:** romantischer Sommer (Städte, Berge, Rosen, Sonnenuntergang),
   aber nostalgisch-düster, „Dark Fantasy“, wie Vergangenheit – ähnlich `nasheed-reel`, nicht gleich.
-  Sonnenblumen und knallige Sommerbilder waren ihm zu wenig romantisch.
+  Sonnenblumen und knallige Sommerbilder sollten es ausdrücklich nicht sein.
 - **Venedig-Clip 4646 nicht nehmen:** Gondoliere und Restaurantgäste im Bild (keine Menschen).
 - **Auslieferung im Chat:** `--1080` (≈ 8 MB). 4K-Dateien kommen über den Chat-Upload nicht an.
