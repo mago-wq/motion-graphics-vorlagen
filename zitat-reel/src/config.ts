@@ -33,9 +33,20 @@ export const CONFIG = {
 	source: 'Qur’an · ash-Sharḥ 94:5–6',
 
 	/** Kürzel unten links im Bild (Schutz gegen Reposts, wie in allen Referenzen). */
-	handle: '@deinkanal',
+	handle: '@Mag0med',
 
-	/** Regenbett mitrendern. Für TikTok mit eigenem Sound: an lassen, App-Sound drüberlegen. */
+	/**
+	 * Rezitation, eine Datei pro Zeile (gleiche Reihenfolge wie `lines`).
+	 * Holen mit: bash scripts/fetch_recitation.sh Alafasy_128kbps 94 5 6
+	 * Einsatzzeitpunkte stehen in timing.ts (RECITATION).
+	 */
+	recitation: {
+		reciter: 'Mishary Rashid Alafasy',
+		files: ['rezitation/094005.wav', 'rezitation/094006.wav'],
+		volume: 1,
+	},
+
+	/** Regenbett unter der Stimme. */
 	ambience: true,
-	ambienceVolume: 1,
+	ambienceVolume: 0.6,
 } as const;

@@ -63,22 +63,28 @@ für schwere Tage, und man teilt ihn als „das ist für dich“.
   Erleichterung“). Einer der meistgeteilten Verse überhaupt, eindeutige Quelle.
   Übersetzung nach Sahih International (eckige Klammern weggelassen).
 
-## Was die Vorlage nicht kann: der Ton
+## Ton: Rezitation
 
-Rezitation oder Naschid sind der wichtigste Faktor (siehe Punkt 2), aber eine
-fremde Aufnahme gehört nicht in die Vorlage. Eine synthetische Koranrezitation per
-Sprach-KI ist für die Zielgruppe ein No-Go. Gerendert wird deshalb nur ein
-Regenbett. Die Stimme kommt in der App dazu:
+Rezitation ist der wichtigste Faktor (siehe Punkt 2). Gewählt: **Mishary Rashid
+Alafasy**, 94:5 und 94:6 als Einzelverse von everyayah.com. Gründe: die bekannteste
+Stimme im Genre, ruhig, natürlicher Hall, passt zum Regen. Mit 4,4 s + 4,1 s passen
+beide Verse in 15 s. (Minshawi Mujawwad wäre ebenso schön, braucht aber 16 s.)
 
-> In TikTok beim Hochladen „Sound hinzufügen“ → eine populäre Rezitation oder
-> einen Naschid wählen (z. B. al-Fātiḥa, ash-Sharḥ). Regen-Lautstärke auf ~20–30 %
-> lassen, Sound auf 100 %. Ein bereits viraler Sound bringt zusätzlich Reichweite
-> über die Sound-Seite.
+- Eine echte Aufnahme, keine KI-Rezitation. Eine synthetische Stimme ist für die
+  Zielgruppe ein No-Go.
+- Jeder Vers setzt 0,2 s nach seiner Textzeile ein. „يُسْرًا / ease“ leuchtet genau
+  in dem Moment auf, in dem Alafasy „yusrā“ spricht (Frame 288, per Whisper-Wortzeiten
+  und Pegelverlauf gemessen).
+- Rezitation auf −16 LUFS normalisiert, Regen auf 60 % darunter. Das ganze Video hat
+  −15 LUFS.
+- In TikTok **keinen weiteren Sound** darüberlegen, der Ton ist fertig gemischt. Der
+  Originalton erscheint dann als „Originalton – Mag0med“, und andere können ihn
+  weiterverwenden. Auch das bringt Reichweite.
 
 ## Caption-Vorschlag
 
 ```
 Indeed, with hardship will be ease. 🤍
-[Qur’an 94:5–6]
+[Qur’an 94:5–6] · Rezitation: Mishary Rashid Alafasy
 #quran #islam #muslimtiktok #islamic_video #fyp #القرآن #فإن_مع_العسر_يسرا
 ```

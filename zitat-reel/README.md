@@ -26,6 +26,13 @@ Eintrag in `LINES`, je ~5–6 s).
 
 ## Ton
 
-Gerendert wird nur Regen (`public/regen.wav`, selbst erzeugt mit
-`npm run ambience`, loopt nahtlos). Rezitation oder Naschid kommt beim Hochladen als
-TikTok-Sound dazu, siehe `ANALYSE.md`.
+Rezitation (echte Aufnahme, Vers für Vers von everyayah.com) plus selbst erzeugter
+Regen (`npm run ambience`, loopt nahtlos). Anderer Vers oder Rezitator:
+
+```bash
+bash scripts/fetch_recitation.sh Alafasy_128kbps 94 5 6
+```
+
+Danach in `src/config.ts` die Dateien und den Rezitator eintragen und in
+`src/timing.ts` die Einsätze (`RECITATION`) und `HIGHLIGHT_AT` an die Verslängen
+anpassen.

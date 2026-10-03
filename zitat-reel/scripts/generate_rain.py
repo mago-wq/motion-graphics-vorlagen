@@ -11,8 +11,8 @@ Schichten:
   2. ferner Regen / Stadt (tiefes Rauschen unter 300 Hz)
   3. einzelne Tropfen auf Glas (kurze, gedämpfte Klicks, zufällig verteilt)
 
-Lautheit absichtlich niedrig (ca. -24 LUFS): Das ist nur das Bett. Rezitation oder
-Naschid kommt in der TikTok-App als Sound dazu (siehe README).
+Lautheit absichtlich niedrig (ca. -24 LUFS): Das ist nur das Bett unter der
+Rezitation (public/rezitation, siehe README).
 """
 import wave
 from pathlib import Path

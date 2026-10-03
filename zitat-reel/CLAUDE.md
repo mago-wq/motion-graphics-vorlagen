@@ -16,8 +16,10 @@ Herleitung des Looks in `ANALYSE.md`.
   (`cyc(frame, k)` mit ganzzahligem k). Kein Push-in, keine einmalige Drift. Prüfen:
   Differenz Frame 449→0 darf nicht deutlich größer sein als 0→1 (gemessen 0,92 vs 0,65,
   der Rest ist Filmkorn und Text).
-- **Ton:** keine synthetische Rezitation, keine fremden Aufnahmen in `public/`. Nur das
-  selbst erzeugte Regenbett. Stimme kommt in der App dazu.
+- **Ton:** nur echte Rezitationen (`scripts/fetch_recitation.sh`, everyayah.com),
+  nie per Sprach-KI erzeugt. Rezitator in `config.ts` und in der Caption nennen.
+  Der Text muss exakt den rezitierten Versen entsprechen. `HIGHLIGHT_AT` an das
+  gesprochene Wort messen, nicht schätzen (Whisper `word_timestamps` + Pegel).
 - Text bleibt im Kinoband (`BAND` in `video.ts`, y 285–1635). Die Zeilen sitzen mittig
   und damit sicher in der TikTok-Zone (y 250–1500).
 

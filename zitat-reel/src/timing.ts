@@ -11,8 +11,18 @@ export const LINES: LineTiming[] = [
 	{in: 207, translationIn: 222, out: 372},
 ];
 
-/** Das Leuchtwort der zweiten Zeile glüht hier auf. */
-export const HIGHLIGHT_AT = 252;
+/**
+ * Einsatz der Rezitation je Zeile (Frame). Die Stimme setzt kurz nach dem
+ * Original ein: Man sieht das Wort, dann hört man es.
+ * Alafasy 94:5 = 4,4 s (bis Frame 148), 94:6 = 4,1 s (bis Frame 336).
+ */
+export const RECITATION = [15, 213];
+
+/**
+ * Das Leuchtwort der zweiten Zeile glüht auf, wenn „yusrā“ gesprochen wird:
+ * in 94:6 bei ca. 2,5 s (Whisper-Wortzeiten + Pegelverlauf gemessen).
+ */
+export const HIGHLIGHT_AT = 213 + 75;
 
 export const SOURCE = {in: 384, out: 438};
 
