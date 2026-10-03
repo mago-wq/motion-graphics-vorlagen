@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Ibn-Battuta-Büste für den Einstieg: hochrechnen und freistellen.
+"""Bilder nachbearbeiten (nach scripts/fetch_assets.py):
 
-  public/bilder/ibn_battuta.jpg  (Commons-Vorschau 500 px, eigentlich PNG; fetch_assets.py)
+  public/bilder/ibn_battuta.jpg  (Commons-Vorschau 500 px, eigentlich PNG)
   -> public/bilder/ibn_battuta_frei.png  (4× hochgerechnet, Hintergrund transparent)
+  public/bilder/aljabr.jpg  (Handschrift, nur 1000 px breit)
+  -> public/bilder/aljabr_4x.jpg  (4× hochgerechnet, sonst beim Heranfahren matschig)
 
 Hochrechnen: Real-ESRGAN x4 über onnxruntime (~/.esrgan/real_esrgan_x4.onnx, wie in
 nokhchi-edit/scripts/upscale.py). Freistellen: rembg mit BiRefNet (lädt das Modell beim ersten Lauf).
@@ -17,8 +19,7 @@ from PIL import Image, ImageFilter
 from rembg import new_session, remove
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "public/bilder/ibn_battuta.jpg"
-OUT = ROOT / "public/bilder/ibn_battuta_frei.png"
+BILDER = ROOT / "public/bilder"
 MODEL = Path.home() / ".esrgan" / "real_esrgan_x4.onnx"
 TILE, PAD = 256, 16
 
@@ -39,19 +40,28 @@ def upscale(im: Image.Image) -> Image.Image:
 	return Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
 
 
-def main() -> None:
-	if not MODEL.exists():
-		raise SystemExit(f"Modell fehlt: {MODEL} (https://huggingface.co/SceneWorks/real-esrgan-onnx)")
-	src = Image.open(SRC).convert("RGB")
+def portraet() -> None:
+	out = BILDER / "ibn_battuta_frei.png"
+	src = Image.open(BILDER / "ibn_battuta.jpg").convert("RGB")
 	big = upscale(src)
 	mask = remove(src, session=new_session("birefnet-general"), only_mask=True, post_process_mask=True)
 	# Maske auf die große Fassung, Kante minimal einziehen und weich machen (kein weißer Saum)
 	mask = mask.resize(big.size, Image.LANCZOS).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(2))
 	big.putalpha(mask)
-	big.save(OUT, optimize=True)
+	big.save(out, optimize=True)
 	cover = np.asarray(mask, dtype=np.float32).mean() / 255
-	print(f"{OUT.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}, Büste deckt {cover:.0%} ab")
+	print(f"{out.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}, Büste deckt {cover:.0%} ab")
+
+
+def handschrift() -> None:
+	out = BILDER / "aljabr_4x.jpg"
+	big = upscale(Image.open(BILDER / "aljabr.jpg"))
+	big.save(out, quality=92)
+	print(f"{out.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}")
 
 
 if __name__ == "__main__":
-	main()
+	if not MODEL.exists():
+		raise SystemExit(f"Modell fehlt: {MODEL} (https://huggingface.co/SceneWorks/real-esrgan-onnx)")
+	portraet()
+	handschrift()

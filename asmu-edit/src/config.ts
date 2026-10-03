@@ -48,7 +48,7 @@ const PERSON = 'brightness(0.82) contrast(1.12) saturate(0.8) sepia(0.18)';
 
 /**
  * Einstieg: Büste von Ibn Battuta (gedachte Skizze, Kairo 1961; ein echtes Porträt gibt es
- * nicht), freigestellt und 4× hochgerechnet von scripts/prepare_portrait.py.
+ * nicht), freigestellt und 4× hochgerechnet von scripts/prepare_bilder.py.
  * breite = Bildbreite in px, unten = so viele px ragen unten aus dem Bild.
  */
 export const PORTRAET = {
@@ -83,7 +83,7 @@ export const SHOTS: Shot[] = [
 	{name: 'Selimiye-Kuppel', src: 'bilder/selimiye.jpg', from: 9.8, to: 11.65, focus: [50, 50], zoom: [1.32, 1.5],
 		turn: [0, 14], grade: PERSON, enter: 'zoom'},
 	// al-Chwarizmi
-	{name: 'al-Dschabr', src: 'bilder/aljabr.jpg', from: 11.65, to: 15.42, focus: [73, 40], zoom: [1.08, 1.5],
+	{name: 'al-Dschabr', src: 'bilder/aljabr_4x.jpg', from: 11.65, to: 15.42, focus: [73, 40], zoom: [1.08, 1.5],
 		drift: [0, -4], grade: 'brightness(0.6) contrast(1.25) saturate(0.85) sepia(0.3)', enter: 'whip'},
 	// Rückblick im Stroboskop, Sog in den Schnitt
 	{name: 'Rückblick', src: 'strobe', from: 15.42, to: 16.25},
@@ -113,7 +113,7 @@ export const SHOTS: Shot[] = [
 
 /** Rückblick 15,42–16,25 s: je 3 Frames ein früheres Motiv, im Wechsel mit Blitzen. */
 export const STROBE = [
-	'bilder/aljabr.jpg', 'portraet', 'bilder/suleymaniye.jpg', 'karte', 'bilder/selimiye.jpg',
+	'bilder/aljabr_4x.jpg', 'portraet', 'bilder/suleymaniye.jpg', 'karte', 'bilder/selimiye.jpg',
 	'clips/40047.mp4', 'portraet', 'clips/4149.mp4',
 ];
 

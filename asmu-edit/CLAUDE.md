@@ -53,7 +53,7 @@ Nasheed „أسمو – I Rise“ (Muhammad al Muqit), nur Stimme. Bedienung und
   und `trimBefore` neu eingesetzt, wie im Remotion-Rezept „accelerated video“. Die
   Interpolation ist monoton-kubisch, damit an Stützpunkten nichts stehen bleibt.
   `enter: 'zoom' | 'whip'`.
-- `components/Portraet.tsx`: Einstieg. Die freigestellte Büste (`scripts/prepare_portrait.py`:
+- `components/Portraet.tsx`: Einstieg. Die freigestellte Büste (`scripts/prepare_bilder.py`:
   Real-ESRGAN ×4 + rembg/BiRefNet) steht vor dem Zeitraffer 4357, der auf „أسمو“ hell wird.
 - `components/Karte.tsx`: Natural-Earth-Land + Route aus `src/karte.json` (`npm run karte`).
 - `components/Muster.tsx`: Achtzackige Sterne, die sich von der Mitte aus zeichnen.

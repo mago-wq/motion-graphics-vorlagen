@@ -7,7 +7,7 @@
     "studio": "remotion studio",
     "assets": "python3 scripts/fetch_assets.py",
     "ton": "python3 scripts/prepare_audio.py",
-    "portraet": "python3 scripts/prepare_portrait.py",
+    "bilder": "python3 scripts/prepare_bilder.py",
     "karte": "python3 scripts/make_map.py",
     "stills": "bash scripts/render-stills.sh",
     "render": "bash scripts/render.sh",

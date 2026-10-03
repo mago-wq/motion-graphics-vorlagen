@@ -33,7 +33,7 @@ npm install
 npx remotion browser ensure
 npm run assets        # Nasheed, Clips, Geräusche, Bilder laden (nicht im Repo) + CREDITS.md
 npm run ton           # Nasheed-Ausschnitt bauen: public/ton/asmu-schnitt.wav + src/huelle.json
-npm run portraet      # Ibn-Battuta-Büste hochrechnen + freistellen (Real-ESRGAN-Modell in ~/.esrgan)
+npm run bilder        # Ibn-Battuta-Büste freistellen, Büste + Handschrift hochrechnen (Real-ESRGAN in ~/.esrgan)
 npm run stills        # Kontrollbilder + Kontaktbogen out/stills/_bogen.jpg
 npm run render -- --entwurf   # 540×960, schnell (~5 min) – erst den zeigen
 npm run render -- --1080      # Endfassung 1080×1920 (Chat-Upload)
@@ -42,7 +42,8 @@ npm run render                # Endfassung 4K (1080 gerendert, Lanczos hochgerec
 
 `npm run karte` baut `src/karte.json` neu (nur nötig, wenn Route oder Ausschnitt geändert
 werden; braucht `shapely`). Python-Pakete: `numpy scipy soundfile shapely pillow yt-dlp`.
-Für 4K-Clips: `python3 scripts/fetch_assets.py --4k` (vorher `public/clips/` leeren).
+Für 4K-Clips: `python3 scripts/fetch_assets.py --4k` (vorher `public/clips/` leeren). Auch für die
+1080er Endfassung lohnt das: Der Hochkant-Ausschnitt aus 4K ist scharf, aus 1080p hochgerechnet.
 
 ## Text und Fakten
 
