@@ -26,7 +26,7 @@ Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, ausgeliefert 
   angeglichen; Mischung wird in `scripts/render.sh` auf -14 LUFS gehoben.
 - **Geräusche ohne Instrumente/Klangspiele** (Nasheeds sind oft bewusst ohne).
 - **Arabisch:** Wörter in Lesereihenfolge im Array, Container `dir="rtl"`. Wort für
-  Wort einblenden (rechts beginnend), Englisch läuft parallel von links ein. Jede
+  Wort einblenden (rechts beginnend), Deutsch läuft parallel von links ein. Jede
   Zeile bleibt einzeilig: `fitText` verkleinert auf `STYLE.textWidth`, gemessen erst
   nach dem FontGate in `NasheedReel.tsx`.
 - **Kein Ruqaa.** Aref Ruqaa staffelt Buchstaben schräg („النجوم“) und macht aus den
