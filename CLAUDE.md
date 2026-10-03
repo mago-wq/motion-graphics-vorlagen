@@ -10,6 +10,17 @@ eintragen. Wiederkehrende Bausteine (FitText, FontGate, SafeArea, SoundTrack, de
 Render-Weg mit korrekter AAC-Synchronität aus `barber-ad/scripts/render.sh`) erst dann in
 einen gemeinsamen Ordner auslagern, wenn die zweite Vorlage sie wirklich braucht.
 
+## Vorgaben des Auftraggebers (gelten für alle Vorlagen)
+
+- **Keine Gesichter und keine Körperteile im Bild** – auch keine Hände, die ein Produkt halten.
+  Produktfotos nur als Packshot oder Stillleben; Shop-Bilder vorher ansehen, viele zeigen
+  Models. Gilt auch für KI-generierte Bilder.
+- **Keine unwahren Ich-Aussagen** („meine Routine“), keine erfundenen Erfahrungsberichte.
+- **Gesundheitsaussagen nur im Wortlaut der EU-Liste** (VO (EU) 432/2012) mit Pflichthinweisen;
+  Werbeaussagen der Shopseiten („reinigt“, „stärkt das Immunsystem“) nicht übernehmen.
+- **Fakten auf Bildern prüfen:** Was auf einem Etikett lesbar ist (z. B. „30 Capsules“), muss
+  zum gesprochenen/geschriebenen Text passen.
+
 ## Arbeitsweise mit dem Auftraggeber (gilt für alle Vorlagen)
 
 1. **Zuerst ein schneller Entwurf in niedrigster sinnvoller Qualität** (z. B. 540×960,
