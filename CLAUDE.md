@@ -15,6 +15,10 @@ einen gemeinsamen Ordner auslagern, wenn die zweite Vorlage sie wirklich braucht
 - **Keine Gesichter und keine Körperteile im Bild** – auch keine Hände, die ein Produkt halten.
   Produktfotos nur als Packshot oder Stillleben; Shop-Bilder vorher ansehen, viele zeigen
   Models. Gilt auch für KI-generierte Bilder.
+- **Wird ein Gesicht gezeigt, sind die Augen immer abgedeckt** – Zensurbalken oder etwas
+  anderes darüber, in jedem Frame (auch beim Ein-/Ausblenden und in Rückblenden). Gesichter
+  nur auf ausdrücklichen Wunsch, z. B. die Darstellung einer historischen Person. Beispiel:
+  `asmu-edit` (Ibn Battuta, Balken mit seinem Namen in arabischer Schrift über den Augen).
 - **Keine unwahren Ich-Aussagen** („meine Routine“), keine erfundenen Erfahrungsberichte.
 - **Gesundheitsaussagen nur im Wortlaut der EU-Liste** (VO (EU) 432/2012) mit Pflichthinweisen;
   Werbeaussagen der Shopseiten („reinigt“, „stärkt das Immunsystem“) nicht übernehmen.

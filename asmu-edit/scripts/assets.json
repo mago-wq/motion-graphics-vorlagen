@@ -1,0 +1,73 @@
+{
+  "_hinweis": "Alle Quellen erlauben die Nutzung in Social-Media-Videos. Die Dateien selbst liegen nicht im Repo (Lizenz: keine Weitergabe der Rohdateien bzw. fremdes Material) – scripts/fetch_assets.py lädt sie.",
+  "nasheed": {
+    "titel": "أسمو – I Rise",
+    "interpret": "Muhammad al Muqit (Gesang und Abmischung)",
+    "quelle": "https://soundcloud.com/muhammadalmuqit/i-rise",
+    "lizenz": "alle Rechte vorbehalten (offizieller Upload des Künstlers, 2016) – nicht einchecken",
+    "datei": "assets-src/nasheed/asmu.m4a"
+  },
+  "clips": {
+    "_lizenz": "Mixkit Stock Video Free License (kommerziell nutzbar, ohne Namensnennung). Nur Clips mit dieser Lizenz verwenden – „Restricted“ ist nur für private, nicht monetarisierte Konten erlaubt.",
+    "4357": "Berg in der Nacht bis zur Morgendämmerung (Zeitraffer)",
+    "4149": "Dünen in der Sahara",
+    "40047": "Wüste mit Mond in der Nacht",
+    "4423": "Gewitter in den Bergen",
+    "52304": "Flammen schlagen vor Schwarz hoch",
+    "3463": "Funken vor Schwarz",
+    "4396": "Nebel zieht über verschneite Gipfel",
+    "4695": "Wolkenmeer über den Bergen in der Dämmerung",
+    "1706": "Adler gleitet am Himmel (Untersicht)",
+    "51689": "Flug über einen Felsgipfel",
+    "4281": "Matterhorn, Nacht bis Morgen (Zeitraffer)",
+    "26070": "Hochplateaus im Sonnenuntergang",
+    "3459": "Glut und Flammen"
+  },
+  "bilder": {
+    "ibn_battuta": {
+      "datei": "Ibn Battuta, Sayr mulhimah min al-Sharq wa-al-Gharb.png",
+      "inhalt": "Ibn Battuta, gedachte Skizze aus „Sayr mulhimah min al-Sharq wa-al-Gharb“ (Kairo 1961); ein echtes Porträt gibt es nicht",
+      "breite": 500
+    },
+    "suleymaniye": {
+      "datei": "Mezquita de Solimán, Estambul, Turquía, 2024-09-28, DD 147-149 HDR.jpg",
+      "inhalt": "Süleymaniye-Moschee (Mimar Sinan, 1550–1557) über dem Goldenen Horn, Abenddämmerung",
+      "breite": 3200
+    },
+    "selimiye": {
+      "datei": "Interior of dome, Selimiye Mosque, Edirne - Tarik Kaan Muslu.jpg",
+      "inhalt": "Kuppel der Selimiye-Moschee in Edirne (Mimar Sinan, 1568–1575), Sinans Meisterwerk",
+      "breite": 3200
+    },
+    "aljabr": {
+      "datei": "Bodleian MS. Huntington 214 roll332 frame36.jpg",
+      "inhalt": "al-Chwarizmi, Kitāb al-ǧabr wa-l-muqābala, Handschrift (Bodleian MS. Huntington 214): geometrische Lösung quadratischer Gleichungen",
+      "breite": 1000
+    }
+  },
+  "sfx": {
+    "_lizenz": "Mixkit Sound Effects Free License (kommerziell nutzbar, ohne Namensnennung, Rohdateien nicht weitergeben). Nur Natur-/Luftgeräusche, keine Instrumente.",
+    "wind_berg": 1267,
+    "wueste": 2495,
+    "sturmwind": 2411,
+    "whoosh_luft": 1489,
+    "whoosh_schnell": 1490,
+    "swoosh_wind": 1471,
+    "whoosh_sweep": 2632,
+    "sturm_kommt": 2408,
+    "donner_nah": 1300,
+    "donner_hit": 1280,
+    "donner_schnell": 1279,
+    "donner_tief": 1296,
+    "adler": 70,
+    "feuer_whoosh": 1348,
+    "seite": 1105,
+    "steine": 403,
+    "herz": 498
+  },
+  "karte": {
+    "quelle": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_land.geojson",
+    "lizenz": "Natural Earth, gemeinfrei",
+    "datei": "assets-src/karte/ne_50m_land.geojson"
+  }
+}

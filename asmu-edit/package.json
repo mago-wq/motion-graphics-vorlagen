@@ -1,0 +1,31 @@
+{
+  "name": "asmu-edit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Motivations-Edit (9:16) auf das Nasheed „أسمو – I Rise“ (Muhammad al Muqit): Vorbilder, Karte, Kinetik-Typo, gebaut mit Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "assets": "python3 scripts/fetch_assets.py",
+    "ton": "python3 scripts/prepare_audio.py",
+    "portraet": "python3 scripts/prepare_portrait.py",
+    "karte": "python3 scripts/make_map.py",
+    "stills": "bash scripts/render-stills.sh",
+    "render": "bash scripts/render.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/paths": "4.0.529",
+    "@remotion/transitions": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

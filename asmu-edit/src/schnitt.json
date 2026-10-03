@@ -1,0 +1,11 @@
+{
+  "_info": "Ausschnitte aus dem Nasheed in Sekunden des Originals (4:25). Gelesen von scripts/prepare_audio.py und src/timing.ts (vt). Schnittstelle 1 liegt im leisen Summen vor dem ersten Refrain und in der Atempause vor „لا تسأل“; dort deckt ein Donnerschlag den Übergang.",
+  "teile": [
+    [0, 16.25],
+    [226.55, 248.9]
+  ],
+  "ueberblendung": 0.1,
+  "ausblenden": 0.45,
+  "nachhall": 2.6,
+  "fps": 30
+}

@@ -1,0 +1,12 @@
+node_modules/
+# Render-Ausgaben nicht einchecken: Das Video enthält den fremden Nasheed-Ton.
+out/
+# Fremdmaterial, wird von scripts/fetch_assets.py geladen bzw. von prepare_audio.py gebaut:
+# Nasheed (alle Rechte beim Künstler), Mixkit-Clips und -Geräusche (Rohdateien nicht
+# weitergeben), Commons-Bilder (Nachweise in CREDITS.md), Natural-Earth-Rohdaten.
+assets-src/
+public/ton/
+public/clips/
+public/sfx/
+public/bilder/
+__pycache__/

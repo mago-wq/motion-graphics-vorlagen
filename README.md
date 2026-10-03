@@ -14,6 +14,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | [`grab-reminder-de/`](grab-reminder-de/) | Deutsche Fassung eines TikTok-Clips (Retusche: englischer Text → deutscher Text im Originalstil) | 24 s |
 | [`nasheed-reel/`](nasheed-reel/) | Lyric-Reel „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit deutscher Übersetzung (Retro-Glow), Nasheed + Geräusche; 4K | 31 s |
 | [`rahil-reel/`](rahil-reel/) | Zwei Reels auf „Ya Rahilan“: Abschied (Regen, Kerze, Mond, arabisch/deutsch) und „Sommertage Vergangenheit“ (romantisch-nostalgischer Look); Schrift zittert mit der Stimme | 15,7 s |
+| [`asmu-edit/`](asmu-edit/) | Motivations-Edit auf das Nasheed „أسمو – I Rise“ (nur Stimme): Vorbilder Ibn Battuta (animierte Reiseroute), Mimar Sinan, al-Chwarizmi; Gewitter, Adler, Gipfel; Liedzeilen arabisch/deutsch; Koran 13:11 zum Schluss; ohne Menschen im Bild | 41 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
