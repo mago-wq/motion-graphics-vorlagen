@@ -1,0 +1,31 @@
+{
+  "name": "zitat-edit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zitat-Video (9:16) mit gesprochenem Text, Wort-für-Wort-Typo, Tauben und Lichteffekten, gebaut mit Remotion",
+  "scripts": {
+    "render": "bash scripts/render.sh",
+    "check": "python3 scripts/check_video.py",
+    "check:sprache": "${STIMME_PYTHON:-$HOME/.venvs/tts/bin/python} scripts/verstaendlichkeit.py",
+    "stills": "bash scripts/render-stills.sh",
+    "stimme": "bash scripts/stimme.sh kostenlos",
+    "stimme:elevenlabs": "bash scripts/stimme.sh elevenlabs",
+    "stimme:bearbeiten": "bash scripts/stimme.sh bearbeiten",
+    "toene": "python3 scripts/toene_vorbereiten.py",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/noise": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

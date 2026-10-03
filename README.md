@@ -7,6 +7,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | Vorlage | Inhalt | Länge |
 |---|---|---|
 | [`barber-ad/`](barber-ad/) | Barbershop: Hook, Leistungen mit Preisen, Neukundenrabatt, Termin-Button | 15 s |
+| [`zitat-edit/`](zitat-edit/) | Gesprochenes Zitat: tiefe Stimme mit Hall (kostenlos erzeugt, ElevenLabs oder eigene Aufnahme), Wort-für-Wort-Typo mit Neon, Glitch und Umriss, Tauben, Lichtblitz, Regen, der sich legt | nach Stimme, Beispiel 18,7 s |
 | [`coralclub-kurz/`](coralclub-kurz/) | Coral Club: Werbe-, Wissens- und Produkt-Reels, teils mit Sprecher (Pillow + ffmpeg, Sekunden Renderzeit) | 6–46 s |
 | [`welt-laerm/`](welt-laerm/) | Reminder-Clip: Originalton, deutsche Untertitel Wort für Wort, leuchtende Piktogramm-Figuren | 22,6 s |
 | [`nokhchi-edit/`](nokhchi-edit/) | History-Edit tschetschenische Geschichte: Nasheed nur Stimme, animierte Karten, Tonfassungen ohne/mit Zitaten (de/ru); 1080p oder 4K | ~69 s |
