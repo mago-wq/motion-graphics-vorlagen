@@ -23,7 +23,7 @@ arabischer Schrift verdeckt** („ابن بطوطة“, „معمار سنان�
 | 16,5–21,4 s | „لا تسأل المقدام عن سبل العلا“ | *Frag den Furchtlosen nicht nach dem Weg nach oben –* (Gewitter, Flammen, Gipfel im Nebel) |
 | 21,4–27,2 s | „ستراه طيرا بالعزيمة جالا“ | *du siehst ihn: ein Vogel, der voller Entschlossenheit kreist.* (Wolkenmeer, Adler, Felsgipfel) |
 | 27,3–33 s | Refrain „أسمو وأجتاز السماء جلالا“ | *Ich steige auf und durchquere den Himmel – voller Erhabenheit.* (Zeitraffer Matterhorn, Sonne) |
-| 33,1 / 34,9 s | „فأزيد أسراب الغيوم جمالا“ | **ERST DICH SELBST.** (Glut) – **DANN DIE WELT.** (Tag) |
+| 33,1 / 34,9 s | „فأزيد أسراب الغيوم جمالا“ | **RETTE ERST DICH SELBST.** (Glut) – **DANN DIE WELT.** (Tag) |
 | 35,9–41 s | Nachhall | Koran 13:11 über dem Sternmuster, Abblende |
 
 Alle Inhalte und Zeiten stehen in `src/config.ts`, der Nasheed-Schnitt in `src/schnitt.json`.

@@ -237,7 +237,10 @@ export const TAFELN: Tafel[] = [
 	]},
 	{kind: 'name', out: 15.36, y: 1420, zeilen: [{text: 'AL-CHWARIZMI', at: 14.5}], unter: 'BAGDAD · UM 820'},
 	// Schluss
-	{kind: 'aussage', out: 34.88, y: 900, zeilen: [{text: 'ERST DICH SELBST.', at: 33.13, size: 128}]},
+	{kind: 'aussage', out: 34.88, y: 900, zeilen: [
+		{text: 'RETTE ERST', at: 33.13, size: 150},
+		{text: 'DICH SELBST.', at: 33.58, size: 150},
+	]},
 	{kind: 'aussage', out: 35.84, y: 900, zeilen: [{text: 'DANN DIE WELT.', at: 34.94, gold: true, size: 150}]},
 ];
 
