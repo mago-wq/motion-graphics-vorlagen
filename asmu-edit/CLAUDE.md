@@ -17,12 +17,16 @@ Nasheed „أسمو – I Rise“ (Muhammad al Muqit), nur Stimme. Bedienung und
   Deutschland auch strafrechtlich ein Risiko (Propaganda verbotener Organisationen,
   §§ 86, 86a StGB). Nur bekannte, unpolitische Munschids nehmen.
 - Keine Menschen in den Clips (Vorgabe für alle Vorlagen): auch keine Reiter, Silhouetten
-  oder Hände. **Ausnahme auf Wunsch:** Ibn Battuta am Anfang, damit nicht nur Text den
-  Einstieg trägt. **Augen immer abgedeckt**: Ein schwarzer Balken mit „ابن بطوطة“ in Gold
-  liegt im selben Container wie das Bild (`components/Portraet.tsx`, Lage `AUGEN` in
-  `config.ts`). Er folgt jeder Bewegung und wird nie getrennt vom Bild eingeblendet,
-  auch nicht im Rückblick. Beim Tausch des Bildes `AUGEN` neu vermessen (Raster über das
-  Original legen, mit Rand).
+  oder Hände. **Ausnahme auf Wunsch:** die drei Vorbilder als Büsten (Ibn Battuta im
+  Einstieg, Sinan und al-Chwarizmi über ihren Einstellungen), „nur Text fesselt nicht“.
+  **Augen immer abgedeckt**: Ein schwarzer Balken mit dem Namen in Gold liegt im selben
+  Container wie das Bild (`components/Portraet.tsx`, `VORBILDER[...].augen` in `config.ts`).
+  Er folgt jeder Bewegung und wird nie getrennt vom Bild eingeblendet, auch nicht im
+  Rückblick. Neue Bilder: Augen mit einem Raster über der Commons-Vorschau vermessen, mit
+  Rand. Sinans Hand an der Messelle wird unten ausgeblendet (`ausblenden`).
+- Bilder echter historischer Darstellungen vor KI-Bildern: Sinan stammt aus einer Miniatur
+  von 1579. Für Ibn Battuta und al-Chwarizmi gibt es keine Porträts, daher gemeinfreie
+  „gedachte“ Darstellungen (Skizze 1961 bzw. nach der sowjetischen Briefmarke 1983).
 
 ## Regeln
 
@@ -53,14 +57,23 @@ Nasheed „أسمو – I Rise“ (Muhammad al Muqit), nur Stimme. Bedienung und
   und `trimBefore` neu eingesetzt, wie im Remotion-Rezept „accelerated video“. Die
   Interpolation ist monoton-kubisch, damit an Stützpunkten nichts stehen bleibt.
   `enter: 'zoom' | 'whip'`.
-- `components/Portraet.tsx`: Einstieg. Die freigestellte Büste (`scripts/prepare_bilder.py`:
-  Real-ESRGAN ×4 + rembg/BiRefNet) steht vor dem Zeitraffer 4357, der auf „أسمو“ hell wird.
+- `components/Portraet.tsx`: `Bueste` (Bild + Augenbalken), `Portraet` (Einstieg vor dem
+  Zeitraffer 4357, der auf „أسمو“ hell wird) und `VorbildEbene` (Büste über einer laufenden
+  Einstellung, `BUESTEN` in `config.ts`). Freistellen/hochrechnen: `scripts/prepare_bilder.py`
+  (Real-ESRGAN ×4 + rembg/BiRefNet).
 - `components/Karte.tsx`: Natural-Earth-Land + Route aus `src/karte.json` (`npm run karte`).
 - `components/Muster.tsx`: Achtzackige Sterne, die sich von der Mitte aus zeichnen.
 - `components/Overlays.tsx`: Korn, Vignette, Blitz/Lichtleck, Funken (Clip 3463 im
   Screen-Modus), gezeichnete Blitzstrahlen.
 
 ## Stolperfallen
+
+- **Schnell nachbessern ohne Komplett-Render:** Nur die geänderten Frames rendern
+  (`npx remotion render AsmuEdit out/.seg.mp4 --frames=A-B --crf=10 --muted`), Grenzen auf die
+  Schlüsselbilder der fertigen Datei legen (`ffprobe … -show_entries frame=key_frame`), dann
+  alte Teile + neuen Abschnitt per `concat`-Filter in einem 2-Pass neu kodieren und den Ton
+  der fertigen Datei kopieren. Reines Aneinanderhängen per Stream-Copy geht nicht: x264 setzt
+  den Start-QP im PPS je Kodierung anders (21 vs. 25), der neue Abschnitt würde falsch dekodiert.
 
 - **Ton-Versatz**: `scripts/render.sh` kodiert AAC selbst, wie barber-ad.
 - **Schnittstelle im Nasheed** (16,25 s): Der Schnitt liegt im leisen Summen. Er wird mit

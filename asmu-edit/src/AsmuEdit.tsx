@@ -2,10 +2,11 @@
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, continueRender, delayRender, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ShotLayer} from './components/Shot';
+import {VorbildEbene} from './components/Portraet';
 import {Blitz, Funken, Grain, Strahlen, Vignette} from './components/Overlays';
 import {LiedView, VersView} from './components/Lied';
 import {TafelView} from './components/Tafel';
-import {COLORS, LIED, SFX, Sfx, SHOTS, TAFELN, VERS} from './config';
+import {BUESTEN, COLORS, LIED, SFX, Sfx, SHOTS, TAFELN, VERS} from './config';
 import {fontsReady} from './fonts';
 import {hits, noise} from './fx';
 import {FPS, fr} from './timing';
@@ -57,6 +58,12 @@ export const AsmuEdit: React.FC = () => {
 						</Sequence>
 					);
 				})}
+				{/* Sinan und al-Chwarizmi als Büsten über ihren Einstellungen (Augen immer abgedeckt) */}
+				{BUESTEN.map((b) => (
+					<Sequence key={b.vorbild} from={fr(b.von)} durationInFrames={fr(b.bis) - fr(b.von)} name={`Büste ${b.vorbild}`}>
+						<VorbildEbene bueste={b} />
+					</Sequence>
+				))}
 				<Funken />
 			</AbsoluteFill>
 			<Vignette />

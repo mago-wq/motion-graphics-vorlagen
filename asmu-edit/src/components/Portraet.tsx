@@ -1,41 +1,41 @@
-// Einstieg: Büste von Ibn Battuta steigt aus dem Dunkel ins Bild und bewegt sich leicht,
-// dahinter bricht der Morgen an. Die Augen deckt IMMER ein Balken mit seinem Namen ab
-// (Vorgabe: bei jedem Gesicht die Augen verdecken). Der Balken sitzt im selben Container
-// wie das Bild, folgt also jeder Bewegung, und wird nie ohne das Bild ein- oder ausgeblendet.
+// Vorbilder als Büsten: Ibn Battuta im Einstieg, Sinan und al-Chwarizmi über ihren Einstellungen.
+// Die Augen deckt IMMER ein Balken mit dem Namen ab (Vorgabe: bei jedem Gesicht die Augen
+// verdecken). Der Balken sitzt im selben Container wie das Bild, folgt also jeder Bewegung,
+// und wird nie ohne das Bild ein- oder ausgeblendet.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
-import {AUGEN, COLORS, PORTRAET} from '../config';
+import {Bueste as BuesteDef, COLORS, PORTRAET, Vorbild, VORBILDER} from '../config';
 import {ARABIC} from '../fonts';
-import {clamp, easeOut, noise} from '../fx';
+import {clamp, easeIn, easeOut, noise} from '../fx';
 import {FPS} from '../timing';
 import {sourceTime} from '../rampe';
 
-const IMG_W = 2000;
-const IMG_H = 2572;
-
-/** Bild + Augenbalken; Größe und Lage in Bildschirmpixeln. */
-export const Bueste: React.FC<{breite: number}> = ({breite}) => {
-	const hoehe = (breite * IMG_H) / IMG_W;
-	const balkenH = AUGEN.h * hoehe;
+/** Bild + Augenbalken; Größe in Bildschirmpixeln. */
+export const Bueste: React.FC<{vorbild: Vorbild; breite: number}> = ({vorbild, breite}) => {
+	const hoehe = (breite * vorbild.h) / vorbild.w;
+	const a = vorbild.augen;
+	const balkenH = a.h * hoehe;
+	// Schriftgröße: so groß wie der Balken hoch ist, aber nie breiter als der Balken (~0,45 em je Zeichen)
+	const schrift = Math.min(balkenH * 0.66, (a.w * breite * 0.86) / (vorbild.name.length * 0.45));
 	return (
 		<div style={{position: 'relative', width: breite, height: hoehe}}>
 			<Img
-				src={staticFile('bilder/ibn_battuta_frei.png')}
+				src={staticFile(vorbild.bild)}
 				style={{
 					width: '100%',
 					height: '100%',
-					filter: `contrast(1.15) brightness(0.95) sepia(0.35) drop-shadow(0 0 26px rgba(226,184,92,0.45)) drop-shadow(0 30px 60px rgba(0,0,0,0.8))`,
+					filter: `${vorbild.look ?? 'contrast(1.15) brightness(0.95) sepia(0.35)'} drop-shadow(0 0 26px rgba(226,184,92,0.45)) drop-shadow(0 30px 60px rgba(0,0,0,0.8))`,
 				}}
 			/>
 			{/* Augenbalken: deckend schwarz, Goldkanten, darauf der Name */}
 			<div
 				style={{
 					position: 'absolute',
-					left: `${AUGEN.x * 100}%`,
-					top: `${AUGEN.y * 100}%`,
-					width: `${AUGEN.w * 100}%`,
+					left: `${a.x * 100}%`,
+					top: `${a.y * 100}%`,
+					width: `${a.w * 100}%`,
 					height: balkenH,
-					transform: `rotate(${AUGEN.drehung}deg)`,
+					transform: `rotate(${a.drehung}deg)`,
 					background: '#050505',
 					borderTop: `3px solid ${COLORS.gold}`,
 					borderBottom: `3px solid ${COLORS.gold}`,
@@ -51,7 +51,7 @@ export const Bueste: React.FC<{breite: number}> = ({breite}) => {
 					style={{
 						fontFamily: ARABIC,
 						fontWeight: 700,
-						fontSize: balkenH * 0.66,
+						fontSize: schrift,
 						lineHeight: 1,
 						paddingBottom: balkenH * 0.08,
 						color: COLORS.goldHell,
@@ -59,18 +59,20 @@ export const Bueste: React.FC<{breite: number}> = ({breite}) => {
 						textShadow: '0 0 18px rgba(226,184,92,0.8), 0 0 40px rgba(226,184,92,0.4)',
 					}}
 				>
-					{PORTRAET.name}
+					{vorbild.name}
 				</div>
 			</div>
 		</div>
 	);
 };
 
+/** Einstieg: Ibn Battuta steigt aus dem Dunkel ins Bild, dahinter bricht auf „أسمو“ der Morgen an. */
 export const Portraet: React.FC<{t: number; still?: boolean}> = ({t, still}) => {
 	const frame = useCurrentFrame();
+	const vorbild = VORBILDER.ibn_battuta;
 	const breite = PORTRAET.breite;
-	const hoehe = (breite * IMG_H) / IMG_W;
-	const left = 540 - AUGEN.mitteX * breite;
+	const hoehe = (breite * vorbild.h) / vorbild.w;
+	const left = 540 - vorbild.mitteX * breite;
 	const top = 1920 - hoehe + PORTRAET.unten;
 	// Erscheinen: steigt aus dem Dunkel, wird scharf (0,7 s); danach leichtes Schweben
 	const ein = still ? 1 : interpolate(t, [0, 0.7], [0, 1], {...clamp, easing: easeOut});
@@ -113,13 +115,70 @@ export const Portraet: React.FC<{t: number; still?: boolean}> = ({t, still}) => 
 					opacity: ein,
 					filter: ein < 0.98 ? `blur(${(1 - ein) * 12}px)` : undefined,
 					transform: `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`,
-					transformOrigin: `${AUGEN.mitteX * 100}% 45%`,
+					transformOrigin: `${vorbild.mitteX * 100}% 45%`,
 				}}
 			>
-				<Bueste breite={breite} />
+				<Bueste vorbild={vorbild} breite={breite} />
 			</div>
 			{/* unten abdunkeln, damit der Text auf Bart und Gewand lesbar bleibt */}
 			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0) 62%, rgba(0,0,0,0.55) 82%, rgba(0,0,0,0.8))'}} />
+		</AbsoluteFill>
+	);
+};
+
+/**
+ * Büste über einer laufenden Einstellung (Sinan, al-Chwarizmi): steigt ins Bild, schwebt,
+ * verschwindet am Ende unscharf. Lokale Zeit (in einer Sequence ab `von`).
+ */
+export const VorbildEbene: React.FC<{bueste: BuesteDef}> = ({bueste}) => {
+	const frame = useCurrentFrame();
+	const t = frame / FPS;
+	const dauer = bueste.bis - bueste.von;
+	const vorbild = VORBILDER[bueste.vorbild];
+	const breite = bueste.breite;
+	const hoehe = (breite * vorbild.h) / vorbild.w;
+	const augenMitte = vorbild.augen.y + vorbild.augen.h / 2;
+	const left = 540 - vorbild.mitteX * breite;
+	const top = bueste.augenY - augenMitte * hoehe;
+	const ein = interpolate(t, [0, 0.55], [0, 1], {...clamp, easing: easeOut});
+	const aus = interpolate(t, [dauer - 0.22, dauer], [0, 1], {...clamp, easing: easeIn});
+	const sicht = ein * (1 - aus);
+	const p = t / dauer;
+	const scale = (1.08 - 0.08 * ein) * (1 + 0.04 * p) * (1 + 0.05 * aus);
+	const y = (1 - ein) * 150;
+	const x = noise(`vx${bueste.vorbild}`, t * 0.9) * 8;
+	const rot = Math.sin(t * 1.3) * 0.6;
+	const [f0, f1] = bueste.ausblenden;
+	const oben = bueste.obenAus ? `transparent 0%, #000 ${bueste.obenAus * 100}%, ` : '';
+	const maske =
+		`linear-gradient(180deg, ${oben}#000 ${f0 * 100}%, transparent ${f1 * 100}%)` +
+		(bueste.linksAus ? `, linear-gradient(90deg, transparent 0%, #000 ${bueste.linksAus * 100}%)` : '');
+	return (
+		<AbsoluteFill>
+			{/* dunkler Hof hinter der Büste, trennt sie vom unruhigen Hintergrund */}
+			<AbsoluteFill
+				style={{
+					background: `radial-gradient(ellipse 62% 34% at 50% ${bueste.augenY + 120}px, rgba(0,0,0,${0.62 * sicht}), rgba(0,0,0,0) 72%)`,
+				}}
+			/>
+			<div
+				style={{
+					position: 'absolute',
+					left,
+					top,
+					opacity: sicht,
+					filter: sicht < 0.98 ? `blur(${(1 - sicht) * 12}px)` : undefined,
+					transform: `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`,
+					transformOrigin: `${vorbild.mitteX * 100}% ${augenMitte * 100}%`,
+					maskImage: maske,
+					WebkitMaskImage: maske,
+					// beide Verläufe gelten zugleich (Schnittmenge)
+					maskComposite: 'intersect',
+					WebkitMaskComposite: 'source-in',
+				}}
+			>
+				<Bueste vorbild={vorbild} breite={breite} />
+			</div>
 		</AbsoluteFill>
 	);
 };

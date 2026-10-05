@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Bilder nachbearbeiten (nach scripts/fetch_assets.py):
 
-  public/bilder/ibn_battuta.jpg  (Commons-Vorschau 500 px, eigentlich PNG)
-  -> public/bilder/ibn_battuta_frei.png  (4× hochgerechnet, Hintergrund transparent)
+  public/bilder/<vorbild>.jpg  (Commons-Vorschauen, 330–500 px; Ibn Battuta eigentlich PNG)
+  -> public/bilder/<vorbild>_frei.png  (4× hochgerechnet, Hintergrund transparent)
+     für ibn_battuta, sinan, chwarizmi (vorhandene werden übersprungen)
   public/bilder/aljabr.jpg  (Handschrift, nur 1000 px breit)
   -> public/bilder/aljabr_4x.jpg  (4× hochgerechnet, sonst beim Heranfahren matschig)
 
@@ -40,21 +41,28 @@ def upscale(im: Image.Image) -> Image.Image:
 	return Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
 
 
-def portraet() -> None:
-	out = BILDER / "ibn_battuta_frei.png"
-	src = Image.open(BILDER / "ibn_battuta.jpg").convert("RGB")
+VORBILDER = ["ibn_battuta", "sinan", "chwarizmi"]
+
+
+def portraet(name: str, session) -> None:
+	out = BILDER / f"{name}_frei.png"
+	if out.exists():
+		return
+	src = Image.open(BILDER / f"{name}.jpg").convert("RGB")
 	big = upscale(src)
-	mask = remove(src, session=new_session("birefnet-general"), only_mask=True, post_process_mask=True)
+	mask = remove(src, session=session, only_mask=True, post_process_mask=True)
 	# Maske auf die große Fassung, Kante minimal einziehen und weich machen (kein weißer Saum)
 	mask = mask.resize(big.size, Image.LANCZOS).filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(2))
 	big.putalpha(mask)
 	big.save(out, optimize=True)
 	cover = np.asarray(mask, dtype=np.float32).mean() / 255
-	print(f"{out.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}, Büste deckt {cover:.0%} ab")
+	print(f"{out.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}, Person deckt {cover:.0%} ab")
 
 
 def handschrift() -> None:
 	out = BILDER / "aljabr_4x.jpg"
+	if out.exists():
+		return
 	big = upscale(Image.open(BILDER / "aljabr.jpg"))
 	big.save(out, quality=92)
 	print(f"{out.relative_to(ROOT)}: {big.size[0]}×{big.size[1]}")
@@ -63,5 +71,7 @@ def handschrift() -> None:
 if __name__ == "__main__":
 	if not MODEL.exists():
 		raise SystemExit(f"Modell fehlt: {MODEL} (https://huggingface.co/SceneWorks/real-esrgan-onnx)")
-	portraet()
+	session = new_session("birefnet-general")
+	for name in VORBILDER:
+		portraet(name, session)
 	handschrift()

@@ -4,8 +4,10 @@ Hochkant-Edit (9:16, 30 fps, ~41 s) zum Aufstehen und Anpacken, mit islamischem 
 Ton ist das Nasheed **„أسمو – I Rise“ von Muhammad al Muqit** (nur Stimme, offizieller
 Upload des Künstlers, 2016). Es wurde ausgesucht, nicht erzeugt. Im Bild sind **keine Menschen**
 zu sehen: Landschaft, Naturgewalt, Architektur, Handschrift und Grafik. Die einzige Ausnahme ist
-der Einstieg. Dort ist Ibn Battuta zu sehen (eine gedachte Skizze, ein echtes Porträt gibt es
-nicht), **die Augen sind immer von einem Balken mit seinem Namen „ابن بطوطة“ verdeckt**.
+die drei Vorbilder als Büsten: Ibn Battuta (gedachte Skizze, ein echtes Porträt gibt es nicht),
+Mimar Sinan (Miniatur von Nakkaş Osman, 1579) und al-Chwarizmi (gedachtes Porträt nach der
+sowjetischen Briefmarke von 1983). **Die Augen sind immer von einem Balken mit dem Namen in
+arabischer Schrift verdeckt** („ابن بطوطة“, „معمار سنان“, „الخوارزمي“).
 
 ## Ablauf
 
@@ -14,8 +16,8 @@ nicht), **die Augen sind immer von einem Balken mit seinem Namen „ابن بط�
 | 0–1,3 s | Wind | Ibn Battuta steigt aus dem Dunkel ins Bild (Augenbalken mit „ابن بطوطة“): **ER REISTE WEITER ALS JEDER VOR IHM.** |
 | 1,35 s | „أسمو“ (allein gesungen) | hinter ihm bricht der Morgen an, Titel **أسمو – ICH STEIGE AUF** über Sternmuster |
 | 3,5–7,8 s | Summen | **Ibn Battuta:** *Mit 21 brach er auf. Allein.* Karte mit der Route 1325–1354, Zähler bis **117.000 km** |
-| 7,8–11,6 s | Summen | **Mimar Sinan:** *Mehr als 300 Bauwerke* (Süleymaniye), *Sein Meisterwerk vollendete er mit über 80* (Kuppel der Selimiye, Edirne) |
-| 11,6–15,4 s | Summen | **al-Chwarizmi:** *Der Algorithmus, der dir das hier zeigt, trägt seinen Namen.* (Handschrift seines Algebra-Buchs) |
+| 7,8–11,6 s | Summen | **Mimar Sinan** als Büste (Augenbalken „معمار سنان“): *Mehr als 300 Bauwerke* (Süleymaniye), *Sein Meisterwerk vollendete er mit über 80* (Kuppel der Selimiye, Edirne) |
+| 11,6–15,4 s | Summen | **al-Chwarizmi** als Büste (Augenbalken „الخوارزمي“): *Der Algorithmus, der dir das hier zeigt, trägt seinen Namen.* (Handschrift seines Algebra-Buchs) |
 | 15,4–16,25 s | Sog | Rückblick im Stroboskop |
 | 16,25 s | Schnitt im Nasheed, Donnerschlag | Gewitter, gezeichnete Blitze |
 | 16,5–21,4 s | „لا تسأل المقدام عن سبل العلا“ | *Frag den Furchtlosen nicht nach dem Weg nach oben –* (Gewitter, Flammen, Gipfel im Nebel) |
@@ -33,7 +35,7 @@ npm install
 npx remotion browser ensure
 npm run assets        # Nasheed, Clips, Geräusche, Bilder laden (nicht im Repo) + CREDITS.md
 npm run ton           # Nasheed-Ausschnitt bauen: public/ton/asmu-schnitt.wav + src/huelle.json
-npm run bilder        # Ibn-Battuta-Büste freistellen, Büste + Handschrift hochrechnen (Real-ESRGAN in ~/.esrgan)
+npm run bilder        # Büsten (Ibn Battuta, Sinan, al-Chwarizmi) freistellen + hochrechnen, Handschrift hochrechnen
 npm run stills        # Kontrollbilder + Kontaktbogen out/stills/_bogen.jpg
 npm run render -- --entwurf   # 540×960, schnell (~5 min) – erst den zeigen
 npm run render -- --1080      # Endfassung 1080×1920 (Chat-Upload)

@@ -63,11 +63,59 @@ export const PORTRAET = {
 };
 
 /**
- * Augenbalken, relativ zum Bild (0–1). VORGABE: Bei jedem Gesicht sind die Augen immer
- * abgedeckt. Augen im Original (500×643): x 125–160 und 205–255, y 248–275 – der Balken
- * deckt x 65–330, y 226–294 ab (mit Rand, auch gedreht). mitteX = Gesichtsmitte.
+ * Vorbilder als freigestellte Büsten (scripts/prepare_bilder.py, 4× hochgerechnet).
+ * VORGABE: Bei jedem Gesicht sind die Augen immer abgedeckt. `augen` ist der Balken relativ
+ * zum Bild (0–1), vermessen mit einem Raster über der Commons-Vorschau, mit Rand.
+ * mitteX = Gesichtsmitte (für die Ausrichtung).
+ *  - Ibn Battuta (500×643): Augen x 125–160 / 205–255, y 248–275 -> Balken x 65–330, y 226–294
+ *  - Sinan (330×562): Augen x 132–150 / 180–195, y 242–250 -> Balken x 89–231, y 218–271
+ *  - al-Chwarizmi (330×477): Augen x 150–180 / 222–250, y 220–237 -> Balken x 114–284, y 196–255
  */
-export const AUGEN = {x: 0.13, y: 0.352, w: 0.53, h: 0.105, drehung: -3, mitteX: 0.38};
+export type Vorbild = {
+	bild: string;
+	w: number;
+	h: number;
+	name: string;
+	augen: {x: number; y: number; w: number; h: number; drehung: number};
+	mitteX: number;
+	/** eigener Look (sonst der gemeinsame Sepia-Look der Skizzen) */
+	look?: string;
+};
+
+export const VORBILDER = {
+	ibn_battuta: {bild: 'bilder/ibn_battuta_frei.png', w: 2000, h: 2572, name: 'ابن بطوطة',
+		augen: {x: 0.13, y: 0.352, w: 0.53, h: 0.105, drehung: -3}, mitteX: 0.38},
+	// Miniatur (Farbe, flacher Turban): mehr Kontrast, sonst wirkt der Turban wie eine helle Fläche
+	sinan: {bild: 'bilder/sinan_frei.png', w: 1320, h: 2248, name: 'معمار سنان',
+		augen: {x: 0.27, y: 0.388, w: 0.43, h: 0.094, drehung: -1}, mitteX: 0.485,
+		look: 'contrast(1.3) brightness(0.72) sepia(0.6) saturate(1.25)'},
+	chwarizmi: {bild: 'bilder/chwarizmi_frei.png', w: 1320, h: 1908, name: 'الخوارزمي',
+		augen: {x: 0.345, y: 0.41, w: 0.515, h: 0.125, drehung: 0}, mitteX: 0.61},
+} satisfies Record<string, Vorbild>;
+
+/**
+ * Büsten über den Einstellungen von Sinan und al-Chwarizmi: steigen beim Schnitt ins Bild,
+ * bleiben bis zum Ende ihres Blocks. augenY = Höhe der Augen im Bild (px), ausblenden =
+ * ab/bis wo die Büste nach unten ins Dunkle verläuft (Anteil der Bildhöhe; bei Sinan
+ * verschwindet so die Hand an der Messelle).
+ */
+export type Bueste = {
+	vorbild: keyof typeof VORBILDER;
+	von: number;
+	bis: number;
+	breite: number;
+	augenY: number;
+	ausblenden: [number, number];
+	/** oben ins Dunkle verlaufen bis zu diesem Anteil (Sinans hoher Turban) */
+	obenAus?: number;
+	/** links weich auslaufen bis zu diesem Anteil (Sinans Bild ist links durch den Turban beschnitten) */
+	linksAus?: number;
+};
+
+export const BUESTEN: Bueste[] = [
+	{vorbild: 'sinan', von: 7.8, bis: 11.62, breite: 820, augenY: 1080, ausblenden: [0.7, 0.79], obenAus: 0.24, linksAus: 0.14},
+	{vorbild: 'chwarizmi', von: 11.65, bis: 15.38, breite: 700, augenY: 1170, ausblenden: [0.74, 0.97]},
+];
 
 export const SHOTS: Shot[] = [
 	// Haken: Ibn Battuta steigt ins Bild, hinter ihm bricht auf „أسمو“ der Morgen an
@@ -170,24 +218,24 @@ export const TAFELN: Tafel[] = [
 	{kind: 'aussage', out: 7.75, y: 1330, zeilen: [{text: '{n} KM', at: 6.1, gold: true, size: 130}],
 		zaehler: {von: 0, bis: 117000, dauer: 1.5}},
 	// Mimar Sinan (mehr als 300 große Bauwerke; Meisterwerk Selimiye, vollendet mit über 80)
-	{kind: 'aussage', out: 9.74, y: 860, zeilen: [
-		{text: 'MEHR ALS', at: 7.85, size: 110},
-		{text: '{n}', at: 7.85, gold: true, size: 260},
-		{text: 'BAUWERKE.', at: 8.77, size: 110},
+	{kind: 'aussage', out: 9.74, y: 470, zeilen: [
+		{text: 'MEHR ALS', at: 7.85, size: 100},
+		{text: '{n}', at: 7.85, gold: true, size: 220},
+		{text: 'BAUWERKE.', at: 8.77, size: 100},
 	], zaehler: {von: 0, bis: 300, dauer: 0.85}},
-	{kind: 'name', out: 11.6, y: 1360, zeilen: [{text: 'MIMAR SINAN', at: 8.3}], unter: 'BAUMEISTER · UM 1490 – 1588'},
-	{kind: 'aussage', out: 11.6, y: 880, zeilen: [
+	{kind: 'name', out: 11.6, y: 1420, zeilen: [{text: 'MIMAR SINAN', at: 8.3}], unter: 'BAUMEISTER · UM 1490 – 1588'},
+	{kind: 'aussage', out: 11.6, y: 470, zeilen: [
 		{text: 'SEIN MEISTERWERK', at: 9.84, size: 110},
 		{text: 'VOLLENDETE ER', at: 10.78, size: 96},
 		{text: 'MIT ÜBER 80.', at: 10.78, gold: true, size: 150},
 	]},
 	// al-Chwarizmi (latinisiert „Algoritmi“ -> Algorithmus; Haus der Weisheit, Bagdad, um 820)
-	{kind: 'aussage', out: 15.36, y: 860, zeilen: [
+	{kind: 'aussage', out: 15.36, y: 470, zeilen: [
 		{text: 'DER ALGORITHMUS,', at: 11.7, size: 104},
 		{text: 'DER DIR DAS HIER ZEIGT,', at: 12.53, size: 84},
 		{text: 'TRÄGT SEINEN NAMEN.', at: 13.49, gold: true, size: 104},
 	]},
-	{kind: 'name', out: 15.36, y: 1360, zeilen: [{text: 'AL-CHWARIZMI', at: 14.5}], unter: 'BAGDAD · UM 820'},
+	{kind: 'name', out: 15.36, y: 1420, zeilen: [{text: 'AL-CHWARIZMI', at: 14.5}], unter: 'BAGDAD · UM 820'},
 	// Schluss
 	{kind: 'aussage', out: 34.88, y: 900, zeilen: [{text: 'ERST DICH SELBST.', at: 33.13, size: 128}]},
 	{kind: 'aussage', out: 35.84, y: 900, zeilen: [{text: 'DANN DIE WELT.', at: 34.94, gold: true, size: 150}]},
