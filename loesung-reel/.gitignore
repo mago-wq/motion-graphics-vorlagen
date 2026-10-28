@@ -1,0 +1,6 @@
+# Referenz-TikTok mit fremdem Ton und Render-Ausgaben nicht einchecken
+src.mp4
+out/
+# Vollständige Mixkit-Clips (nur die Ausschnitte in clips/ sind eingecheckt)
+clips/roh/
+__pycache__/

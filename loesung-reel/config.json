@@ -1,0 +1,43 @@
+{
+  "_hinweis": "Alle Inhalte, Zeiten und Stilwerte stehen hier. Zeiten in Sekunden, abgelesen aus dem Referenz-TikTok (Schnitte per ffmpeg scene-Erkennung).",
+  "fps": 30,
+  "dauer": 27.1,
+  "ton": "src.mp4",
+
+  "szenen": [
+    {"start": 0.0,    "clip": 9704,  "ab": 2.0,  "fokus_x": 0.50, "zoom": [1.00, 1.10], "teil": "unruhe", "glitch": 1.0, "inhalt": "Gewitterwolken"},
+    {"start": 2.2333, "clip": 28901, "ab": 1.0,  "fokus_x": 0.50, "zoom": [1.04, 1.00], "teil": "unruhe", "glitch": 0.12, "inhalt": "Sanduhr, Sand rinnt"},
+    {"start": 4.7333, "clip": 17776, "ab": 3.0,  "fokus_x": 0.71, "zoom": [1.00, 1.08], "teil": "unruhe", "glitch": 0.12, "flackern": 0.35, "inhalt": "Kerze im Dunkeln"},
+    {"start": 7.2,    "clip": 34515, "ab": 0.4,  "einpassen": true, "skala": 1.8, "fokus_x": 0.37, "fokus_y": 0.70, "rueckwaerts": true, "tempo": 3.6, "zoom": [1.00, 1.06], "teil": "unruhe", "glitch": 0.12, "inhalt": "Pfingstrose schließt sich (rückwärts)"},
+    {"start": 9.9,    "clip": 9736,  "ab": 1.0,  "fokus_x": 0.42, "zoom": [1.00, 1.08], "teil": "loesung", "inhalt": "Moschee über den Wolken, Sonnenaufgang"},
+    {"start": 13.15,  "clip": 4312,  "ab": 1.0,  "fokus_x": 0.62, "zoom": [1.06, 1.00], "teil": "loesung", "inhalt": "Moschee bei Nacht"},
+    {"start": 14.9833,"clip": 39184, "ab": 2.0,  "fokus_x": 0.50, "zoom": [1.00, 1.06], "teil": "loesung", "inhalt": "Gebetsraum mit Kronleuchter, leer"},
+    {"start": 17.8167,"clip": 11924, "ab": 0.0,  "fokus_x": 0.50, "zoom": [1.00, 1.08], "teil": "loesung", "inhalt": "Koran auf dem Lesepult mit Gebetskette"},
+    {"start": 21.25,  "clip": 39179, "ab": 20.0, "fokus_x": 0.50, "zoom": [1.00, 1.05], "teil": "loesung", "inhalt": "Gebetsteppich einer großen Moschee, leer"},
+    {"start": 25.0833,"clip": 35194, "ab": 8.0,  "fokus_x": 0.60, "zoom": [1.00, 1.06], "teil": "loesung", "look": {"saettigung": 0.75, "toenung": [1.16, 1.0, 0.80]}, "inhalt": "Aufgeschlagener Koran im Licht"}
+  ],
+
+  "texte": [
+    {"von": 0.0, "bis": 9.9, "zeilen": ["„ständige Unruhe“", "„Stress“", "„Müdigkeit“", "„keine Lust auf irgendwas“"]},
+    {"von": 9.9, "bis": 27.1, "zeilen": ["Lösung:"]}
+  ],
+
+  "schrift": {
+    "datei": "fonts/Arimo-Medium.ttf",
+    "groesse": 54,
+    "zeilenabstand": 1.18,
+    "kontur": 3,
+    "schatten_blur": 6,
+    "schatten_alpha": 0.55,
+    "unterkante_y": 1480
+  },
+
+  "look": {
+    "unruhe": {"saettigung": 0.0, "toenung": [0.86, 1.0, 0.98], "kontrast": 0.92, "anhebung": 10, "helligkeit": 0.95, "korn": 9},
+    "loesung": {"saettigung": 1.05, "toenung": [1.06, 1.0, 0.90], "kontrast": 1.06, "anhebung": 0, "helligkeit": 1.0, "korn": 4, "leuchten": 0.28},
+    "vignette": 0.45,
+    "glitch_schnitt": 0.7,
+    "glitch_schnitt_dauer": 0.22,
+    "lichtblitz": {"zeit": 9.9, "staerke": 0.75, "dauer": 0.6}
+  }
+}
