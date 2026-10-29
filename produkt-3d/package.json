@@ -1,0 +1,27 @@
+{
+  "name": "produkt-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D-Produktspot (9:16) mit three.js: Getränkedose mit Etikett, Kamerafahrt, Texteinblendungen, gebaut mit Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "bash scripts/render.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@remotion/cli": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/three": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "typescript": "7.0.2"
+  }
+}
