@@ -31,3 +31,8 @@ einen gemeinsamen Ordner auslagern, wenn die zweite Vorlage sie wirklich braucht
 3. **Erst danach der eine Endrender** in voller Qualität (z. B. 4K).
 Lange Renders nie „auf Verdacht“ in voller Qualität starten.
 
+
+## Bücher
+
+- **Fragen zu Büchern** gehören ins Repo `mago-wq/buecher`, nicht hierher: mit `add_repo` dazuholen, dessen `CLAUDE.md`
+  lesen und dort arbeiten.
