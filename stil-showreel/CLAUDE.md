@@ -13,6 +13,8 @@ Remotion-Projekt, 1080×1920, 30 fps, 15 s (450 Frames): 40 Stile in 30 Einstell
   über die Schnitte hinweg; diese Einstellungen stehen in `NO_PUNCH` (`src/Showreel.tsx`), sonst ruckt der Zoom.
 - **Ab `STILL_FROM` (435) steht alles still**, der Mix ist dort stumm.
 - **Nur Geräusche, keine Musik.** Jede Rolle in `audio/kit.json` hat eine `note`, zu welchem Bildereignis sie gehört.
+- **Auslieferung im Chat:** 1080p (`npm run render`, ≈ 22 MB, ≈ 3 min Rendern). 4K wird größer als die
+  Upload-Grenze im Chat (~29 MB), dann über GitHub ausliefern.
 - Auftraggeber-Regeln aus der Haupt-`CLAUDE.md` gelten: keine Gesichter/Körperteile, keine unwahren Aussagen.
   Die Endkarte sagt nur Prüfbares („100 % Code“, „kein Stock-Material“).
 
