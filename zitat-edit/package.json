@@ -15,13 +15,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@remotion/cli": "4.0.529",
-    "@remotion/fonts": "4.0.529",
-    "@remotion/layout-utils": "4.0.529",
-    "@remotion/noise": "4.0.529",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "remotion": "4.0.529"
+    "@remotion/cli": "4.0.540",
+    "@remotion/fonts": "4.0.540",
+    "@remotion/layout-utils": "4.0.540",
+    "@remotion/noise": "4.0.540",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.540"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

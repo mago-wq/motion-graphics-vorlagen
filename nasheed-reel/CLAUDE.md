@@ -49,4 +49,5 @@ Remotion-Projekt (TypeScript), Lyric-Reel, Komposition 1080×1920, ausgeliefert 
 - **Mixkit geht** (`mixkit.co/free-stock-video/<begriff>/`, Clips unter
   `assets.mixkit.co/videos/<id>/<id>-720.mp4`, Vorschaubild `<id>-thumb-360-0.jpg`).
   1080p ist ohne Login gesperrt (403), daher 720p hochskaliert.
-- Apify (Pexels-Scraper) war am Monatslimit.
+- Apify (Pexels-Scraper) war im Oktober 2026 am Monatslimit. Das Limit gilt je Monat,
+  vor dem Aufgeben also erneut versuchen.
