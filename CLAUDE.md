@@ -34,5 +34,5 @@ Lange Renders nie „auf Verdacht“ in voller Qualität starten.
 
 ## Bücher
 
-- **Fragen zu Büchern** gehören ins Repo `mago-wq/buecher`, nicht hierher: mit `add_repo` dazuholen, dessen `CLAUDE.md`
+- **Fragen zu Büchern** gehören ins Repo `mago-wq/B-cher-Bildung`, nicht hierher: mit `add_repo` dazuholen, dessen `CLAUDE.md`
   lesen und dort arbeiten.
