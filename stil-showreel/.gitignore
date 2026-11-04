@@ -1,0 +1,7 @@
+node_modules/
+out/
+# Gerenderte Geräusche (aus audio/kit.json neu erzeugbar)
+audio/kit/
+public/ton/
+# aus src/timing.ts erzeugt (node scripts/cues.mjs)
+audio/cues.json

@@ -1,0 +1,29 @@
+{
+  "name": "stil-showreel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Showreel (9:16, 15 s): 40 Animationsstile aus Code, mit Geräuschen aus der earshot-Bank, gebaut mit Remotion",
+  "scripts": {
+    "studio": "remotion studio",
+    "entwurf": "bash scripts/render.sh --entwurf",
+    "render": "bash scripts/render.sh",
+    "render:4k": "bash scripts/render.sh --4k",
+    "stills": "node scripts/stills.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "@remotion/paths": "4.0.529",
+    "@remotion/transitions": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}

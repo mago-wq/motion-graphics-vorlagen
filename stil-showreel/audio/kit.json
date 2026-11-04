@@ -1,0 +1,364 @@
+{
+  "kit": 1,
+  "name": "stil-showreel",
+  "sr": 48000,
+  "note": "Geräusche für das 15-s-Showreel (40 Stile, Schnitt alle 0,4 s). Nur Effekte aus der earshot-Bank, keine Musik. Jede Rolle gehört zu einem Bildereignis in src/timing.ts (CUES). Nebentreffer (Pops, Klopfen, Landungen) 3 dB leiser als die großen Einschläge: earshot critique fand 1,93 laute Treffer/s (Profi-Filme bis 1,66/s).",
+  "roles": {
+    "flap": {
+      "sound": "fit/tick/domino",
+      "takes": 12,
+      "align": "onset",
+      "level_db": -9.0,
+      "note": "Fallblatt-Klappern: Dominosteine, nah am echten Klappern der Blätter"
+    },
+    "flap.land": {
+      "sound": "knock/plastic",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -7.0,
+      "note": "letztes Blatt rastet ein"
+    },
+    "punch": {
+      "sound": "cut_hit/punch",
+      "takes": 3,
+      "align": "onset",
+      "level_db": -4.0,
+      "edits": {
+        "pitch": "G1"
+      },
+      "note": "Wörter der kinetischen Typo und das Comic-WUSCH schlagen ein"
+    },
+    "buzz": {
+      "sound": "glitch/mid",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -14.0,
+      "note": "Neonröhre flackert"
+    },
+    "switch": {
+      "sound": "toggle/on",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -9.0,
+      "note": "Neonrahmen schaltet ein"
+    },
+    "tape": {
+      "sound": "toggle/latch",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -8.0,
+      "note": "PLAY-Taste des Videorekorders"
+    },
+    "glitch": {
+      "sound": "glitch/hit",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -9.0,
+      "note": "VHS-Störung, Höhepunkt auf dem Schnitt zu Pixel-Art"
+    },
+    "coin": {
+      "sound": "mallet/glock",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -11.0,
+      "edits": {
+        "pitch": "E6"
+      },
+      "note": "Münze in der Pixel-Art"
+    },
+    "key": {
+      "sound": "pro_typing_key/tick",
+      "takes": 12,
+      "align": "onset",
+      "level_db": -12.0,
+      "note": "ASCII-Zeichen tippen sich ins Bild"
+    },
+    "data": {
+      "sound": "glitch/data",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -13.0,
+      "note": "Matrix-Regen setzt ein"
+    },
+    "whoosh": {
+      "sound": "whoosh_fast/tight",
+      "takes": 2,
+      "align": "peak",
+      "level_db": -7.0,
+      "note": "Drahtgitter-Kugel dreht sich"
+    },
+    "pen": {
+      "sound": "pro_click/mouse",
+      "takes": 2,
+      "align": "onset",
+      "level_db": -11.0,
+      "note": "Zeichenstift auf der Blaupause"
+    },
+    "pop": {
+      "sound": "pro_pop_in/round",
+      "takes": 4,
+      "align": "onset",
+      "level_db": -8.0,
+      "note": "Voxel-Lagen landen"
+    },
+    "plop": {
+      "sound": "fit/pop/mouth_plop",
+      "takes": 3,
+      "align": "onset",
+      "level_db": -9.0,
+      "note": "Knetformen klatschen auf"
+    },
+    "swish": {
+      "sound": "swish/bright",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -9.0,
+      "note": "Wechsel zu Cel-Shading"
+    },
+    "sub": {
+      "sound": "pro_sub_drop/quick",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -5.0,
+      "edits": {
+        "pitch": "G1"
+      },
+      "note": "Eintauchen in den Raymarching-Tunnel"
+    },
+    "drip": {
+      "sound": "drip/bloop",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -6.0,
+      "note": "flüssiger Chromtropfen"
+    },
+    "shimmer": {
+      "sound": "pro_shimmer/m3",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -15.0,
+      "note": "Chrom wird holografisch"
+    },
+    "glide": {
+      "sound": "swipe/glide",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -11.0,
+      "note": "Glaskarte gleitet herein"
+    },
+    "toggle": {
+      "sound": "toggle/on",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -9.0,
+      "note": "Schalter auf der Glaskarte"
+    },
+    "tine": {
+      "sound": "mallet/celesta",
+      "takes": 1,
+      "seed": 5,
+      "align": "onset",
+      "level_db": -13.0,
+      "edits": {
+        "pitch": "E6"
+      },
+      "note": "klarer Einsatz auf dem Schnitt zum Polarlicht"
+    },
+    "shimmer.aurora": {
+      "sound": "pro_shimmer/m1",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -15.0,
+      "note": "Polarlicht"
+    },
+    "drop": {
+      "sound": "drip/drop",
+      "takes": 2,
+      "align": "onset",
+      "level_db": -8.0,
+      "note": "Tinte tropft ins Wasser"
+    },
+    "glass": {
+      "sound": "pro_tap/glass",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -8.0,
+      "note": "Kaleidoskop"
+    },
+    "chime": {
+      "sound": "mallet/celesta",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -11.0,
+      "edits": {
+        "pitch": "B5"
+      },
+      "note": "Buntglas erscheint"
+    },
+    "swell": {
+      "sound": "reverse_swell/short",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -11.0,
+      "note": "Licht fällt durchs Fenster"
+    },
+    "jet": {
+      "sound": "whoosh_big/jet",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -6.0,
+      "note": "Sternensprung, Höhepunkt beim Übergang in den Endloszoom"
+    },
+    "zing": {
+      "sound": "swish/zing",
+      "takes": 2,
+      "align": "peak",
+      "level_db": -9.0,
+      "note": "Lichtbänder sausen vorbei"
+    },
+    "hover": {
+      "sound": "pro_hover_tick/glass",
+      "takes": 6,
+      "align": "onset",
+      "level_db": -13.0,
+      "note": "Magnet streicht über die Punkte"
+    },
+    "burst": {
+      "sound": "pro_impact/short",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -6.0,
+      "edits": {
+        "pitch": "G1"
+      },
+      "note": "Punkte brechen als Partikel aus"
+    },
+    "paper": {
+      "sound": "swipe/paper",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -10.0,
+      "note": "Landkarte aus Papier"
+    },
+    "soft": {
+      "sound": "swish/soft",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -11.0,
+      "note": "Strömungsfeld öffnet sich"
+    },
+    "fold": {
+      "sound": "swipe/paper",
+      "takes": 2,
+      "seed": 77,
+      "align": "peak",
+      "level_db": -8.0,
+      "edits": {
+        "dur": 0.4,
+        "apex": 0.12
+      },
+      "note": "Origami-Falz"
+    },
+    "brush": {
+      "sound": "swish/soft",
+      "takes": 1,
+      "seed": 91,
+      "align": "peak",
+      "level_db": -9.0,
+      "note": "Pinselstrich des Ensō"
+    },
+    "stamp": {
+      "sound": "knock/desk",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -7.0,
+      "note": "Siegel wird gestempelt"
+    },
+    "chalk": {
+      "sound": "tap/knuckle",
+      "takes": 2,
+      "align": "onset",
+      "level_db": -10.0,
+      "note": "Kreide setzt auf"
+    },
+    "idea": {
+      "sound": "mallet/glock",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -11.0,
+      "edits": {
+        "pitch": "C6"
+      },
+      "note": "Glühbirne: Idee!"
+    },
+    "whip": {
+      "sound": "whoosh_fast/whip",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -6.0,
+      "note": "Comic-Explosion fliegt heran"
+    },
+    "knock": {
+      "sound": "knock/wood",
+      "takes": 4,
+      "align": "onset",
+      "level_db": -9.0,
+      "note": "Bauhaus-Formen landen"
+    },
+    "flip": {
+      "sound": "swish/flick",
+      "takes": 2,
+      "align": "peak",
+      "level_db": -8.0,
+      "note": "3D-Kartenflip"
+    },
+    "deco": {
+      "sound": "pro_notify/ding_2045",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -14.0,
+      "note": "goldener Glanz im Art déco"
+    },
+    "riser": {
+      "sound": "riser/dark",
+      "takes": 1,
+      "align": "peak",
+      "level_db": -9.0,
+      "edits": {
+        "dur": 1.4
+      },
+      "note": "Spannung vor der Endkarte, Höhepunkt auf dem Aufprall"
+    },
+    "kick": {
+      "sound": "cut_hit/kick",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -2.0,
+      "edits": {
+        "pitch": "G1"
+      },
+      "note": "Endkarte schlägt ein"
+    },
+    "popin": {
+      "sound": "pro_pop_in/knock",
+      "takes": 3,
+      "align": "onset",
+      "level_db": -8.0,
+      "note": "Kästen der Endkarte landen"
+    },
+    "sticker": {
+      "sound": "ui_pop/wide",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -7.0,
+      "note": "Aufkleber"
+    },
+    "press": {
+      "sound": "toggle/rocker",
+      "takes": 1,
+      "align": "onset",
+      "level_db": -5.0,
+      "note": "Knopf wird gedrückt"
+    }
+  }
+}
