@@ -31,6 +31,11 @@ einen gemeinsamen Ordner auslagern, wenn die zweite Vorlage sie wirklich braucht
 3. **Erst danach der eine Endrender** in voller Qualität (z. B. 4K).
 Lange Renders nie „auf Verdacht“ in voller Qualität starten.
 
+## Ton-Werkzeuge
+
+- **earshot und Openverse** (252 Soundeffekte, Ton und fertige Videos anhören, frei lizenzierte Audiodateien suchen) liegen
+  im Repo `mago-wq/Youtube` unter `werkzeuge/ton/`, Bedienung in der README dort. Fehlt das Repo in der Sitzung, mit
+  `add_repo` dazuholen. Einrichten: `bash <Youtube-Repo>/werkzeuge/ton/earshot_einrichten.sh`.
 
 ## Bücher
 
