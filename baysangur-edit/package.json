@@ -1,0 +1,25 @@
+{
+  "name": "baysangur-edit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "History-Edit (9:16) über Baysangur von Benoy im Stil alter Farbfilm-Aufnahmen, mit tschetschenischen Sprichwörtern, Nasheed nur Stimme, gebaut mit Remotion",
+  "scripts": {
+    "figure": "python3 scripts/make_figure.py",
+    "audio": "python3 scripts/build_audio.py",
+    "render": "bash scripts/render.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/layout-utils": "4.0.529",
+    "remotion": "4.0.529",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  }
+}
