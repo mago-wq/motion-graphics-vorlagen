@@ -11,7 +11,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | [`coralclub-kurz/`](coralclub-kurz/) | Coral Club: Werbe-, Wissens- und Produkt-Reels, teils mit Sprecher (Pillow + ffmpeg, Sekunden Renderzeit) | 6–46 s |
 | [`welt-laerm/`](welt-laerm/) | Reminder-Clip: Originalton, deutsche Untertitel Wort für Wort, leuchtende Piktogramm-Figuren | 22,6 s |
 | [`nokhchi-edit/`](nokhchi-edit/) | History-Edit tschetschenische Geschichte: Nasheed nur Stimme, animierte Karten, Tonfassungen ohne/mit Zitaten (de/ru); 1080p oder 4K | ~69 s |
-| [`baysangur-edit/`](baysangur-edit/) | History-Edit Baysangur von Benoy im Stil eines Philosophie-Edits: alte Farbfilm-Optik, tschetschenische Sprichwörter (Original + deutsch), Collage-Kästchen, Nasheed nur Stimme | 22 s |
+| [`baysangur-edit/`](baysangur-edit/) | History-Edit Baysangur von Benoy im Stil eines Philosophie-Edits: alte, satte Farbfilm-Optik, tschetschenische Sprichwörter (Original + deutsch), Collage-Kästchen, „Нохчо Нашид“ nur Stimme | 22 s |
 | [`grab-reminder-de/`](grab-reminder-de/) | Deutsche Fassung eines TikTok-Clips (Retusche: englischer Text → deutscher Text im Originalstil) | 24 s |
 | [`nasheed-reel/`](nasheed-reel/) | Lyric-Reel „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit deutscher Übersetzung (Retro-Glow), Nasheed + Geräusche; 4K | 31 s |
 | [`rahil-reel/`](rahil-reel/) | Zwei Reels auf „Ya Rahilan“: Abschied (Regen, Kerze, Mond, arabisch/deutsch) und „Sommertage Vergangenheit“ (romantisch-nostalgischer Look); Schrift zittert mit der Stimme | 15,7 s |

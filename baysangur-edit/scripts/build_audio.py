@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Baut die Tonspur des Baysangur-Edits und die Zeitleiste für Remotion.
 
-Eingang (nicht im Repo):
-  ../nokhchi-edit/assets-src/nasheed/vocals.wav       Nasheed „Джохар Дудаев“, nur Stimme (Beat per KI entfernt)
-  ../nokhchi-edit/assets-src/nasheed/beats_orig.json  Taktraster der Originalfassung
-  ../nokhchi-edit/assets-src/sfx/*.mp3                natürliche Geräusche
-  Wiederherstellen: bash ../nokhchi-edit/scripts/fetch_nasheed.sh
+Eingang:
+  assets-src/nasheed/vocals.wav    „Нохчо Нашид“, nur Stimme (nicht im Repo: scripts/fetch_nasheed.sh)
+  assets-src/nasheed/beats.json    Taktraster
+  ../nokhchi-edit/assets-src/sfx/  natürliche Geräusche (im Repo)
 
 Ausgang:
   public/audio/mix.wav   fertige Tonspur (44,1 kHz, Stereo)
@@ -28,12 +27,13 @@ import soundfile as sf
 from scipy import signal
 
 ROOT = Path(__file__).resolve().parent.parent
-NOK = ROOT.parent / "nokhchi-edit" / "assets-src"
+NASHEED = ROOT / "assets-src" / "nasheed"
+SFX = ROOT.parent / "nokhchi-edit" / "assets-src" / "sfx"
 SR = 44100
 DUR = 22.0        # Länge des Edits (Vorbild: 21,9 s)
 COLD = 1.2        # nur Wind und Wolf
-OPEN_BEAT = 128   # ab diesem Schlag ist die Stimme offen (Einsatz des Refrains)
-OPEN_AT = 4.0     # … und zwar bei dieser Sekunde der Ausgabe
+SRC_START = 0.0   # ab dieser Sekunde des Nasheeds (Anfang des Gesangs)
+OPEN_AT = 4.0     # bis hierhin gedämpft wie hinter einer Wand, dann offen (wie im Vorbild)
 TAIL = 2.2        # Ausklang: Stimme blendet aus, Hall und Wind bleiben
 
 
@@ -98,9 +98,9 @@ def place(dst, src, at, gain_db=0.0):
 
 
 def main():
-    beats = np.array(json.load(open(NOK / "nasheed" / "beats_orig.json"))["beats"])
-    voc = load(NOK / "nasheed" / "vocals.wav")
-    src0 = beats[OPEN_BEAT] - (OPEN_AT - COLD)          # Quellsekunde, die bei COLD einsetzt
+    beats = np.array(json.load(open(NASHEED / "beats.json"))["beats"])
+    voc = load(NASHEED / "vocals.wav")
+    src0 = SRC_START                                     # Quellsekunde, die bei COLD einsetzt
     vlen = DUR - COLD
     v = voc[int(src0 * SR): int((src0 + vlen) * SR)].copy()
     n = int(DUR * SR)
@@ -136,7 +136,7 @@ def main():
     place(mix, tail[int(1.2 * SR):], COLD + vlen - 0.02)
 
     # Geräusche (natürlich): Wind durchgehend, Wolf am Anfang, Donner tief bei Zitat 2 und am Ende
-    sfx = NOK / "sfx"
+    sfx = SFX
     wind = load(sfx / "wind_a.mp3")
     wind = np.tile(wind, (int(np.ceil(n / len(wind))) + 1, 1))[:n]
     wenv = env_points([(0, 0.0), (0.4, 1.0), (COLD, 1.0), (OPEN_AT, 0.45), (DUR - TAIL, 0.45), (DUR, 0.9)], n)

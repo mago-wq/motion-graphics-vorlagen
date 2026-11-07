@@ -72,47 +72,11 @@
   "height": 569
  },
  {
-  "file": "img/hist/sharoi_1800.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Sharoi1800.jpg",
-  "author": "НеизвестенUnknown author",
-  "license": "Public domain",
-  "date": "XIX векdate QS:P,+1850-00-00T00:00:00Z/7",
-  "width": 1272,
-  "height": 1047
- },
- {
   "file": "img/hist/tower_khambetar.jpg",
   "commons": "https://commons.wikimedia.org/wiki/File:%D0%A5%D0%B0%D0%BC%D0%B1%D0%B5%D1%82%D0%B0%D1%80%D0%B0%D0%BD_%D0%B3I%D0%B0%D0%BB%D0%B0.jpg",
   "author": "Flandria12",
   "license": "CC BY 4.0",
   "date": "2021-12-14 16:36:55",
-  "width": 3024,
-  "height": 4032
- },
- {
-  "file": "img/hist/tower_komalkhi.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BC%D0%B0%D0%BB%D1%85%D0%B0%D1%80_%D0%B1I%D0%BE%D0%B2.jpg",
-  "author": "Flandria12",
-  "license": "CC BY 4.0",
-  "date": "2017-09-06",
-  "width": 1429,
-  "height": 1559
- },
- {
-  "file": "img/hist/towers_chechnya.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D1%88%D0%BD%D0%B8_%D0%B2_%D0%A7%D0%B5%D1%87%D0%BD%D0%B5.jpg",
-  "author": "Олег Шеин",
-  "license": "CC BY 3.0",
-  "date": "2012-05-12",
-  "width": 3216,
-  "height": 4288
- },
- {
-  "file": "img/hist/towers_ushkaloy.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Ushkaloyskie_Towers.jpg",
-  "author": "SoloveiYegor",
-  "license": "CC BY-SA 4.0",
-  "date": "Taken on 25 August 2020, 11:44:41",
   "width": 3024,
   "height": 4032
  },
@@ -144,12 +108,52 @@
   "height": 1052
  },
  {
-  "file": "img/hist/war_valerik_lermontov.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Paintings_by_Mikhail_Lermontov%2C_1840%2C_Valerik.jpg",
-  "author": "Михаил Юрьевич Лермонтов / Григорий Григорьевич Гагарин",
+  "file": "img/valerik_color.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Valerik.jpg",
+  "author": "Mikhail Lermontov",
   "license": "Public domain",
-  "date": "1840date QS:P571,+1840-00-00T00:00:00Z/9",
-  "width": 3213,
-  "height": 2815
+  "date": "1840"
+ },
+ {
+  "file": "img/ushchelye_vasilenko.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%A3%D1%89%D0%B5%D0%BB%D1%8C%D0%B5_%D0%B2_%D0%A7%D0%B5%D1%87%D0%BD%D0%B5.png",
+  "author": "И. Василенко",
+  "license": "Public domain",
+  "date": "before 1855-1859"
+ },
+ {
+  "file": "img/naiby.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%B8%D0%B1%D1%8B.jpg",
+  "author": "хууш дац",
+  "license": "Public domain",
+  "date": "0100"
+ },
+ {
+  "file": "img/sani_1926.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%98%D0%B7%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B0%D0%B3%D0%BE%D1%80%D0%BD%D1%8B%D1%85_%D1%81%D0%B0%D0%BD%D0%B5%D0%B9_%D0%B2_%D0%B0%D1%83%D0%BB%D0%B5_%D0%A5%D1%83%D0%B3%D0%B0%D0%BD%D0%B4%D0%BE%D0%B9.jpg",
+  "author": "unbekannt",
+  "license": "Public domain",
+  "date": "1926"
+ },
+ {
+  "file": "img/belgatoy_1845.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%90%D1%83%D0%BB_%D0%91%D0%B5%D0%BB%D0%B3%D0%B0%D1%82%D0%BE%D0%B9_%D0%B2_%D0%A7%D0%B5%D1%87%D0%BD%D0%B5._(%D0%92%D0%B5%D0%B4%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%80%D0%B0%D0%B9%D0%BE%D0%BD).jpg",
+  "author": "unknown",
+  "license": "Public domain",
+  "date": "1880-1890-е"
+ },
+ {
+  "file": "img/achkhoy.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%90%D1%87%D1%85%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%B1%D0%BE%D0%B9.jpg",
+  "author": "unbekannt",
+  "license": "Public domain",
+  "date": "before 1895"
+ },
+ {
+  "file": "img/khulkhulau.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%A3%D1%89%D0%B5%D0%BB%D1%8C%D0%B5_%D0%A5%D1%83%D0%BB%D1%85%D1%83%D0%BB%D0%B0%D1%83.jpg",
+  "author": "unbekannt",
+  "license": "Public domain",
+  "date": "1895"
  }
 ]

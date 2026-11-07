@@ -1,6 +1,7 @@
 node_modules/
 out/
 # Die Tonspur enthält das Nasheed (urheberrechtlich geschützt) und kommt nicht ins Repo.
-# Wiederherstellen: bash ../nokhchi-edit/scripts/fetch_nasheed.sh, dann npm run audio.
+# Wiederherstellen: bash scripts/fetch_nasheed.sh, dann npm run audio.
 public/audio/
+assets-src/nasheed/
 __pycache__/

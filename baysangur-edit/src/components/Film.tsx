@@ -1,4 +1,4 @@
-// Alter Farbfilm wie im Vorbild: verblasste Farben (Kodachrome-artig), leichtes Bildstehen-Wackeln,
+// Alter Farbfilm wie im Vorbild: satte Farben mit tiefen Schwarztönen (Kodachrome-artig), Bildstehen-Wackeln,
 // Helligkeitsflackern, Staub, gelegentlich ein senkrechter Kratzer. Das Korn kommt erst in
 // scripts/render.sh per ffmpeg dazu (im Browser pro Frame zu teuer).
 import type {CSSProperties} from 'react';
@@ -6,14 +6,16 @@ import {AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame} fro
 import {F} from '../fonts';
 import {BAND} from '../video';
 
-export type Grade = 'film' | 'filmBw' | 'filmWarm' | 'none';
+export type Grade = 'film' | 'filmBw' | 'filmWarm' | 'dark' | 'none';
 
+// Rückmeldung: nostalgischer, lebendiger, düsterer – wie das Vorbild (satt, tiefe Schwarztöne,
+// türkiser Himmel, rötliche Wärme). Erste Fassung war zu blass und zu sepia.
 const GRADE: Record<Grade, string> = {
-	// Farbfotos/-gemälde: weniger Kontrast in den Tiefen, Farben etwas ausgewaschen, warm-türkis
-	film: 'contrast(0.92) saturate(1.12) sepia(0.22) brightness(1.02)',
-	// Schwarzweiß-Vorlagen: wie alter Farbfilm, der S/W abfilmt – leicht getönt
-	filmBw: 'grayscale(1) contrast(1.08) sepia(0.42) saturate(1.35) brightness(0.98)',
-	filmWarm: 'contrast(0.98) saturate(0.95) sepia(0.4) brightness(0.97)',
+	film: 'contrast(1.22) saturate(1.38) sepia(0.12) brightness(0.9)',
+	// Schwarzweiß-Vorlagen: getönt wie abgefilmtes Material, Tiefen satt
+	filmBw: 'grayscale(1) sepia(0.55) saturate(1.5) contrast(1.5) brightness(0.76)',
+	filmWarm: 'contrast(1.2) saturate(1.25) sepia(0.32) brightness(0.86)',
+	dark: 'contrast(1.35) saturate(1.2) sepia(0.25) brightness(0.62)',
 	none: 'none',
 };
 
@@ -28,8 +30,10 @@ export const Shot: React.FC<{
 	dur: number;
 	grade?: Grade;
 	flip?: boolean;
+	/** Kleine Vorlagen (≤ 750 px) leicht weichzeichnen – wirkt wie Film statt wie Pixel */
+	soft?: boolean;
 	style?: CSSProperties;
-}> = ({src, focus = [0.5, 0.5], zoom = [1, 1.06], drift = [0, 0], dur, grade = 'film', flip, style}) => {
+}> = ({src, focus = [0.5, 0.5], zoom = [1, 1.06], drift = [0, 0], dur, grade = 'film', flip, soft, style}) => {
 	const fr = useCurrentFrame();
 	const p = interpolate(fr, [0, dur], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 	const z = zoom[0] + (zoom[1] - zoom[0]) * p;
@@ -46,7 +50,7 @@ export const Shot: React.FC<{
 					objectPosition: `${focus[0] * 100}% ${focus[1] * 100}%`,
 					transformOrigin: `${focus[0] * 100}% ${focus[1] * 100}%`,
 					transform: `translate(${drift[0] * p}px, ${drift[1] * p}px) scale(${z})${flip ? ' scaleX(-1)' : ''}`,
-					filter: GRADE[grade],
+					filter: GRADE[grade] + (soft ? ' blur(0.9px)' : ''),
 					...style,
 				}}
 			/>
@@ -67,9 +71,9 @@ export const FilmBand: React.FC<{children: React.ReactNode}> = ({children}) => {
 			<div style={{position: 'absolute', inset: -6, transform: `translate(${wx}px, ${wy}px)`, filter: `brightness(${flick})`}}>
 				{children}
 			</div>
-			{/* Farbstich des alten Materials: Tiefen türkis, Lichter warm */}
-			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(40,110,120,0.10), rgba(160,90,40,0.10))', mixBlendMode: 'soft-light'}} />
-			<AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.38) 100%)'}} />
+			{/* Farbstich des alten Materials: oben türkis, unten rötlich-warm */}
+			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(30,120,130,0.28), rgba(150,60,40,0.22))', mixBlendMode: 'soft-light'}} />
+			<AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 100%)'}} />
 			<Dust />
 		</div>
 	);
@@ -126,7 +130,7 @@ export const PopBox: React.FC<{
 	wordSize?: number;
 	/** Frames bis zum Erscheinen (relativ zur Einstellung) */
 	at: number;
-}> = ({src, x, y, w, h, focus = [0.5, 0.5], zoom = 1, grade = 'filmWarm', word, wordSize = 56, at}) => {
+}> = ({src, x, y, w, h, focus = [0.5, 0.5], zoom = 1, grade = 'dark', word, wordSize = 56, at}) => {
 	const fr = useCurrentFrame();
 	if (fr < at) return null;
 	// 2 Frames leichtes Aufploppen
@@ -145,6 +149,8 @@ export const PopBox: React.FC<{
 					filter: GRADE[grade],
 				}}
 			/>
+			{/* Wie im Vorbild: Motiv taucht aus Schwarz auf */}
+			<AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.75) 100%)'}} />
 			{word && (
 				<AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
 					<Outline size={wordSize} color="#fff" stroke="#000" width={3}>

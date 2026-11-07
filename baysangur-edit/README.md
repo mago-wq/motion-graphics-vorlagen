@@ -4,9 +4,15 @@ History-Edit (9:16, 22 s) über **Baysangur von Benoy** im Stil eines TikTok-Phi
 alte Farbfilm-Optik im 4:3-Streifen mit schwarzen Balken, große schmale Schrift links und
 rechts der Figur, Bildkästchen als Collage auf dem Schlag, Einzelwörter (КЪОНАХ, МАРШО).
 
-Ton: das Nasheed „Джохар Дудаев“ **nur als Stimme** (wie `nokhchi-edit`), gedämpfter Einstieg
-mit Wind und Wolf, nach 4 s offen; Wärme unten aus der Stimme selbst (eine Oktave tiefer,
-nur < 95 Hz), dazu tiefer Donner. Keine Instrumente.
+Ton: „Нохчо Нашид – Чеченский Нашид“ (SoundCloud, https://soundcloud.com/prosto-ded-527740432/noxcho-nashid-chechenskij),
+zur Sicherheit per KI auf die Stimme reduziert. Gedämpfter Einstieg mit Wind und Wolf, nach 4 s offen
+(wie im Vorbild); Wärme unten aus der Stimme selbst (eine Oktave tiefer, nur < 95 Hz), dazu tiefer
+Donner. Keine Instrumente.
+
+Bildstimmung nach Rückmeldung (2. Entwurf): satt und dunkel wie das Vorbild statt blass-sepia,
+keine Turm-Einstellungen mehr; dafür Lermontows farbiges Valerik-Bild und am Schluss die
+Zeichnung „Ущелье в Чечне“ (I. Vasilenko, vor 1855). Sprichwort 2 steht wie im Vorbild vor einer
+dunklen Figur auf rotem Vorhang. Abblende am Ende.
 
 ## Texte
 
@@ -21,14 +27,15 @@ https://rus4all.ru/che/20240814/61848/Chechenskaya-narodnaya-mudrost.html
 
 Einzelwörter: **КЪОНАХ** (würdiger, mutiger Mann; steht so auch in Sprichwort 217 derselben
 Quelle: „ТIелхигаш кIелара а волу къонах“ – „И из-под лохмотьев может выйти храбрец“),
-**МАРШО** (Freiheit).
+**ДАЙМОХК** (Heimat; Sprichwort 68 derselben Quelle: „Даймохк — йалсамани, нехан мохк — жоьжахате“ –
+„Родина — рай, чужбина — ад“), **МАРШО** (Freiheit).
 
 ## Ablauf
 
 ```bash
 npm install
 npx remotion browser ensure
-bash ../nokhchi-edit/scripts/fetch_nasheed.sh   # Nasheed holen, Stimme trennen (nicht im Repo)
+bash scripts/fetch_nasheed.sh   # Nasheed holen, Stimme trennen, Takt messen (nicht im Repo)
 npm run figure                  # Baysangur ohne Papierrand freistellen → public/img/baysangur_fig.png
 npm run audio                   # Tonspur → public/audio/mix.wav + src/timeline.json
 bash scripts/render.sh --draft  # schneller Entwurf 540p – erst den zeigen
