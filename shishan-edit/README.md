@@ -9,10 +9,13 @@ im Stil der TikTok-Referenz 1 (Kaneki-Edit von @eolnski_edits): erst Frage und A
 |---|---|---|
 | 0–0,35 s | Wind, Wolfsgeheul | Wolfsauge blitzt auf |
 | 0,35–7,0 s | „حسبوا اقتحامك نزهة لجيوشهم“ | Zarenheere (Gemälde 1836–1840), Berge · SIE DACHTEN, DICH ZU STÜRMEN SEI EIN SPAZIERGANG FÜR IHRE HEERE. |
-| 7,0 s | „كلا!“ + Donner | Krieger (Foto Jermakow), Schrift **hinter** ihm: NEIN. |
-| 7–11,5 s | „فتلك عرائن الشجعان“ | Wehrtürme, Tschetschenen um 1880 · DAS IST DAS REVIER DER TAPFEREN. |
-| 11,5–27,4 s | sechs Rufe „شيشان!“, Bass aus der Stimme | Drop, dunkel (weiß auf Schwarz): شيشان → НОХЧИЙЧОЬ → TSCHETSCHENIEN, Reiter, Dolche, Medaillon Scheich Mansur, BAYSANGUR und ZELIMKHAN (Name hinter dem Kopf), Wolf, Adler, Schmiede … МАРШО → FREIHEIT. (Wolf auf dem Fels) |
+| 7,0 s | „كلا!“ + Donner | tschetschenischer Krieger im Kettenhemd (Stich, 19. Jh.) auf Schwarz, Schrift **hinter** ihm: NEIN. |
+| 7–11,5 s | „فتلك عرائن الشجعان“ | Wehrtürme, Männer aus Zumsoi (Foto 1906) · DAS IST DAS REVIER DER TAPFEREN. |
+| 11,5–27,4 s | sechs Rufe „شيشان!“, Bass aus der Stimme | Drop, dunkel (weiß auf Schwarz): شيشان → НОХЧИЙЧОЬ → TSCHETSCHENIEN, Reiter, Dolche, Tschetschenen in Tracht (Krieger mit Gewehr, КЪОНАХ und НОХЧО hinter dem Kopf), Gesicht nach Mikeschin 1876, Wolf, Adler, Schmiede … МАРШО → FREIHEIT. (Wolf auf dem Fels) |
 | 27,4–30,1 s | Nachhall, Wolfsgeheul | Abblende auf Schwarz |
+
+Menschen nur als anonymer tschetschenischer Typ in Tracht – keine bekannten Personen (siehe `CLAUDE.md`).
+КЪОНАХ = der Ehrenhafte, Tapfere (Ideal des tschetschenischen Mannes), НОХЧО = Tschetschene, МАРШО = Freiheit.
 
 Text-Übersetzung: „Sie dachten, dich zu stürmen sei ein Spaziergang für ihre Heere. – Nein. Das ist das
 Revier der Tapferen.“ (wörtlich: „…das sind die Löwenhöhlen der Tapferen“). Nur diese Anfangsstrophe und

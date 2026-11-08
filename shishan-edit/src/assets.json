@@ -1,17 +1,22 @@
 {
  "img": {
-  "baysangur": {
-   "aspect": 0.8895,
+  "chechen_litho": {
+   "aspect": 0.4062,
    "cut": true,
-   "half": true
+   "half": false
   },
-  "chechen_yermakov": {
-   "aspect": 0.8308,
+  "chechen_rider_1910": {
+   "aspect": 0.6983,
    "cut": true,
-   "half": true
+   "half": false
   },
-  "chechens_kennan": {
-   "aspect": 0.5996,
+  "chechen_rifle": {
+   "aspect": 0.7608,
+   "cut": true,
+   "half": false
+  },
+  "chechens_seidlitz": {
+   "aspect": 0.6217,
    "cut": false,
    "half": true
   },
@@ -30,9 +35,9 @@
    "cut": false,
    "half": false
   },
-  "mansur_1787": {
-   "aspect": 0.9488,
-   "cut": true,
+  "mikeshin_chechen": {
+   "aspect": 0.445,
+   "cut": false,
    "half": true
   },
   "mountains_kezenoyam": {
@@ -90,6 +95,11 @@
    "cut": false,
    "half": false
   },
+  "warrior_mail": {
+   "aspect": 0.5262,
+   "cut": true,
+   "half": true
+  },
   "weapons_platz": {
    "aspect": 1.3646,
    "cut": false,
@@ -120,9 +130,9 @@
    "cut": true,
    "half": false
   },
-  "zelimkhan": {
-   "aspect": 0.8312,
-   "cut": true,
+  "zumsoy_1906": {
+   "aspect": 1.7045,
+   "cut": false,
    "half": true
   }
  },

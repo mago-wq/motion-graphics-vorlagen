@@ -21,10 +21,57 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets-src"
 PUB = ROOT / "public"
 MAX_SIDE = 2400
-HALF_KEYS = ["mansur_1787", "towers_ushkaloy", "chechens_kennan"]
-# Freisteller per BiRefNet (rembg) – die vier Porträts kommen fertig aus dem nokhchi-edit.
+HALF_KEYS = ["towers_ushkaloy", "mikeshin_chechen", "zumsoy_1906", "chechens_seidlitz", "warrior_mail"]
+# Freisteller per BiRefNet (rembg) für „Text hinter dem Motiv“ und Figuren auf Schwarz.
 # Je Bild ein eigener Prozess, sonst läuft der Speicher voll (BiRefNet ~14 GB bei mehreren Bildern).
-CUT_KEYS = ["papakha_painting"]
+CUT_KEYS = ["papakha_painting", "warrior_mail", "chechen_rifle", "chechen_litho", "chechen_rider_1910"]
+# Ausschnitt (links, oben, rechts, unten als Anteil) vor allem anderen – z. B. nur die eine Figur einer Tafel
+CROPS = {
+    "chechen_litho": (0.37, 0.0, 1.0, 0.915),  # rechts der Tschetschene (Hand bei x≈0,38), links die Kabardinerin, unten Bildunterschrift
+}
+# Freisteller nachbessern: Flächen, die BiRefNet verliert (Ellipse: Mitte x, y, Halbachsen rx, ry als Anteil)
+# Reiter 1910: die schwarze Papacha verschwimmt mit dem dunklen Haus dahinter und fehlte in der Maske.
+MASK_ADD = {
+    "chechen_rider_1910": [(0.612, 0.078, 0.078, 0.048)],
+}
+# Kleine Vorlagen mit Real-ESRGAN x4 hochrechnen (lokal, onnxruntime; Modell ~/.esrgan/real_esrgan_x4.onnx,
+# BSD-3, https://huggingface.co/SceneWorks/real-esrgan-onnx). Wert = größte Seite danach.
+UPSCALE = {"zumsoy_1906": 2400, "chechens_seidlitz": 2400, "chechen_rifle": 2400, "chechen_rider_1910": 2400,
+           "mikeshin_chechen": 3600}
+ESRGAN = Path.home() / ".esrgan" / "real_esrgan_x4.onnx"
+TILE, PAD = 384, 16
+
+
+def esrgan_x4(im: Image.Image) -> Image.Image:
+    import onnxruntime as ort
+    sess = ort.InferenceSession(str(ESRGAN), providers=["CPUExecutionProvider"])
+    a = np.asarray(im.convert("RGB"), dtype=np.float32) / 255.0
+    h, w, _ = a.shape
+    out = np.zeros((h * 4, w * 4, 3), np.float32)
+    for y in range(0, h, TILE):
+        for x in range(0, w, TILE):
+            y0, x0 = max(0, y - PAD), max(0, x - PAD)
+            y1, x1 = min(h, y + TILE + PAD), min(w, x + TILE + PAD)
+            res = sess.run(None, {"input": a[y0:y1, x0:x1].transpose(2, 0, 1)[None]})[0][0].transpose(1, 2, 0)
+            oy, ox = (y - y0) * 4, (x - x0) * 4
+            th, tw = min(TILE, h - y) * 4, min(TILE, w - x) * 4
+            out[y * 4:y * 4 + th, x * 4:x * 4 + tw] = res[oy:oy + th, ox:ox + tw]
+    return Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
+
+
+def base_image(p: Path) -> Image.Image:
+    key = p.stem
+    im = Image.open(p).convert("RGB")
+    if key in CROPS:
+        l, t, r, b = CROPS[key]
+        im = im.crop((round(l * im.width), round(t * im.height), round(r * im.width), round(b * im.height)))
+    side = MAX_SIDE
+    if key in UPSCALE:
+        side = UPSCALE[key]
+        im = esrgan_x4(im)
+        print(f"ESRGAN {key}: → {im.width}×{im.height}", flush=True)
+    im.thumbnail((side, side), Image.LANCZOS)
+    return im
 
 
 def red_look(im: Image.Image) -> Image.Image:
@@ -73,6 +120,14 @@ def cutouts(keys):
         session = session or new_session("birefnet-general")
         im = Image.open(src).convert("RGB")
         mask = remove(im, session=session, only_mask=True, post_process_mask=True)
+        if key in MASK_ADD:
+            from PIL import ImageChops, ImageDraw
+            extra = Image.new("L", mask.size, 0)
+            d = ImageDraw.Draw(extra)
+            W, H = mask.size
+            for cx, cy, rx, ry in MASK_ADD[key]:
+                d.ellipse([(cx - rx) * W, (cy - ry) * H, (cx + rx) * W, (cy + ry) * H], fill=255)
+            mask = ImageChops.lighter(mask, extra.filter(ImageFilter.GaussianBlur(6)))
         mask = mask.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.0))
         out = im.copy()
         out.putalpha(mask)
@@ -107,9 +162,7 @@ def main():
         key = p.stem
         base = PUB / "img" / f"{key}.jpg"
         if not base.exists():
-            im = Image.open(p).convert("RGB")
-            im.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
-            im.save(base, quality=92)
+            base_image(p).save(base, quality=92)
         im = Image.open(base)
         red = PUB / "img" / "red" / f"{key}.jpg"
         if not red.exists():
@@ -121,7 +174,7 @@ def main():
                 h.thumbnail((1400, 1400))
                 halftone(h).save(half, optimize=True)
         assets["img"][key] = {"aspect": round(im.width / im.height, 4)}
-    # Porträt-Freisteller aus dem nokhchi-edit (gleich groß wie das Grundbild dort)
+    # Fertige Freisteller aus assets-src/img/cut (falls vorhanden; gleich groß wie das Grundbild)
     for p in sorted((SRC / "img" / "cut").glob("*.png")):
         dest = PUB / "img" / "cut" / p.name
         if not dest.exists():

@@ -89,23 +89,24 @@ export const buildPlan = (): Plan => {
 	shots.push(shot(fuer - LEAD_SHOT, nein, 'war_dargo_roubaud', 'crush', cam(1.1, 1.42, 0.5, 0.42, 0.5, 0.5)));
 
 	// ================================================================ ANTWORT („NEIN. Das ist das Revier der Tapferen.“)
-	// „NEIN.“ – der Krieger (Foto Jermakow, 19. Jh.) rechts, Schrift läuft HINTER ihn; Schnitt genau auf dem Donner
-	shots.push(shot(nein, dasist - LEAD_SHOT, 'chechen_yermakov', 'ink', cam(1.3, 1.16, 0.3, 0.3), {fg: true, flicker: 0.05}));
+	// „NEIN.“ – tschetschenischer Krieger im Kettenhemd (Stich, 19. Jh.) auf Schwarz, die Schrift läuft HINTER
+	// Helm und Gewehr; Schnitt genau auf dem Donner. (Keine bekannten Personen – nur der Typ in Tracht.)
+	shots.push(shot(nein, dasist - LEAD_SHOT, 'warrior_mail', 'ink', cam(1.06, 0.98, 0.45, 0.28), {cutOnly: true, fg: true, flicker: 0.05}));
 	// „DAS IST“ – Turmmauer, „DAS REVIER“ – Wehrtürme im Fels (Uschkaloi)
 	shots.push(shot(dasist - LEAD_SHOT, revier - 3, 'tower_khambetar', 'crush', cam(1.35, 1.6, 0.5, 0.42)));
 	shots.push(shot(revier - 3, der - LEAD_SHOT, 'towers_ushkaloy', 'crush', cam(1.15, 1.42, 0.42, 0.55)));
-	// „DER TAPFEREN.“ – Tschetschenen um 1880 (Kennan), Fahrt auf die Gesichter
-	shots.push(shot(der - LEAD_SHOT, P[0], 'chechens_kennan', 'red', cam(1.15, 1.62, 0.5, 0.33, 0.5, 0.27)));
+	// „DER TAPFEREN.“ – Männer aus Zumsoi in Papacha und Tscherkeska (Foto 1906), Fahrt auf die vordere Reihe
+	shots.push(shot(der - LEAD_SHOT, P[0], 'zumsoy_1906', 'red', cam(1.0, 1.22, 0.5, 0.5, 0.5, 0.6)));
 
 	// Blitzbilder im Intro (Negativ / Raster) und schwarze Einzelbilder wie in der Referenz
 	tops.push(shot(dachten + 9, dachten + 11, 'war_faesi_1836', 'neg', cam(1.4, 1.4, 0.48, 0.79)));
 	tops.push(shot(spazier + 12, spazier + 14, 'mountains_kezenoyam', 'neg', cam(1.1, 1.1, 0.33, 0.5)));
 	tops.push(shot(heere + 22, heere + 24, 'war_dargo_roubaud', 'neg', cam(1.3, 1.3, 0.5, 0.46)));
 	tops.push(shot(revier + 10, revier + 12, 'towers_ushkaloy', 'half', cam(1.25, 1.25, 0.42, 0.55)));
-	tops.push(shot(tapfer + 14, tapfer + 16, 'chechens_kennan', 'half', cam(1.4, 1.4, 0.5, 0.3)));
+	tops.push(shot(tapfer + 14, tapfer + 16, 'zumsoy_1906', 'half', cam(1.15, 1.15, 0.5, 0.55)));
 	for (const t of [sie + 14, dich + 18, stuermen + 10, spazier + 22, heere + 14, dasist + 9, der + 4, tapfer + 24]) black(t);
 	// Anlauf auf „NEIN.“: Negativ des Kriegers, drei Frames Schwarz, Treffer: Weiß, dann ein Frame Blutrot
-	tops.push(shot(nein - 6, nein - 3, 'chechen_yermakov', 'neg', cam(1.45, 1.45, 0.4, 0.28)));
+	tops.push(shot(nein - 6, nein - 3, 'warrior_mail', 'neg', cam(1.25, 1.25, 0.52, 0.3)));
 	black(nein - 3, 3);
 	white(nein, 2);
 	red(nein + 2);
@@ -119,7 +120,7 @@ export const buildPlan = (): Plan => {
 	white(P[0], 2);
 	tops.push(shot(P[0] + 2, P[0] + 5, 'wolf_face', 'neg', cam(2.9, 3.1, 0.54, 0.455)));
 	black(P[0] + 5, 2);
-	tops.push(shot(P[0] + 7, P[0] + 10, 'mansur_1787', 'half', cam(1.3, 1.3, 0.55, 0.45)));
+	tops.push(shot(P[0] + 7, P[0] + 10, 'mikeshin_chechen', 'half', cam(1.4, 1.4, 0.54, 0.56)));
 	black(P[0] + 10, 2);
 	tops.push(shot(P[0] + 12, P[0] + 15, 'weapons_platz', 'neg', cam(1.3, 1.3, 0.5, 0.5)));
 	black(P[0] + 15, D[0] - P[0] - 15);
@@ -142,12 +143,13 @@ export const buildPlan = (): Plan => {
 	add(shot(B(1, 2) + 7, B(1, 2) + 14, 'sparks_fall', 'color', cam(1.0, 1.0, 0.5, 0.5), {clipAt: 3.0}), false);
 	add(shot(B(1, 2) + 14, P[2], 'papakha_painting', 'crush', cam(0.95, 1.05, 0.5, 0.42), {cutOnly: true}), false);
 
-	// Ruf 3: die Gesichter des Widerstands – Scheich Mansur (Medaillon 1787), Baisangur, Selimchan.
-	// Namen stehen HINTER den Köpfen (Freisteller auf Schwarz, Schrift dazwischen).
-	add(shot(P[2], D[2], 'mansur_1787', 'half', cam(1.3, 1.32, 0.55, 0.45)), false);
-	add(shot(D[2], B(2, 1), 'mansur_1787', 'crush', cam(0.6, 0.7, 0.5, 0.48), {cutOnly: true}), false);
-	add(shot(B(2, 1), B(2, 2), 'baysangur', 'crush', cam(0.8, 0.86, 0.5, 0.3275), {cutOnly: true, fg: true}));
-	add(shot(B(2, 2), P[3] - 7, 'zelimkhan', 'crush', cam(0.8, 0.86, 0.49, 0.308), {cutOnly: true, fg: true}));
+	// Ruf 3: die Männer – nur der tschetschenische Typ in Tracht, keine bekannten Personen (Wunsch des
+	// Auftraggebers: Baysangur, Zelimkhan, Mansur & Co. kamen im Kanal schon zu oft vor).
+	// Raster-Blitz zweier Männer (Foto vor 1900), Krieger mit Gewehr, dann zwei Figuren mit Wort HINTER dem Kopf.
+	add(shot(P[2], D[2], 'chechens_seidlitz', 'half', cam(1.6, 1.66, 0.73, 0.42)), false); // nur der rechte Mann
+	add(shot(D[2], B(2, 1), 'chechen_rifle', 'bright', cam(0.98, 1.06, 0.5, 0.52), {cutOnly: true}), false);
+	add(shot(B(2, 1), B(2, 2), 'chechen_litho', 'crush', cam(0.8, 0.84, 0.41, 0.304), {cutOnly: true, fg: true}));
+	add(shot(B(2, 2), P[3] - 7, 'chechen_rider_1910', 'crush', cam(0.8, 0.84, 0.56, 0.288), {cutOnly: true, fg: true}));
 	red(D[2] + 2);
 	black(P[3] - 7, 7); // Atempause vor der tiefen Dreiergruppe (auch im Ton fast still)
 
@@ -165,7 +167,7 @@ export const buildPlan = (): Plan => {
 	add(shot(P[4], D[4], 'eagle_stare', 'crush', cam(1.05, 1.0, 0.38, 0.45), {clipAt: 8.1}), false);
 	add(shot(D[4], B(4, 1), 'eagle_stare', 'crush', cam(1.0, 1.08, 0.38, 0.45), {clipAt: 8.5}), false);
 	add(shot(B(4, 1), B(4, 2), 'tower_itumkale', 'crush', cam(1.2, 1.4, 0.4, 0.33), {alt: FLICKER, altP: 0.2, burn: 0.7}));
-	add(shot(B(4, 2), B(4, 2) + 9, 'chechen_yermakov', 'crush', cam(2.4, 2.6, 0.43, 0.2)));
+	add(shot(B(4, 2), B(4, 2) + 9, 'mikeshin_chechen', 'crush', cam(1.7, 1.95, 0.54, 0.55)));
 	add(shot(B(4, 2) + 9, B(4, 2) + 19, 'wolf_portrait_v', 'crush', cam(1.2, 1.35, 0.6, 0.38)), false);
 	add(shot(B(4, 2) + 19, P[5], 'wolf_howl_rock', 'crush', cam(1.9, 2.2, 0.4, 0.3)), false);
 
@@ -195,17 +197,18 @@ export const buildPlan = (): Plan => {
 	wd({id: 'fuer', text: 'FÜR IHRE', at: fuer - L, until: nein - 3, x: 0.5, y: 0.27, size: 300, tone: 'white', entry: 'type'});
 	wd({id: 'heere', text: 'HEERE.', at: heere - L, until: nein - 3, x: 0.5, y: 0.52, size: 760, maxW: 1000, tone: 'red'});
 	// „NEIN. DAS IST DAS REVIER DER TAPFEREN.“ (كلا فتلك عرائن الشجعان)
-	wd({id: 'nein', text: 'NEIN.', at: nein, until: dasist - LEAD_SHOT, x: 0.34, y: 0.43, size: 900, maxW: 620, tone: 'red', layer: 'back'});
+	wd({id: 'nein', text: 'NEIN.', at: nein, until: dasist - LEAD_SHOT, x: 0.5, y: 0.25, size: 900, maxW: 1000, tone: 'red', layer: 'back'});
 	wd({id: 'dasist', text: 'DAS IST', at: dasist - L, until: der - LEAD_SHOT, x: 0.5, y: 0.31, size: 300, tone: 'white', entry: 'type'});
 	wd({id: 'revier', text: 'DAS REVIER', at: revier - L, until: der - LEAD_SHOT, x: 0.5, y: 0.48, size: 560, maxW: 1010, tone: 'red'});
-	wd({id: 'der', text: 'DER', at: der - L, until: P[0], x: 0.5, y: 0.3, size: 300, tone: 'white', entry: 'type'});
-	wd({id: 'tapfer', text: 'TAPFEREN.', at: tapfer - L, until: P[0], x: 0.5, y: 0.5, size: 700, maxW: 990, tone: 'red', glitch: 1.4});
-	// Drop: der Name in drei Schriften (genau auf den Schlägen), Namen hinter den Köpfen, am Ende Freiheit
+	wd({id: 'der', text: 'DER', at: der - L, until: P[0], x: 0.5, y: 0.22, size: 300, tone: 'white', entry: 'type'});
+	wd({id: 'tapfer', text: 'TAPFEREN.', at: tapfer - L, until: P[0], x: 0.5, y: 0.37, size: 700, maxW: 990, tone: 'red', glitch: 1.4});
+	// Drop: der Name in drei Schriften (genau auf den Schlägen), Wörter hinter den Köpfen, am Ende Freiheit
 	wd({id: 'shishan', text: 'شيشان', at: D[0], until: B(0, 1), x: 0.5, y: 0.44, size: 640, maxW: 820, font: 'arabic', tone: 'red'});
 	wd({id: 'nokhchiychoe', text: 'НОХЧИЙЧОЬ', at: B(0, 1), until: B(0, 2), x: 0.5, y: 0.45, size: 640, maxW: 980, tone: 'white'});
 	wd({id: 'tschetschenien', text: 'TSCHETSCHENIEN', at: B(0, 2), until: B(0, 2) + 15, x: 0.5, y: 0.45, size: 560, maxW: 970, tone: 'red'});
-	wd({id: 'baysangur', text: 'BAYSANGUR', at: B(2, 1), until: B(2, 2), x: 0.5, y: 0.235, size: 420, maxW: 1000, tone: 'red', layer: 'back', glitch: 0.7});
-	wd({id: 'zelimkhan', text: 'ZELIMKHAN', at: B(2, 2), until: P[3] - 7, x: 0.5, y: 0.235, size: 420, maxW: 1000, tone: 'white', layer: 'back', glitch: 0.7});
+	// КЪОНАХ = der Ehrenhafte, Tapfere (tschetschenisches Ideal des Mannes), НОХЧО = Tschetschene
+	wd({id: 'konakh', text: 'КЪОНАХ', at: B(2, 1), until: B(2, 2), x: 0.5, y: 0.235, size: 440, maxW: 1000, tone: 'red', layer: 'back', glitch: 0.7});
+	wd({id: 'nokhcho', text: 'НОХЧО', at: B(2, 2), until: P[3] - 7, x: 0.5, y: 0.235, size: 460, maxW: 1000, tone: 'white', layer: 'back', glitch: 0.7});
 	wd({id: 'marsho', text: 'МАРШО', at: D[5], until: B(5, 1), x: 0.5, y: 0.42, size: 820, maxW: 1000, tone: 'red'});
 	wd({id: 'freiheit', text: 'FREIHEIT.', at: B(5, 1), until: end + 26, x: 0.5, y: 0.25, size: 720, maxW: 1000, tone: 'red', glitch: 0.6});
 

@@ -1,49 +1,4 @@
 {
- "chechen_yermakov": {
-  "file": "img/chechen_yermakov.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Chechen%2C_19th_century.jpg",
-  "author": "D. I. Yermakov",
-  "license": "Public domain",
-  "date": "From 1845 to 1916",
-  "width": 2198,
-  "height": 2646
- },
- "chechens_kennan": {
-  "file": "img/chechens_kennan.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Chechense._Match._a_wedding_match._George_Kennan._1870-1886.jpg",
-  "author": "George Kennan (died in 1924)",
-  "license": "Public domain",
-  "date": "с 1870 по 1886date QS:P,+1850-00-00T00:00:00Z/7,P580,+1870-00-00T00:00:00Z/9,P582,+1886-00-00T00:00:00Z/9",
-  "width": 509,
-  "height": 849
- },
- "zelimkhan": {
-  "file": "img/zelimkhan.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:Zelimxan.jpg",
-  "author": "Unknown authorUnknown author",
-  "license": "Public domain",
-  "date": "before 1913date QS:P,+1913-00-00T00:00:00Z/7,P1326,+1913-00-00T00:00:00Z/9",
-  "width": 410,
-  "height": 493
- },
- "mansur_1787": {
-  "file": "img/mansur_1787.png",
-  "commons": "https://commons.wikimedia.org/wiki/File:Portr%C3%A4t_des_%E2%80%9EScheich_Mansur%E2%80%9C.png",
-  "author": "J. Chr. Winkler",
-  "license": "Public domain",
-  "date": "1787",
-  "width": 828,
-  "height": 872
- },
- "baysangur": {
-  "file": "img/baysangur.jpg",
-  "commons": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B5%D0%BD%D0%BE%D0%B9%D0%BD_%D0%91%D0%BE%D0%B9%D1%81%D0%B3%D3%80%D0%B0%D1%80.jpg",
-  "author": "Фарук Кутлу",
-  "license": "CC BY 3.0",
-  "date": "2019-04-03",
-  "width": 1779,
-  "height": 2000
- },
  "war_dargo_roubaud": {
   "file": "img/war_dargo_roubaud.jpg",
   "commons": "https://commons.wikimedia.org/wiki/File:Fight_in_the_Caucasus.jpg",
@@ -232,5 +187,68 @@
   "license": "CC BY 3.0",
   "license_url": "https://creativecommons.org/licenses/by/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Vicart_-_loups.webm"
+ },
+ "warrior_mail": {
+  "key": "warrior_mail",
+  "file": "img/warrior_mail.jpg",
+  "title": "Krieger in Kettenpanzer.jpg",
+  "artist": "The original uploader was Araneophilus at German Wikipedia.",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Krieger_in_Kettenpanzer.jpg"
+ },
+ "mikeshin_chechen": {
+  "key": "mikeshin_chechen",
+  "file": "img/mikeshin_chechen.jpg",
+  "title": "Микешин Чеченец 1876.JPG",
+  "artist": "Mikhail Mikeshin",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B8%D0%BA%D0%B5%D1%88%D0%B8%D0%BD_%D0%A7%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D1%86_1876.JPG"
+ },
+ "chechen_rifle": {
+  "key": "chechen_rifle",
+  "file": "img/chechen_rifle.jpg",
+  "title": "Circassian Warrior.jpg",
+  "artist": "The original uploader was SGGH at English Wikipedia.",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Circassian_Warrior.jpg"
+ },
+ "chechen_litho": {
+  "key": "chechen_litho",
+  "file": "img/chechen_litho.jpg",
+  "title": "Народы Кавказа Чеченец.JPG",
+  "artist": "НеизвестенUnknown author",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D1%80%D0%BE%D0%B4%D1%8B_%D0%9A%D0%B0%D0%B2%D0%BA%D0%B0%D0%B7%D0%B0_%D0%A7%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D1%86.JPG"
+ },
+ "zumsoy_1906": {
+  "key": "zumsoy_1906",
+  "file": "img/zumsoy_1906.jpg",
+  "title": "Зумсой. 1906 год.jpg",
+  "artist": "Иваненков",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%97%D1%83%D0%BC%D1%81%D0%BE%D0%B9._1906_%D0%B3%D0%BE%D0%B4.jpg"
+ },
+ "chechens_seidlitz": {
+  "key": "chechens_seidlitz",
+  "file": "img/chechens_seidlitz.jpg",
+  "title": "Чеченцы XIX.jpg",
+  "artist": "Зейдлиц Н. К. (1831—1907)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%A7%D0%B5%D1%87%D0%B5%D0%BD%D1%86%D1%8B_XIX.jpg"
+ },
+ "chechen_rider_1910": {
+  "key": "chechen_rider_1910",
+  "file": "img/chechen_rider_1910.jpg",
+  "title": "Chechen Horseman.jpg",
+  "artist": "Баймурза сын Ирисхана",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chechen_Horseman.jpg"
  }
 }

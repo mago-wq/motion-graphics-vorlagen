@@ -7,6 +7,10 @@ JSON und gehören bei Veröffentlichung in die Videobeschreibung (npm run credit
 Bilder, die schon im nokhchi-edit liegen, werden von dort kopiert (gleiche Nachweise), statt sie
 erneut zu laden. Commons drosselt geteilte IPs (429): Standard-Vorschaubreiten verwenden,
 API-Endpunkte rotieren, Lauf ist fortsetzbar.
+
+Menschen nur als anonymer tschetschenischer Typ in Tracht (Wunsch des Auftraggebers): keine bekannten
+Personen. Baysangur, Zelimkhan, Scheich Mansur, der Jermakow-Krieger mit Kapuze und die Kennan-Gruppe
+kamen im Kanal schon zu oft vor und sind deshalb hier ausdrücklich nicht dabei.
 """
 import json
 import re
@@ -41,14 +45,23 @@ FILES = {
     "tower_shatoy_stairs": ("Шуьйта бlов.jpg", 1920),
     "lake_nokhchkeloy": ("Нохч-Келара Iам.jpg", 1920),
     "orga": ("Орга. Нихал уллехь.jpg", 1920),
+    # Tschetschenen in Tracht – anonym, als „Tschetschene/Tschetschenen“ beschriftet, bisher nie verwendet
+    "warrior_mail": ("Krieger in Kettenpanzer.jpg", 1920),             # Stich: Krieger im Kettenhemd
+    "mikeshin_chechen": ("Микешин Чеченец 1876.JPG", 960),             # M. Mikeschin 1876: Profil, Papacha
+    "chechen_rifle": ("Circassian Warrior.jpg", 500),                  # Lithografie „Tchetchenze“ mit Gewehr
+    "chechen_litho": ("Народы Кавказа Чеченец.JPG", 1280),             # Lithografie Ende 19. Jh. (rechte Figur)
+    "zumsoy_1906": ("Зумсой. 1906 год.jpg", 818),                      # Männer aus Zumsoi, Foto 1906
+    "chechens_seidlitz": ("Чеченцы XIX.jpg", 516),                     # Foto N. K. Seidlitz, vor 1900
+    "chechen_rider_1910": ("Chechen Horseman.jpg", 500),               # Reiter, Foto 1910
 }
+# Kleine Originale (≤ 1200 px) zuerst im Original versuchen, sonst größte Standardbreite darunter
+SMALL_ORIGINAL = {"zumsoy_1906", "chechens_seidlitz"}
 # Aus dem nokhchi-edit übernehmen (Nachweise stehen dort in credits/commons.json)
+# (nur Gemälde und Landschaften – keine Personen, siehe oben)
 REUSE = [
-    "chechen_yermakov", "chechens_kennan", "zelimkhan", "mansur_1787", "baysangur", "war_dargo_roubaud", "war_roubaud_scene", "war_faesi_1836", "war_valerik_lermontov", "towers_ushkaloy", "tower_khambetar", "mountains_kezenoyam",
+    "war_dargo_roubaud", "war_roubaud_scene", "war_faesi_1836", "war_valerik_lermontov", "towers_ushkaloy", "tower_khambetar", "mountains_kezenoyam",
 ]
-REUSE_CUT = [
-    "chechen_yermakov", "zelimkhan", "mansur_1787", "baysangur",
-]
+REUSE_CUT: list[str] = []
 # Videos (transkodierte 1080p-Fassung von upload.wikimedia.org)
 # („Wolfsgeheul Wolfcenter Dörverden.webm“ geprüft und verworfen: Wölfe nur hinter einem Zaun)
 VIDEOS = {
@@ -127,20 +140,35 @@ def main():
 
     missing = []
     for key, (name, width) in FILES.items():
-        if key in credits and (OUT / Path(credits[key]["file"]).name).exists():
+        have = next(OUT.glob(key + ".*"), None)
+        if key in credits and have:
             continue
         try:
             ii = info(name)
+            if have:  # Datei liegt schon da (z. B. von Hand geholt) – nur Nachweis ergänzen
+                credits[key] = credit(key, name, ii, f"img/{have.name}")
+                print(f"{key:22s} (vorhanden)  {credits[key]['license']}")
+                out_json.write_text(json.dumps(credits, ensure_ascii=False, indent=1))
+                continue
             # Nur Standard-Vorschaubreiten unterhalb der Originalbreite (Originale werden gedrosselt)
             ok = [w for w in STD_WIDTHS if w <= width and w < ii.get("width", 0)]
+            urls = []
+            if key in SMALL_ORIGINAL:
+                urls.append(ii["url"])
             if ok:
-                ii = info(name, ok[0])
-                url = ii["thumburl"]
-            else:
-                url = ii["url"]
-            ext = Path(urllib.parse.urlparse(url).path).suffix.lower().replace(".jpeg", ".jpg") or ".jpg"
-            dest = OUT / f"{key}{ext}"
-            download(url, dest)
+                urls.append(info(name, ok[0])["thumburl"])
+            elif not urls:
+                urls.append(ii["url"])
+            dest = None
+            for url in urls:
+                ext = Path(urllib.parse.urlparse(url).path).suffix.lower().replace(".jpeg", ".jpg") or ".jpg"
+                dest = OUT / f"{key}{ext}"
+                try:
+                    download(url, dest, tries=4 if url != urls[-1] else 12)
+                    break
+                except RuntimeError:
+                    if url == urls[-1]:
+                        raise
             credits[key] = credit(key, name, ii, f"img/{dest.name}")
             print(f"{key:22s} {ii.get('width')}×{ii.get('height')}  {credits[key]['license']}")
         except RuntimeError as e:

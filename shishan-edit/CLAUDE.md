@@ -9,7 +9,12 @@ Remotion-Projekt (TypeScript): Krieger-Edit über den tschetschenischen Freiheit
   Grundstimmung. Er will ausdrücklich, dass Ton und Bild Bild für Bild analysiert werden (wann welches Wort,
   welcher Schnitt auf welchem Schlag) – die Regeln stehen in `README.md` und `src/plan.ts`. Übertreffen erlaubt.
 - **Kriegerisch, brutal, motivierend – ohne kitschige Phrasen.** Text nur aus dem Nasheed (übersetzt) und
-  Namen (شيشان / НОХЧИЙЧОЬ / TSCHETSCHENIEN, МАРШО / FREIHEIT).
+  einzelne tschetschenische Wörter (شيشان / НОХЧИЙЧОЬ / TSCHETSCHENIEN, КЪОНАХ, НОХЧО, МАРШО / FREIHEIT).
+- **Keine bekannten Personen – nur der tschetschenische Typ in kaukasischer Tracht** (Papacha, Tscherkeska,
+  Gasyri, Kindschal). Rückmeldung des Auftraggebers: Baysangur, Zelimkhan, Scheich Mansur, der
+  Jermakow-Krieger mit Kapuze und die Kennan-Gruppe kamen im Kanal schon zu oft vor. Anonyme Figuren aus
+  Commons, als „Tschetschene“ beschriftet: Krieger im Kettenhemd (Stich), Mikeschin 1876, „Tchetchenze“ mit
+  Gewehr, Lithografie in weißer Tscherkeska, Zumsoi 1906, Seidlitz (vor 1900), Reiter 1910.
 - **Arabisches Nasheed, in dem „Shishan“ (الشيشان) vorkommt**: „ملحمة الشيشان“. Viele arabische
   Tschetschenien-Nasheeds sind dschihadistisch (IS, Kaukasus-Emirat) – die nie verwenden. Diesen Text
   vollständig geprüft; nur Strophe 1 und der Ruf „شيشان“ sind drin.
@@ -25,7 +30,10 @@ Remotion-Projekt (TypeScript): Krieger-Edit über den tschetschenischen Freiheit
   von „sch“ (2,2–3,9 kHz) werden eingerastet; Schlag = (nächster „shan“ − dieser) / 4.
 - Die Aufnahme endet bei ~4 kHz (alt): `exciter()` ergänzt Obertöne aus der Stimme, erst ab „كلا“.
 - Looks: CSS-Filter in `src/look.ts`; „red“ (Schwarz-Weiß, nur Rot bleibt) und „half“ (Rasterpunkte) vorab in
-  `scripts/bake_looks.py`. Freisteller per BiRefNet (rembg) für „Text hinter dem Motiv“ (NEIN. hinter dem Krieger).
+  `scripts/bake_looks.py`. Freisteller per BiRefNet (rembg) für „Text hinter dem Motiv“ (NEIN., КЪОНАХ, НОХЧО).
+- `bake_looks.py` kann vorher zuschneiden (`CROPS`, z. B. nur die rechte Figur einer Tafel), kleine Vorlagen
+  mit Real-ESRGAN x4 hochrechnen (`UPSCALE`, Modell `~/.esrgan/real_esrgan_x4.onnx` von Hugging Face
+  SceneWorks/real-esrgan-onnx) und Masken ergänzen (`MASK_ADD`: Ellipse für Teile, die BiRefNet verliert).
 
 ## Bildsprache (aus dem Vergleich mit der Referenz gemessen)
 
@@ -33,8 +41,11 @@ Remotion-Projekt (TypeScript): Krieger-Edit über den tschetschenischen Freiheit
   war mit 103 / 30 % viel zu hell und wirkte wie Stockfotos. Looks dafür: `crush`, `inv`, `cutOnly`, `burn`.
 - Nur Schwarz-Weiß + Rot; Eisblau/Cyan nur für Negativ-Blitze und kurzes Flackern.
 - Keine weißen Standbilder über mehrere Frames (Schneefoto mit `hard` war 10 Frames reines Weiß).
-- Namen hinter dem Kopf: Schrift knapp über dem Scheitel, Kopf verdeckt nur den unteren Rand der Buchstaben
-  (sonst unlesbar). Medaillon Mansur trägt seinen Namen selbst – keine zusätzliche Schrift.
+- Wörter hinter dem Kopf: Schrift knapp über dem Scheitel, Kopf verdeckt nur den unteren Rand der Buchstaben
+  (sonst unlesbar). Kopf unter einen schmalen Buchstaben legen: bei „NEIN.“ unter dem E las es sich als
+  „NFIN.“ (unterer Balken weg) – Krieger nach rechts unter das I geschoben.
+- Freisteller auf Schwarz: dunkle Kleidung säuft mit `crush` ab (Tschetschene mit Gewehr) → `bright`.
+- Schwarze Papacha vor dunklem Hintergrund fehlt in der BiRefNet-Maske (Reiter 1910) → `MASK_ADD`.
 
 ## Stolperfallen (gelöst)
 

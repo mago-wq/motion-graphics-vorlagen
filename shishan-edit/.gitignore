@@ -13,11 +13,6 @@ public/img/
 __pycache__/
 
 # Aus nokhchi-edit kopiert (scripts/fetch_commons.py legt sie an) – dort schon eingecheckt
-assets-src/img/chechen_yermakov.*
-assets-src/img/chechens_kennan.*
-assets-src/img/zelimkhan.*
-assets-src/img/mansur_1787.*
-assets-src/img/baysangur.*
 assets-src/img/war_dargo_roubaud.*
 assets-src/img/war_roubaud_scene.*
 assets-src/img/war_faesi_1836.*
@@ -25,7 +20,3 @@ assets-src/img/war_valerik_lermontov.*
 assets-src/img/towers_ushkaloy.*
 assets-src/img/tower_khambetar.*
 assets-src/img/mountains_kezenoyam.*
-assets-src/img/cut/chechen_yermakov.png
-assets-src/img/cut/zelimkhan.png
-assets-src/img/cut/mansur_1787.png
-assets-src/img/cut/baysangur.png
