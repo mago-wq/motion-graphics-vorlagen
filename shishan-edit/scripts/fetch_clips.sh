@@ -30,8 +30,6 @@ declare -A SFX=(
 	[mk_hufe_dreck]=1762      # einzelnes Pferd, schneller Galopp auf Erde (wird verlangsamt und tiefer)
 	[mk_hengst_wiehern]=78    # Hengst wiehert
 	[mk_pferd_schnauben]=30   # Pferd schnaubt
-	[mk_wolf_knurren]=1774    # Knurren
-	[mk_wolf_angriff]=3015    # Wolfsangriff (Fauchen)
 	[mk_donner_einzel]=1291   # einzelner Donnerschlag
 )
 for key in "${!SFX[@]}"; do

@@ -365,8 +365,6 @@ def crackle(seconds=0.6) -> np.ndarray:
 
 # Blitze im Gewitter-Clip (Sekunden im Clip, gemessen an der Helligkeit) – dort kommt Donner
 STORM_FLASHES = [0.7, 1.13, 1.43, 1.63]
-WOLF_KEYS = {"wolf_loup": "knurren", "wolf_face": "angriff", "wolf_howl_zoo": "angriff",
-             "wolf_portrait_v": "knurren", "wolf_howl_rock": "heulen"}
 HORSE_KEYS = {"hooves", "horses_mountain", "horses_herd"}
 STEEL_KEYS = {"kinjal_met_a", "kinjal_met_b", "weapons_platz"}
 
@@ -398,23 +396,7 @@ def place_plan_sfx(fx, plan, wolves, clashes, stone):
     for it in plan["shots"]:
         if it["key"] == "chechen_rider_1910":
             place(fx, fade(snort, 0.01, 0.2), it["from"] / fps + 0.05, 0.45, pan=0.15)
-    # --- Wölfe: aggressives Knurren/Fauchen auf jedem Wolfsbild (Heulen nur beim heulenden Wolf)
-    growl = norm(loudest(sfx("mk_wolf_knurren.mp3"), 0.7))
-    attack = norm(loudest(sfx("mk_wolf_angriff.mp3"), 0.9))
-    howl_short = norm(fade(wolves[int(3.4 * SR): int(5.0 * SR)], 0.05, 0.5))
-    snd = {"knurren": (growl, 0.85), "angriff": (attack, 0.8), "heulen": (howl_short, 0.6)}
-    last = {}
-    for it in items:
-        kind = WOLF_KEYS.get(it["key"])
-        if not kind:
-            continue
-        t = it["from"] / fps
-        if t - last.get(it["key"], -9) < 0.6:   # Negativ-Blitz und Einstellung direkt danach: nur einmal
-            continue
-        last[it["key"]] = t
-        y, g = snd[kind]
-        place(fx, y, t, g, pan=float(rng.uniform(-0.25, 0.25)))
-        place(fx, reverb(y, IR_ROOM)[: len(y) + SR // 2], t, g * 0.25)
+    # (Kein Knurren/Fauchen auf den Wolfsbildern – Auftraggeber: klang wie Babywölfe. Nur Heulen am Anfang und Ende.)
     # --- Gewitter: Donner genau auf den Blitzen im Clip
     thunder_hit = norm(sfx("mk_donner_einzel.mp3")[: int(3.0 * SR)])
     for it in plan["shots"]:

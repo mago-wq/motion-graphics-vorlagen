@@ -27,8 +27,8 @@ Remotion-Projekt (TypeScript): Krieger-Edit über den tschetschenischen Freiheit
   und kein Schmelz-Effekt** (Bild nicht mehr erkennbar). **Einstieg fesselnd:** vor „NEIN.“ nur klar erkennbare
   Zarenheere (Horschelt, Roubaud), keine Mauern. **Keine KI-Bilder** (Auftraggeber will die Figuren aus Fassung 2).
 - **Geräusche passend zum Bild:** jedes Geräusch hängt an der Einstellung, die sein Motiv zeigt (siehe unten).
-  Hufe: einzelnes Pferd auf Erde, verlangsamt und tiefer – die Commons-Herde klang wie Klatschen. Bei jedem
-  Wolfsbild Knurren/Fauchen (Auftraggeber mag den Wolf am Ende sehr). Blitz im Bild = Donner im Ton.
+  Hufe: einzelnes Pferd auf Erde, verlangsamt und tiefer – die Commons-Herde klang wie Klatschen. **Kein Knurren/Fauchen
+  bei den Wolfsbildern** (Mixkit-Knurren klang wie Babywölfe – abgelehnt); nur das Heulen am Anfang und am Ende. Blitz im Bild = Donner im Ton.
 
 ## Aufbau
 
