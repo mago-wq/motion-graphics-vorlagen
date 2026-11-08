@@ -31,6 +31,8 @@ export type WordSpec = {
 	glitch?: number;
 };
 
+// Flacher Schatten für Arabisch: die Punkte (z. B. des „ش“) dürfen nicht im 3D-Schatten verschwimmen
+const EXTRUDE_AR = '3px 4px 0 rgba(0,0,0,0.95), 6px 8px 0 rgba(0,0,0,0.6), 14px 18px 24px rgba(0,0,0,0.6)';
 const EXTRUDE = [
 	...Array.from({length: 8}, (_, i) => `${(i + 1) * 2}px ${(i + 1) * 2.3}px 0 rgba(0,0,0,0.93)`),
 	'22px 26px 26px rgba(0,0,0,0.55)',
@@ -64,12 +66,15 @@ export const Word: React.FC<{w: WordSpec; frame: number}> = ({w, frame}) => {
 	if (frame < w.at || frame >= w.until) return null;
 	const age = frame - w.at;
 	const left = w.until - frame;
-	const sx = w.sx ?? (w.font === 'arabic' ? 0.9 : 0.54);
-	const sy = w.sy ?? (w.font === 'arabic' ? 1.05 : 1.24);
+	const sx = w.sx ?? (w.font === 'arabic' ? 1 : 0.54);
+	const sy = w.sy ?? (w.font === 'arabic' ? 1 : 1.24);
 	const family = w.font === 'arabic' ? F.arabic : F.serif;
 	const weight = w.font === 'arabic' ? '400' : '900';
 	const fontSize = fit(w.text, family, weight, w.size, w.maxW ?? 1000, sx);
-	const glitch = w.glitch ?? 1;
+	const arabic = w.font === 'arabic';
+	// Arabisch: kein Streifen-Versatz, kein Strecken, kein RGB-Versatz – die Buchstaben müssen ganz bleiben
+	const glitch = arabic ? 0 : w.glitch ?? 1;
+	const shadow = arabic ? EXTRUDE_AR : EXTRUDE;
 
 	// Farbe wechselt in Schritten von 2–3 Frames; im ersten Frame immer kräftig
 	const hold = 2 + Math.floor(random(`h-${w.id}`) * 2);
@@ -87,9 +92,9 @@ export const Word: React.FC<{w: WordSpec; frame: number}> = ({w, frame}) => {
 	// Glitch-Würfel pro Frame
 	const g = random(`g-${w.id}-${frame}`);
 	const exiting = left <= 2;
-	const slices = exiting || age === 1 || g > 1 - 0.2 * glitch;
+	const slices = !arabic && (exiting || age === 1 || g > 1 - 0.2 * glitch);
 	const ghost = !slices && g < 0.22 * glitch;
-	const split = age === 0 || random(`s-${w.id}-${frame}`) < 0.18 * glitch;
+	const split = !arabic && (age === 0 || random(`s-${w.id}-${frame}`) < 0.18 * glitch);
 	const stretch = random(`y-${w.id}-${frame}`) < 0.07 * glitch ? 1.32 : 1;
 	const blink = !exiting && age > 3 && random(`blink-${frame}`) < 0.035; // ein Frame weg – für alle Wörter zugleich
 
@@ -98,7 +103,7 @@ export const Word: React.FC<{w: WordSpec; frame: number}> = ({w, frame}) => {
 		fontWeight: Number(weight),
 		fontSize,
 		lineHeight: 0.84,
-		letterSpacing: w.font === 'arabic' ? 0 : '-0.01em',
+		letterSpacing: w.font === 'arabic' ? 'normal' : '-0.01em',
 		whiteSpace: 'nowrap',
 		display: 'block',
 		direction: w.font === 'arabic' ? 'rtl' : 'ltr',
@@ -135,14 +140,14 @@ export const Word: React.FC<{w: WordSpec; frame: number}> = ({w, frame}) => {
 		for (let i = 0; i < 3; i++) {
 			const off = (random(`sl-${w.id}-${frame}-${i}`) - 0.5) * (exiting ? 150 : 80);
 			out.push(
-				layer({color, textShadow: EXTRUDE}, `slice${i}`, {
+				layer({color, textShadow: shadow}, `slice${i}`, {
 					marginLeft: off,
 					clipPath: `inset(${bands[i] * 100}% -20% ${(1 - bands[i + 1]) * 100}% -20%)`,
 				}),
 			);
 		}
 	} else {
-		out.push(layer({color, textShadow: EXTRUDE}, 'main'));
+		out.push(layer({color, textShadow: shadow}, 'main'));
 	}
 	return <>{out}</>;
 };

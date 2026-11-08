@@ -45,6 +45,11 @@ FILES = {
     "tower_shatoy_stairs": ("Шуьйта бlов.jpg", 1920),
     "lake_nokhchkeloy": ("Нохч-Келара Iам.jpg", 1920),
     "orga": ("Орга. Нихал уллехь.jpg", 1920),
+    # Die Heere des Zaren (Einstieg vor „NEIN.“) – erkennbar, nicht zu dunkel
+    "army_vedeno_column": ("Движение царского отряда через горы к аулу Ведено в феврале 1859.jpg", 1280),  # Horschelt
+    "army_gunib_storm": ("Теодор Горшельт. Штурм укреплений Гуниба. 1867.jpg", 1280),                     # Horschelt
+    "army_mountain_battle": ("Battle in the mountains (1890).jpg", 1280),                                 # Roubaud
+    "army_dargo_forest": ("Даргинский поход. Подвиг 3-го бат.Апшеронского полка. рис.Рубо Ф.А. 1895г ГИМ e1.jpg", 1920),  # Roubaud
     # Tschetschenen in Tracht – anonym, als „Tschetschene/Tschetschenen“ beschriftet, bisher nie verwendet
     "warrior_mail": ("Krieger in Kettenpanzer.jpg", 1920),             # Stich: Krieger im Kettenhemd
     "mikeshin_chechen": ("Микешин Чеченец 1876.JPG", 960),             # M. Mikeschin 1876: Profil, Papacha

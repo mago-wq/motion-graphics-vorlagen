@@ -1,5 +1,25 @@
 {
  "img": {
+  "army_dargo_forest": {
+   "aspect": 1.3724,
+   "cut": false,
+   "half": false
+  },
+  "army_gunib_storm": {
+   "aspect": 1.4286,
+   "cut": false,
+   "half": false
+  },
+  "army_mountain_battle": {
+   "aspect": 1.7803,
+   "cut": false,
+   "half": false
+  },
+  "army_vedeno_column": {
+   "aspect": 0.7033,
+   "cut": false,
+   "half": false
+  },
   "chechen_litho": {
    "aspect": 0.4062,
    "cut": true,
@@ -18,12 +38,12 @@
   "chechens_seidlitz": {
    "aspect": 0.6217,
    "cut": false,
-   "half": true
+   "half": false
   },
   "kinjal_met_a": {
    "aspect": 0.5625,
    "cut": true,
-   "half": true
+   "half": false
   },
   "kinjal_met_b": {
    "aspect": 0.5625,
@@ -38,7 +58,7 @@
   "mikeshin_chechen": {
    "aspect": 0.445,
    "cut": false,
-   "half": true
+   "half": false
   },
   "mountains_kezenoyam": {
    "aspect": 1.5,
@@ -53,7 +73,7 @@
   "papakha_painting": {
    "aspect": 0.7883,
    "cut": true,
-   "half": true
+   "half": false
   },
   "tower_itumkale": {
    "aspect": 0.75,
@@ -73,7 +93,7 @@
   "towers_ushkaloy": {
    "aspect": 0.75,
    "cut": false,
-   "half": true
+   "half": false
   },
   "war_dargo_roubaud": {
    "aspect": 0.6925,
@@ -88,7 +108,7 @@
   "war_roubaud_scene": {
    "aspect": 1.5202,
    "cut": false,
-   "half": true
+   "half": false
   },
   "war_valerik_lermontov": {
    "aspect": 1.1415,
@@ -98,7 +118,7 @@
   "warrior_mail": {
    "aspect": 0.5262,
    "cut": true,
-   "half": true
+   "half": false
   },
   "weapons_platz": {
    "aspect": 1.3646,
@@ -108,12 +128,12 @@
   "wolf_face": {
    "aspect": 1.5,
    "cut": false,
-   "half": true
+   "half": false
   },
   "wolf_howl_rock": {
    "aspect": 1.6667,
    "cut": false,
-   "half": true
+   "half": false
   },
   "wolf_howl_zoo": {
    "aspect": 1.5,
@@ -133,7 +153,7 @@
   "zumsoy_1906": {
    "aspect": 1.7045,
    "cut": false,
-   "half": true
+   "half": false
   }
  },
  "clip": {

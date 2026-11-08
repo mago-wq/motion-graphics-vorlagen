@@ -339,6 +339,102 @@ def exciter(v: np.ndarray) -> np.ndarray:
 
 # ---------------------------------------------------------------- Zusammenbau
 
+def norm(y: np.ndarray, peak=1.0) -> np.ndarray:
+    return (y / (np.abs(y).max() + 1e-9) * peak).astype(np.float32)
+
+
+def loudest(y: np.ndarray, seconds: float) -> np.ndarray:
+    """Lautester Ausschnitt der Länge `seconds` (z. B. der eigentliche Knurrer in einer Aufnahme)."""
+    n = int(seconds * SR)
+    e = np.convolve((y ** 2).mean(axis=1), np.ones(n) / n, mode="valid")
+    i = int(np.argmax(e))
+    return y[i: i + n]
+
+
+def crackle(seconds=0.6) -> np.ndarray:
+    """Funkenknistern: kurze, gefilterte Knackser (für die Funken-Clips)."""
+    n = int(seconds * SR)
+    out = np.zeros(n)
+    for _ in range(int(seconds * 40)):
+        s0 = rng.integers(0, n - 400)
+        k = int(rng.integers(40, 300))
+        c = rng.standard_normal(k) * np.exp(-np.arange(k) / (k / 5))
+        out[s0:s0 + k] += rng.uniform(0.2, 1.0) * c
+    return fade(stereo(butter(out, "high", 1500, 2) * 0.5).astype(np.float32), 0.01, 0.2)
+
+
+# Blitze im Gewitter-Clip (Sekunden im Clip, gemessen an der Helligkeit) – dort kommt Donner
+STORM_FLASHES = [0.7, 1.13, 1.43, 1.63]
+WOLF_KEYS = {"wolf_loup": "knurren", "wolf_face": "angriff", "wolf_howl_zoo": "angriff",
+             "wolf_portrait_v": "knurren", "wolf_howl_rock": "heulen"}
+HORSE_KEYS = {"hooves", "horses_mountain", "horses_herd"}
+STEEL_KEYS = {"kinjal_met_a", "kinjal_met_b", "weapons_platz"}
+
+
+def place_plan_sfx(fx, plan, wolves, clashes, stone):
+    """Geräusche genau dort, wo man ihr Motiv sieht (Einstellungen aus src/plan.ts)."""
+    fps = 30.0
+    items = sorted(plan["shots"] + plan["tops"], key=lambda x: x["from"])
+    # --- Pferde: echte Hufe (einzelnes Pferd auf Erde), langsamer und tiefer, nur solange Pferde im Bild sind
+    runs = []
+    for it in plan["shots"]:
+        if it["key"] in HORSE_KEYS:
+            a, b = it["from"] / fps, it["to"] / fps
+            if runs and a - runs[-1][1] < 0.25:
+                runs[-1][1] = max(runs[-1][1], b)
+            else:
+                runs.append([a, b])
+    hoof = sfx("mk_hufe_dreck.mp3")[int(0.15 * SR): int(2.05 * SR)]
+    hoof = stretch(hoof, tempo=0.78, pitch=0.82)               # weniger, schwerere Schläge
+    hoof = varying_biquad(butter(hoof, "low", 3800, 2), lowshelf_design, np.full(len(hoof), 6.0))
+    hoof = norm(hoof, 0.9)
+    for a, b in runs:
+        place(fx, fade(loop_to(hoof, b - a + 0.15, 0.08), 0.06, 0.18), a, 0.62, pan=0.1)
+    neigh = norm(loudest(sfx("mk_hengst_wiehern.mp3"), 1.3))
+    first_mountain = next((it for it in plan["shots"] if it["key"] == "horses_mountain"), None)
+    if first_mountain:
+        place(fx, fade(neigh, 0.02, 0.4), first_mountain["from"] / fps, 0.32, pan=-0.2)
+    snort = norm(loudest(sfx("mk_pferd_schnauben.mp3"), 0.8))
+    for it in plan["shots"]:
+        if it["key"] == "chechen_rider_1910":
+            place(fx, fade(snort, 0.01, 0.2), it["from"] / fps + 0.05, 0.45, pan=0.15)
+    # --- Wölfe: aggressives Knurren/Fauchen auf jedem Wolfsbild (Heulen nur beim heulenden Wolf)
+    growl = norm(loudest(sfx("mk_wolf_knurren.mp3"), 0.7))
+    attack = norm(loudest(sfx("mk_wolf_angriff.mp3"), 0.9))
+    howl_short = norm(fade(wolves[int(3.4 * SR): int(5.0 * SR)], 0.05, 0.5))
+    snd = {"knurren": (growl, 0.85), "angriff": (attack, 0.8), "heulen": (howl_short, 0.6)}
+    last = {}
+    for it in items:
+        kind = WOLF_KEYS.get(it["key"])
+        if not kind:
+            continue
+        t = it["from"] / fps
+        if t - last.get(it["key"], -9) < 0.6:   # Negativ-Blitz und Einstellung direkt danach: nur einmal
+            continue
+        last[it["key"]] = t
+        y, g = snd[kind]
+        place(fx, y, t, g, pan=float(rng.uniform(-0.25, 0.25)))
+        place(fx, reverb(y, IR_ROOM)[: len(y) + SR // 2], t, g * 0.25)
+    # --- Gewitter: Donner genau auf den Blitzen im Clip
+    thunder_hit = norm(sfx("mk_donner_einzel.mp3")[: int(3.0 * SR)])
+    for it in plan["shots"]:
+        if it["key"] == "storm_peaks":
+            for lt in STORM_FLASHES:
+                t = it["from"] / fps + (lt - it.get("clipAt", 0))
+                if it["from"] / fps <= t < it["to"] / fps:
+                    place(fx, fade(thunder_hit, 0.002, 1.0), t, 0.75)
+    # --- Stahl auf Dolchen und Waffen, Hammer an der Schmiede, Knistern bei den Funken
+    for it in plan["shots"]:
+        t = it["from"] / fps
+        if it["key"] in STEEL_KEYS:
+            place(fx, clashes[sum(map(ord, it["key"])) % 3], t, 0.45, pan=float(rng.uniform(-0.3, 0.3)))
+        elif it["key"] == "forge_blade":
+            place(fx, butter(clashes[0], "low", 2500, 2), t + 0.02, 0.5)
+            place(fx, stone, t + 0.02, 0.45)
+        elif it["key"] in ("sparks_fall", "sparks_black"):
+            place(fx, crackle((it["to"] - it["from"]) / fps + 0.2), t, 0.5)
+
+
 def main():
     # Zeitachse der Ausgabe
     t_l2 = COLD
@@ -441,6 +537,23 @@ def main():
     # ---- Hall
     hall = reverb(v * verb[:, None], IR_HALL)[:N]
 
+    # ---- Zeitleiste jetzt schon schreiben: der Schnittplan (src/plan.ts) hängt an ihr,
+    # und die Geräusche hängen am Schnittplan (jedes Geräusch auf „seiner“ Einstellung)
+    place(perc, BOOM, t_end - 0.02, 0.55)
+    hits.append((t_end - 0.02, "boom"))
+    tl = dict(
+        fps=30, duration=round(total, 4), base=BASE,
+        sections=dict(cold=[0, round(t_l2, 4)], l2=[round(t_l2, 4), round(t_l3, 4)], l3=[round(t_l3, 4), round(t_drop, 4)],
+                      drop=[round(t_drop, 4), round(t_end, 4)], end=[round(t_end, 4), round(total, 4)]),
+        words=words,
+        shi=[round(x, 4) for x in shi], shan=[round(x, 4) for x in shan],
+        beats=beats,
+        hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
+    )
+    (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
+    plan = json.loads(subprocess.run(["node", "scripts/export_plan.mjs"], cwd=ROOT, check=True,
+                                     capture_output=True, text=True).stdout)
+
     # ---- Geräusche (keine Wörter, keine Instrumente)
     fx = np.zeros((N, 2))
     wind = loop_to(stretch(sfx("wind_b.mp3"), tempo=0.6, pitch=0.85), N / SR + 0.1)
@@ -449,7 +562,6 @@ def main():
     stone = sfx("stone_a.mp3")
     clash = sfx("clash_b.mp3")
     clashes = [clash[int(a * SR): int(a * SR) + int(0.75 * SR)] for a in (0.18, 0.98, 2.22)]
-    gallop = sfx("horses_gallop.ogg")
     march = sfx("march_a.mp3")
 
     wind_env = curve([(0, 0.0), (0.05, 0.5), (t_drop - 0.2, 0.42), (t_drop, 0.22), (t_end, 0.22), (t_end + 0.3, 0.5), (total, 0.35)])
@@ -476,34 +588,20 @@ def main():
     for k in (0, 3, 5):
         place(fx, thunder, shan[k] - 0.01, 0.95 if k != 5 else 0.8)
         place(fx, stone, shan[k], 0.65)
-    for i, k in enumerate((1, 2, 4)):
-        place(fx, clashes[(i + 1) % 3], shan[k], 0.42, pan=(-0.35, 0.35, 0.0)[i])
-    g0, g1 = shan[1] - 0.3, shan[4] + 0.6
-    run = gallop[int(4.0 * SR): int((4.0 + g1 - g0) * SR)]
-    run = fade(run, 0.6, 1.2)
-    place(fx, run, g0, 0.75, pan=0.2)
-    place(fx, reverb(run, IR_ROOM)[: len(run)], g0, 0.25, pan=-0.3)
+    # Blitze auf den leichten Rufen (weißer Blitz im Bild): kurzer, trockener Donnerschlag
+    crack = norm(sfx("mk_donner_einzel.mp3")[: int(2.2 * SR)])
+    for k in (1, 2, 4):
+        place(fx, fade(crack, 0.002, 0.8), shan[k] - 0.01, 0.42)
+    place_plan_sfx(fx, plan, wolves, clashes, stone)
     # Ende: Nachhall, Wolfsgeheul, Wind
     howl_out = fade(wolves[int(12.0 * SR): int(16.2 * SR)], 0.25, 1.6)
     place(fx, howl_out, t_end - 0.35, 0.95, pan=0.1)
     place(fx, reverb(howl_out, IR_HALL)[: 6 * SR], t_end - 0.35, 0.35, pan=-0.2)
-    place(perc, BOOM, t_end - 0.02, 0.55)
-    hits.append((t_end - 0.02, "boom"))
 
     # ---- Summe und Mastering
     music = 0.92 * v + 0.36 * hall + 1.3 * stereo(perc) + 0.8 * sub + 0.8 * fx
     loud = master(music, total, ROOT / "public" / "audio" / "mix.wav", t_end)
 
-    tl = dict(
-        fps=30, duration=round(total, 4), base=BASE,
-        sections=dict(cold=[0, round(t_l2, 4)], l2=[round(t_l2, 4), round(t_l3, 4)], l3=[round(t_l3, 4), round(t_drop, 4)],
-                      drop=[round(t_drop, 4), round(t_end, 4)], end=[round(t_end, 4), round(total, 4)]),
-        words=words,
-        shi=[round(x, 4) for x in shi], shan=[round(x, 4) for x in shan],
-        beats=beats,
-        hits=sorted([dict(t=round(t, 4), kind=k) for t, k in hits], key=lambda h: h["t"]),
-    )
-    (ROOT / "src" / "timeline.json").write_text(json.dumps(tl, indent=1))
     print(f"mix.wav: {total:.2f} s, Lautheit vorher {loud:.1f} LUFS, Grundton Korn {F0:.0f} Hz")
     for k, (a, b) in tl["sections"].items():
         print(f"  {k:5s} {a:6.2f} – {b:6.2f}")

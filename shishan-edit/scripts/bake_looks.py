@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets-src"
 PUB = ROOT / "public"
 MAX_SIDE = 2400
-HALF_KEYS = ["towers_ushkaloy", "mikeshin_chechen", "zumsoy_1906", "chechens_seidlitz", "warrior_mail"]
+HALF_KEYS: list[str] = []  # Raster-Look abgeschafft (Auftraggeber: „man erkennt nicht mehr, was das Bild sein soll“)
 # Freisteller per BiRefNet (rembg) für „Text hinter dem Motiv“ und Figuren auf Schwarz.
 # Je Bild ein eigener Prozess, sonst läuft der Speicher voll (BiRefNet ~14 GB bei mehreren Bildern).
 CUT_KEYS = ["papakha_painting", "warrior_mail", "chechen_rifle", "chechen_litho", "chechen_rider_1910"]

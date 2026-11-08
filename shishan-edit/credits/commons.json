@@ -250,5 +250,41 @@
   "license": "CC BY-SA 4.0",
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Chechen_Horseman.jpg"
+ },
+ "army_vedeno_column": {
+  "key": "army_vedeno_column",
+  "file": "img/army_vedeno_column.jpg",
+  "title": "Движение царского отряда через горы к аулу Ведено в феврале 1859.jpg",
+  "artist": "Theodor Horschelt",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%94%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D1%86%D0%B0%D1%80%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BE%D1%82%D1%80%D1%8F%D0%B4%D0%B0_%D1%87%D0%B5%D1%80%D0%B5%D0%B7_%D0%B3%D0%BE%D1%80%D1%8B_%D0%BA_%D0%B0%D1%83%D0%BB%D1%83_%D0%92%D0%B5%D0%B4%D0%B5%D0%BD%D0%BE_%D0%B2_%D1%84%D0%B5%D0%B2%D1%80%D0%B0%D0%BB%D0%B5_1859.jpg"
+ },
+ "army_gunib_storm": {
+  "key": "army_gunib_storm",
+  "file": "img/army_gunib_storm.jpg",
+  "title": "Теодор Горшельт. Штурм укреплений Гуниба. 1867.jpg",
+  "artist": "Theodor Horschelt",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%A2%D0%B5%D0%BE%D0%B4%D0%BE%D1%80_%D0%93%D0%BE%D1%80%D1%88%D0%B5%D0%BB%D1%8C%D1%82._%D0%A8%D1%82%D1%83%D1%80%D0%BC_%D1%83%D0%BA%D1%80%D0%B5%D0%BF%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9_%D0%93%D1%83%D0%BD%D0%B8%D0%B1%D0%B0._1867.jpg"
+ },
+ "army_mountain_battle": {
+  "key": "army_mountain_battle",
+  "file": "img/army_mountain_battle.jpg",
+  "title": "Battle in the mountains (1890).jpg",
+  "artist": "Франц Рубо",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Battle_in_the_mountains_(1890).jpg"
+ },
+ "army_dargo_forest": {
+  "key": "army_dargo_forest",
+  "file": "img/army_dargo_forest.jpg",
+  "title": "Даргинский поход. Подвиг 3-го бат.Апшеронского полка. рис.Рубо Ф.А. 1895г ГИМ e1.jpg",
+  "artist": "Рубо Франц (Roubaud) (1856 — 1928)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%94%D0%B0%D1%80%D0%B3%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D0%BF%D0%BE%D1%85%D0%BE%D0%B4._%D0%9F%D0%BE%D0%B4%D0%B2%D0%B8%D0%B3_3-%D0%B3%D0%BE_%D0%B1%D0%B0%D1%82.%D0%90%D0%BF%D1%88%D0%B5%D1%80%D0%BE%D0%BD%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BF%D0%BE%D0%BB%D0%BA%D0%B0._%D1%80%D0%B8%D1%81.%D0%A0%D1%83%D0%B1%D0%BE_%D0%A4.%D0%90._1895%D0%B3_%D0%93%D0%98%D0%9C_e1.jpg"
  }
 }

@@ -77,33 +77,34 @@ export const buildPlan = (): Plan => {
 	// ================================================================ INTRO (Frage: „Sie dachten …“)
 	// Kalter Einstieg (Wind, Wolf): ein Wolfsauge blitzt auf
 	tops.push(shot(3, 8, 'wolf_loup', 'ice', cam(3.1, 3.4, 0.635, 0.405)));
-	// „SIE DACHTEN,“ – die Heere des Zaren (Gefecht 1836, Schlucht voller Truppen)
-	shots.push(shot(10, dich - LEAD_SHOT, 'war_faesi_1836', 'crush', cam(1.25, 1.55, 0.5, 0.8, 0.45, 0.78)));
+	// Vor dem „NEIN.“ nur die Heere des Zaren – gut erkennbar (Wunsch des Auftraggebers: fesselnder Einstieg,
+	// keine Mauern, nichts Unkenntliches). „SIE DACHTEN,“ – Kolonne mit Kanonen durch den Schnee nach Wedeno 1859
+	shots.push(shot(10, dich - LEAD_SHOT, 'army_vedeno_column', 'ink', cam(1.12, 1.38, 0.5, 0.56, 0.5, 0.5)));
 	// „DICH“ – das Land
 	shots.push(shot(dich - LEAD_SHOT, stuermen - 3, 'lake_nokhchkeloy', 'ink', cam(1.05, 1.24, 0.5, 0.42), {burn: 0.6}));
 	// „ZU STÜRMEN“ – Nahkampf (Lermontow, Walerik 1840)
-	shots.push(shot(stuermen - 3, sei - LEAD_SHOT, 'war_valerik_lermontov', 'red', cam(1.35, 1.62, 0.55, 0.45, 0.6, 0.5, -1.5, 1.5)));
+	shots.push(shot(stuermen - 3, sei - LEAD_SHOT, 'army_gunib_storm', 'red', cam(1.0, 1.22, 0.6, 0.5, 0.66, 0.52, -1, 1)));
 	// „SEI EIN SPAZIERGANG“ – ruhiger Schwenk über die Berge (wie ein Spaziergang)
-	shots.push(shot(sei - LEAD_SHOT, fuer - LEAD_SHOT, 'mountains_kezenoyam', 'crush', cam(1.05, 1.15, 0.22, 0.5, 0.42, 0.5, 0, 0, 'lin'), {burn: 0.5}));
+	shots.push(shot(sei - LEAD_SHOT, fuer - LEAD_SHOT, 'army_dargo_forest', 'bright', cam(1.0, 1.1, 0.4, 0.5, 0.58, 0.5, 0, 0, 'lin')));
 	// „FÜR IHRE HEERE.“ – Truppen im verschneiten Wald (Roubaud), ferne Marschschritte im Ton
-	shots.push(shot(fuer - LEAD_SHOT, nein, 'war_dargo_roubaud', 'crush', cam(1.1, 1.42, 0.5, 0.42, 0.5, 0.5)));
+	shots.push(shot(fuer - LEAD_SHOT, nein, 'army_mountain_battle', 'ink', cam(1.0, 1.25, 0.42, 0.45, 0.55, 0.45)));
 
 	// ================================================================ ANTWORT („NEIN. Das ist das Revier der Tapferen.“)
 	// „NEIN.“ – tschetschenischer Krieger im Kettenhemd (Stich, 19. Jh.) auf Schwarz, die Schrift läuft HINTER
 	// Helm und Gewehr; Schnitt genau auf dem Donner. (Keine bekannten Personen – nur der Typ in Tracht.)
 	shots.push(shot(nein, dasist - LEAD_SHOT, 'warrior_mail', 'ink', cam(1.06, 0.98, 0.45, 0.28), {cutOnly: true, fg: true, flicker: 0.05}));
 	// „DAS IST“ – Turmmauer, „DAS REVIER“ – Wehrtürme im Fels (Uschkaloi)
-	shots.push(shot(dasist - LEAD_SHOT, revier - 3, 'tower_khambetar', 'crush', cam(1.35, 1.6, 0.5, 0.42)));
-	shots.push(shot(revier - 3, der - LEAD_SHOT, 'towers_ushkaloy', 'crush', cam(1.15, 1.42, 0.42, 0.55)));
+	shots.push(shot(dasist - LEAD_SHOT, revier - 3, 'eagle_stare', 'ink', cam(1.0, 1.08, 0.38, 0.45), {clipAt: 1.0}));
+	shots.push(shot(revier - 3, der - LEAD_SHOT, 'towers_ushkaloy', 'ink', cam(1.15, 1.42, 0.42, 0.55)));
 	// „DER TAPFEREN.“ – Männer aus Zumsoi in Papacha und Tscherkeska (Foto 1906), Fahrt auf die vordere Reihe
 	shots.push(shot(der - LEAD_SHOT, P[0], 'zumsoy_1906', 'red', cam(1.0, 1.22, 0.5, 0.5, 0.5, 0.6)));
 
 	// Blitzbilder im Intro (Negativ / Raster) und schwarze Einzelbilder wie in der Referenz
-	tops.push(shot(dachten + 9, dachten + 11, 'war_faesi_1836', 'neg', cam(1.4, 1.4, 0.48, 0.79)));
-	tops.push(shot(spazier + 12, spazier + 14, 'mountains_kezenoyam', 'neg', cam(1.1, 1.1, 0.33, 0.5)));
-	tops.push(shot(heere + 22, heere + 24, 'war_dargo_roubaud', 'neg', cam(1.3, 1.3, 0.5, 0.46)));
-	tops.push(shot(revier + 10, revier + 12, 'towers_ushkaloy', 'half', cam(1.25, 1.25, 0.42, 0.55)));
-	tops.push(shot(tapfer + 14, tapfer + 16, 'zumsoy_1906', 'half', cam(1.15, 1.15, 0.5, 0.55)));
+	tops.push(shot(dachten + 9, dachten + 11, 'army_vedeno_column', 'neg', cam(1.3, 1.3, 0.5, 0.52)));
+	tops.push(shot(spazier + 12, spazier + 14, 'army_dargo_forest', 'neg', cam(1.05, 1.05, 0.5, 0.5)));
+	tops.push(shot(heere + 22, heere + 24, 'army_mountain_battle', 'neg', cam(1.2, 1.2, 0.5, 0.45)));
+	tops.push(shot(revier + 10, revier + 12, 'towers_ushkaloy', 'neg', cam(1.25, 1.25, 0.42, 0.55)));
+	tops.push(shot(tapfer + 14, tapfer + 16, 'zumsoy_1906', 'neg', cam(1.15, 1.15, 0.5, 0.55)));
 	for (const t of [sie + 14, dich + 18, stuermen + 10, spazier + 22, heere + 14, dasist + 9, der + 4, tapfer + 24]) black(t);
 	// Anlauf auf „NEIN.“: Negativ des Kriegers, drei Frames Schwarz, Treffer: Weiß, dann ein Frame Blutrot
 	tops.push(shot(nein - 6, nein - 3, 'warrior_mail', 'neg', cam(1.25, 1.25, 0.52, 0.3)));
@@ -112,7 +113,7 @@ export const buildPlan = (): Plan => {
 	red(nein + 2);
 	// Anlauf auf den Drop: Flackern wird dichter, zuletzt Schwarz
 	for (const t of [tapfer + 30, tapfer + 34, tapfer + 37, tapfer + 39]) black(t);
-	blobs.push([dich - LEAD_SHOT - 3, dich - LEAD_SHOT + 1], [sei - LEAD_SHOT - 2, sei - LEAD_SHOT + 2], [nein + 8, nein + 11], [der - LEAD_SHOT - 3, der - LEAD_SHOT]);
+	// (Keine Raster- und Schmelz-Effekte mehr: Auftraggeber erkannte die Bilder darin nicht.)
 	scans.push([stuermen + 14, stuermen + 17], [revier - 6, revier - 3]);
 
 	// ================================================================ DROP – sechs Rufe „شيشان“
@@ -120,7 +121,7 @@ export const buildPlan = (): Plan => {
 	white(P[0], 2);
 	tops.push(shot(P[0] + 2, P[0] + 5, 'wolf_face', 'neg', cam(2.9, 3.1, 0.54, 0.455)));
 	black(P[0] + 5, 2);
-	tops.push(shot(P[0] + 7, P[0] + 10, 'mikeshin_chechen', 'half', cam(1.4, 1.4, 0.54, 0.56)));
+	tops.push(shot(P[0] + 7, P[0] + 10, 'mikeshin_chechen', 'neg', cam(1.4, 1.4, 0.54, 0.56)));
 	black(P[0] + 10, 2);
 	tops.push(shot(P[0] + 12, P[0] + 15, 'weapons_platz', 'neg', cam(1.3, 1.3, 0.5, 0.5)));
 	black(P[0] + 15, D[0] - P[0] - 15);
@@ -146,15 +147,14 @@ export const buildPlan = (): Plan => {
 	// Ruf 3: die Männer – nur der tschetschenische Typ in Tracht, keine bekannten Personen (Wunsch des
 	// Auftraggebers: Baysangur, Zelimkhan, Mansur & Co. kamen im Kanal schon zu oft vor).
 	// Raster-Blitz zweier Männer (Foto vor 1900), Krieger mit Gewehr, dann zwei Figuren mit Wort HINTER dem Kopf.
-	add(shot(P[2], D[2], 'chechens_seidlitz', 'half', cam(1.6, 1.66, 0.73, 0.42)), false); // nur der rechte Mann
+	add(shot(P[2], D[2], 'chechens_seidlitz', 'ink', cam(1.6, 1.66, 0.73, 0.42)), false); // nur der rechte Mann
 	add(shot(D[2], B(2, 1), 'chechen_rifle', 'bright', cam(0.98, 1.06, 0.5, 0.52), {cutOnly: true}), false);
 	add(shot(B(2, 1), B(2, 2), 'chechen_litho', 'crush', cam(0.8, 0.84, 0.41, 0.304), {cutOnly: true, fg: true}));
 	add(shot(B(2, 2), P[3] - 7, 'chechen_rider_1910', 'crush', cam(0.8, 0.84, 0.56, 0.288), {cutOnly: true, fg: true}));
 	red(D[2] + 2);
-	black(P[3] - 7, 7); // Atempause vor der tiefen Dreiergruppe (auch im Ton fast still)
-
-	// Ruf 4 (eine Oktave tiefer, Donner): Gewitter, heulender Wolf, Herde, Schmiede, Dolch, Funken
-	add(shot(P[3], D[3], 'storm_peaks', 'ink', cam(1.0, 1.05, 0.35, 0.45), {clipAt: 0.25}), false);
+	// Ruf 4 (eine Oktave tiefer, Donner): Gewitter – der Blitz im Clip (0,7 s) fällt genau auf den Auftakt,
+	// build_audio.py setzt dort den Donner. Danach heulender Wolf, Herde, Schmiede, Dolch, Funken
+	add(shot(P[3] - 7, D[3], 'storm_peaks', 'ink', cam(1.0, 1.05, 0.35, 0.45), {clipAt: 0.47}), false);
 	add(shot(D[3], B(3, 1), 'wolf_howl_zoo', 'crush', cam(1.0, 1.04, 0.585, 0.3), {alt: FLICKER, altP: 0.2}), false);
 	red(D[3] + 2, 2);
 	add(shot(B(3, 1), B(3, 2), 'horses_herd', 'hard', cam(1.0, 1.06, 0.5, 0.55), {clipAt: 2.0}));
@@ -181,7 +181,6 @@ export const buildPlan = (): Plan => {
 	// Treffer: weiße Blitze auf den schweren Rufen, kurze auf den anderen
 	for (const k of [0, 3, 5]) white(D[k], 2);
 	for (const k of [1, 2, 4]) white(D[k], 1);
-	blobs.push([D[2] - 3, D[2]], [B(4, 2) + 6, B(4, 2) + 9]);
 	scans.push([D[1] - 4, D[1] - 2], [D[3] - 5, D[3] - 3], [D[4] - 3, D[4] - 1], [B(0, 2) + 19, B(0, 2) + 23]);
 
 	// ================================================================ WÖRTER
@@ -203,7 +202,8 @@ export const buildPlan = (): Plan => {
 	wd({id: 'der', text: 'DER', at: der - L, until: P[0], x: 0.5, y: 0.22, size: 300, tone: 'white', entry: 'type'});
 	wd({id: 'tapfer', text: 'TAPFEREN.', at: tapfer - L, until: P[0], x: 0.5, y: 0.37, size: 700, maxW: 990, tone: 'red', glitch: 1.4});
 	// Drop: der Name in drei Schriften (genau auf den Schlägen), Wörter hinter den Köpfen, am Ende Freiheit
-	wd({id: 'shishan', text: 'شيشان', at: D[0], until: B(0, 1), x: 0.5, y: 0.44, size: 640, maxW: 820, font: 'arabic', tone: 'red'});
+	// „الشيشان“ = Tschetschenien (mit Artikel, so wird der Name geschrieben); Schrift Lalezar, ohne Glitch
+	wd({id: 'shishan', text: 'الشيشان', at: D[0], until: B(0, 1), x: 0.5, y: 0.44, size: 330, maxW: 940, font: 'arabic', tone: 'red'});
 	wd({id: 'nokhchiychoe', text: 'НОХЧИЙЧОЬ', at: B(0, 1), until: B(0, 2), x: 0.5, y: 0.45, size: 640, maxW: 980, tone: 'white'});
 	wd({id: 'tschetschenien', text: 'TSCHETSCHENIEN', at: B(0, 2), until: B(0, 2) + 15, x: 0.5, y: 0.45, size: 560, maxW: 970, tone: 'red'});
 	// КЪОНАХ = der Ehrenhafte, Tapfere (tschetschenisches Ideal des Mannes), НОХЧО = Tschetschene

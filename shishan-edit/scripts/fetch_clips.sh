@@ -23,3 +23,20 @@ for key in "${!CLIPS[@]}"; do
 	curl -sSf -m 300 -o "$D/$key.mp4" "https://assets.mixkit.co/videos/$id/$id-720.mp4"
 	echo "$key ($id)"
 done
+
+# Geräusche von Mixkit (gleiche Lizenz: frei, aber nicht als Rohmaterial weitergeben → nicht im Repo)
+S=assets-src/sfx
+declare -A SFX=(
+	[mk_hufe_dreck]=1762      # einzelnes Pferd, schneller Galopp auf Erde (wird verlangsamt und tiefer)
+	[mk_hengst_wiehern]=78    # Hengst wiehert
+	[mk_pferd_schnauben]=30   # Pferd schnaubt
+	[mk_wolf_knurren]=1774    # Knurren
+	[mk_wolf_angriff]=3015    # Wolfsangriff (Fauchen)
+	[mk_donner_einzel]=1291   # einzelner Donnerschlag
+)
+for key in "${!SFX[@]}"; do
+	id=${SFX[$key]}
+	[[ -s "$S/$key.mp3" ]] && continue
+	curl -sSf -m 120 -o "$S/$key.mp3" "https://assets.mixkit.co/active_storage/sfx/$id/$id-preview.mp3"
+	echo "$key ($id)"
+done

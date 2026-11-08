@@ -48,7 +48,7 @@ lines += ["", "## Stock-Clips (Mixkit-Lizenz, frei ohne Namensnennung)", "",
           "- Nasheed „ملحمة الشيشان“ (Tarek Jaber, SoundCloud), nur Stimme, beschleunigt 1,18×, bearbeitet;",
           "  Bass und Schläge aus der Stimme geformt. Fremdes Material – nicht im Repo.",
           "- Wolfsgeheul: „Wolf howls.ogg“ (U.S. National Park Service, gemeinfrei), Wikimedia Commons.",
-          "- Galoppierende Pferde: „Six Horses Galloping By.ogg“ (Freesound Community, CC0), Wikimedia Commons.",
+          "- Hufe, Wiehern, Schnauben, Wolfsknurren/-angriff, Donnerschläge: Mixkit Sound Effects (Mixkit-Lizenz, frei).",
           "- Wind, Donner, Stein, Stahl, Marschschritte: aus dem nokhchi-edit (ElevenLabs Sound Effects bzw. lokal erzeugt).",
           "", "## Kurzfassung für die Videobeschreibung", ""]
 by = sorted({author(c) + f" ({c['license']})" for c in used.values() if c["license"].startswith("CC BY")})

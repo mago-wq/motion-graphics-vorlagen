@@ -22,10 +22,21 @@ Remotion-Projekt (TypeScript): Krieger-Edit über den tschetschenischen Freiheit
   der Stimme (`scripts/build_audio.py`), dazu nur natürliche Geräusche. Keine gesprochenen Wörter (TTS).
 - **Echte Personen nur mit echten Bildern** (keine KI-Porträts). Keine modernen Politiker.
 
+- **Rückmeldungen Fassung 3:** arabisch „الشيشان“ (mit Artikel) in **Lalezar** – Rakkas zeichnete das „ش“
+  falsch, und Streifen-Glitch/3D-Schatten verstümmelten die Punkte (für Arabisch abgeschaltet). **Kein Raster-
+  und kein Schmelz-Effekt** (Bild nicht mehr erkennbar). **Einstieg fesselnd:** vor „NEIN.“ nur klar erkennbare
+  Zarenheere (Horschelt, Roubaud), keine Mauern. **Keine KI-Bilder** (Auftraggeber will die Figuren aus Fassung 2).
+- **Geräusche passend zum Bild:** jedes Geräusch hängt an der Einstellung, die sein Motiv zeigt (siehe unten).
+  Hufe: einzelnes Pferd auf Erde, verlangsamt und tiefer – die Commons-Herde klang wie Klatschen. Bei jedem
+  Wolfsbild Knurren/Fauchen (Auftraggeber mag den Wolf am Ende sehr). Blitz im Bild = Donner im Ton.
+
 ## Aufbau
 
 - `scripts/build_audio.py` → `public/audio/mix.wav` + `src/timeline.json` (Wortanfänge, Rufe „Shi/shan“,
   Schläge, Treffer). `src/plan.ts` setzt den ganzen Schnitt daraus zusammen – nie Frames von Hand setzen.
+- Danach liest `build_audio.py` den Plan über `scripts/export_plan.mjs` (esbuild) und setzt die Geräusche auf die
+  Einstellungen (`place_plan_sfx`: Pferde, Wölfe, Gewitter-Blitze im Clip, Stahl, Schmiede, Funken). Wer den Schnitt
+  ändert, muss `npm run audio` neu laufen lassen.
 - Quellzeiten im Nasheed (Original): Strophe 31,20–44,31 s, Rufe 138,42–157,22 s. Rufe: Reibelaut-Spitzen
   von „sch“ (2,2–3,9 kHz) werden eingerastet; Schlag = (nächster „shan“ − dieser) / 4.
 - Die Aufnahme endet bei ~4 kHz (alt): `exciter()` ergänzt Obertöne aus der Stimme, erst ab „كلا“.
