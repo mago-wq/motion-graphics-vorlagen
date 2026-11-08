@@ -1,0 +1,171 @@
+{
+ "img": {
+  "baysangur": {
+   "aspect": 0.8895,
+   "cut": true,
+   "half": true
+  },
+  "chechen_yermakov": {
+   "aspect": 0.8308,
+   "cut": true,
+   "half": true
+  },
+  "chechens_kennan": {
+   "aspect": 0.5996,
+   "cut": false,
+   "half": true
+  },
+  "kinjal_met_a": {
+   "aspect": 0.5625,
+   "cut": true,
+   "half": true
+  },
+  "kinjal_met_b": {
+   "aspect": 0.5625,
+   "cut": true,
+   "half": false
+  },
+  "lake_nokhchkeloy": {
+   "aspect": 0.75,
+   "cut": false,
+   "half": false
+  },
+  "mansur_1787": {
+   "aspect": 0.9488,
+   "cut": true,
+   "half": true
+  },
+  "mountains_kezenoyam": {
+   "aspect": 1.5,
+   "cut": false,
+   "half": false
+  },
+  "orga": {
+   "aspect": 1.0,
+   "cut": false,
+   "half": false
+  },
+  "papakha_painting": {
+   "aspect": 0.7883,
+   "cut": true,
+   "half": true
+  },
+  "tower_itumkale": {
+   "aspect": 0.75,
+   "cut": false,
+   "half": false
+  },
+  "tower_khambetar": {
+   "aspect": 0.75,
+   "cut": false,
+   "half": false
+  },
+  "tower_shatoy_stairs": {
+   "aspect": 0.75,
+   "cut": false,
+   "half": false
+  },
+  "towers_ushkaloy": {
+   "aspect": 0.75,
+   "cut": false,
+   "half": true
+  },
+  "war_dargo_roubaud": {
+   "aspect": 0.6925,
+   "cut": false,
+   "half": false
+  },
+  "war_faesi_1836": {
+   "aspect": 1.2225,
+   "cut": false,
+   "half": false
+  },
+  "war_roubaud_scene": {
+   "aspect": 1.5202,
+   "cut": false,
+   "half": true
+  },
+  "war_valerik_lermontov": {
+   "aspect": 1.1415,
+   "cut": false,
+   "half": false
+  },
+  "weapons_platz": {
+   "aspect": 1.3646,
+   "cut": false,
+   "half": false
+  },
+  "wolf_face": {
+   "aspect": 1.5,
+   "cut": false,
+   "half": true
+  },
+  "wolf_howl_rock": {
+   "aspect": 1.6667,
+   "cut": false,
+   "half": true
+  },
+  "wolf_howl_zoo": {
+   "aspect": 1.5,
+   "cut": true,
+   "half": false
+  },
+  "wolf_loup": {
+   "aspect": 0.7412,
+   "cut": true,
+   "half": false
+  },
+  "wolf_portrait_v": {
+   "aspect": 0.6667,
+   "cut": true,
+   "half": false
+  },
+  "zelimkhan": {
+   "aspect": 0.8312,
+   "cut": true,
+   "half": true
+  }
+ },
+ "clip": {
+  "eagle_stare": {
+   "aspect": 1.7778,
+   "duration": 16.8
+  },
+  "forge_blade": {
+   "aspect": 1.7778,
+   "duration": 14.733
+  },
+  "hooves": {
+   "aspect": 1.7778,
+   "duration": 32.033
+  },
+  "horses_herd": {
+   "aspect": 1.7778,
+   "duration": 12.433
+  },
+  "horses_mountain": {
+   "aspect": 1.7778,
+   "duration": 10.0
+  },
+  "mist_vertical": {
+   "aspect": 0.5625,
+   "duration": 10.033
+  },
+  "sparks_black": {
+   "aspect": 0.5625,
+   "duration": 12.833
+  },
+  "sparks_fall": {
+   "aspect": 1.7778,
+   "duration": 16.167
+  },
+  "storm_peaks": {
+   "aspect": 1.7778,
+   "duration": 11.233
+  },
+  "wolves_vicart": {
+   "aspect": 1.7778,
+   "duration": 40.967
+  }
+ }
+}

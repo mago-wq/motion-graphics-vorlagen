@@ -1,0 +1,236 @@
+{
+ "chechen_yermakov": {
+  "file": "img/chechen_yermakov.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Chechen%2C_19th_century.jpg",
+  "author": "D. I. Yermakov",
+  "license": "Public domain",
+  "date": "From 1845 to 1916",
+  "width": 2198,
+  "height": 2646
+ },
+ "chechens_kennan": {
+  "file": "img/chechens_kennan.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Chechense._Match._a_wedding_match._George_Kennan._1870-1886.jpg",
+  "author": "George Kennan (died in 1924)",
+  "license": "Public domain",
+  "date": "с 1870 по 1886date QS:P,+1850-00-00T00:00:00Z/7,P580,+1870-00-00T00:00:00Z/9,P582,+1886-00-00T00:00:00Z/9",
+  "width": 509,
+  "height": 849
+ },
+ "zelimkhan": {
+  "file": "img/zelimkhan.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Zelimxan.jpg",
+  "author": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "date": "before 1913date QS:P,+1913-00-00T00:00:00Z/7,P1326,+1913-00-00T00:00:00Z/9",
+  "width": 410,
+  "height": 493
+ },
+ "mansur_1787": {
+  "file": "img/mansur_1787.png",
+  "commons": "https://commons.wikimedia.org/wiki/File:Portr%C3%A4t_des_%E2%80%9EScheich_Mansur%E2%80%9C.png",
+  "author": "J. Chr. Winkler",
+  "license": "Public domain",
+  "date": "1787",
+  "width": 828,
+  "height": 872
+ },
+ "baysangur": {
+  "file": "img/baysangur.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B5%D0%BD%D0%BE%D0%B9%D0%BD_%D0%91%D0%BE%D0%B9%D1%81%D0%B3%D3%80%D0%B0%D1%80.jpg",
+  "author": "Фарук Кутлу",
+  "license": "CC BY 3.0",
+  "date": "2019-04-03",
+  "width": 1779,
+  "height": 2000
+ },
+ "war_dargo_roubaud": {
+  "file": "img/war_dargo_roubaud.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Fight_in_the_Caucasus.jpg",
+  "author": "Рубо Франц Алексеевич",
+  "license": "Public domain",
+  "date": "1895",
+  "width": 693,
+  "height": 1000
+ },
+ "war_roubaud_scene": {
+  "file": "img/war_roubaud_scene.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Roubaud._Scene_from_Caucasian_war.jpg",
+  "author": "Франц Алексеевич Рубо",
+  "license": "Public domain",
+  "date": "",
+  "width": 1600,
+  "height": 1052
+ },
+ "war_faesi_1836": {
+  "file": "img/war_faesi_1836.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Battle_between_Russian_Troops_under_General_Faesi_and_Chechens_%281836%29.jpg",
+  "author": "Russian School",
+  "license": "Public domain",
+  "date": "1836",
+  "width": 1500,
+  "height": 1227
+ },
+ "war_valerik_lermontov": {
+  "file": "img/war_valerik_lermontov.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Paintings_by_Mikhail_Lermontov%2C_1840%2C_Valerik.jpg",
+  "author": "Михаил Юрьевич Лермонтов / Григорий Григорьевич Гагарин",
+  "license": "Public domain",
+  "date": "1840date QS:P571,+1840-00-00T00:00:00Z/9",
+  "width": 3213,
+  "height": 2815
+ },
+ "towers_ushkaloy": {
+  "file": "img/towers_ushkaloy.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:Ushkaloyskie_Towers.jpg",
+  "author": "SoloveiYegor",
+  "license": "CC BY-SA 4.0",
+  "date": "Taken on 25 August 2020, 11:44:41",
+  "width": 3024,
+  "height": 4032
+ },
+ "tower_khambetar": {
+  "file": "img/tower_khambetar.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%A5%D0%B0%D0%BC%D0%B1%D0%B5%D1%82%D0%B0%D1%80%D0%B0%D0%BD_%D0%B3I%D0%B0%D0%BB%D0%B0.jpg",
+  "author": "Flandria12",
+  "license": "CC BY 4.0",
+  "date": "2021-12-14 16:36:55",
+  "width": 3024,
+  "height": 4032
+ },
+ "mountains_kezenoyam": {
+  "file": "img/mountains_kezenoyam.jpg",
+  "commons": "https://commons.wikimedia.org/wiki/File:%D0%A7%D0%B5%D1%87%D0%BD%D1%8F_4.jpg",
+  "author": "Michael Bushmin",
+  "license": "CC BY-SA 4.0",
+  "date": "Taken on 16 April 2015",
+  "width": 3919,
+  "height": 2613
+ },
+ "wolf_howl_rock": {
+  "key": "wolf_howl_rock",
+  "file": "img/wolf_howl_rock.jpg",
+  "title": "Wolf howling on glacial erratic2.jpg",
+  "artist": "Jim Peaco for NPS",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Wolf_howling_on_glacial_erratic2.jpg"
+ },
+ "wolf_howl_zoo": {
+  "key": "wolf_howl_zoo",
+  "file": "img/wolf_howl_zoo.jpg",
+  "title": "Howling wolf 1.jpg",
+  "artist": "Kikimora mashenka",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Howling_wolf_1.jpg"
+ },
+ "wolf_face": {
+  "key": "wolf_face",
+  "file": "img/wolf_face.jpg",
+  "title": "Portrait of a common european wolf.jpg",
+  "artist": "Artur Galicki",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_common_european_wolf.jpg"
+ },
+ "kinjal_met_a": {
+  "key": "kinjal_met_a",
+  "file": "img/kinjal_met_a.jpg",
+  "title": "Dagger with Sheath MET 36.25.927ab 001july2014.jpg",
+  "artist": "This file was donated to Wikimedia Commons as part of a project by the Metropolitan Museum of Art. See the Image and Data Resources Open Access Policy",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Dagger_with_Sheath_MET_36.25.927ab_001july2014.jpg"
+ },
+ "kinjal_met_b": {
+  "key": "kinjal_met_b",
+  "file": "img/kinjal_met_b.jpg",
+  "title": "Dagger with Sheath MET 26.35.9ab 001june2014.jpg",
+  "artist": "This file was donated to Wikimedia Commons as part of a project by the Metropolitan Museum of Art. See the Image and Data Resources Open Access Policy",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Dagger_with_Sheath_MET_26.35.9ab_001june2014.jpg"
+ },
+ "wolf_portrait_v": {
+  "key": "wolf_portrait_v",
+  "file": "img/wolf_portrait_v.jpg",
+  "title": "Canis lupus lupus portrait 01.jpg",
+  "artist": "User:MatthiasKabel",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Canis_lupus_lupus_portrait_01.jpg"
+ },
+ "wolf_loup": {
+  "key": "wolf_loup",
+  "file": "img/wolf_loup.jpg",
+  "title": "Loup portrait.jpg",
+  "artist": "Raoul Feignoux",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Loup_portrait.jpg"
+ },
+ "weapons_platz": {
+  "key": "weapons_platz",
+  "file": "img/weapons_platz.jpg",
+  "title": "Caucasian weapons (E. Platz).jpg",
+  "artist": "Ernst Platz (1867-1940)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Caucasian_weapons_(E._Platz).jpg"
+ },
+ "papakha_painting": {
+  "key": "papakha_painting",
+  "file": "img/papakha_painting.jpg",
+  "title": "Russian school - A Caucasian in a papakha with a saddle beside him.jpg",
+  "artist": "Russian school Unknown artistUnknown artist",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Russian_school_-_A_Caucasian_in_a_papakha_with_a_saddle_beside_him.jpg"
+ },
+ "tower_itumkale": {
+  "key": "tower_itumkale",
+  "file": "img/tower_itumkale.jpg",
+  "title": "Itum-Kale tower.jpg",
+  "artist": "https://ru.wikipedia.org/w/index.php?title=%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Noxchiy&amp;action=edit&amp;redlink=1",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Itum-Kale_tower.jpg"
+ },
+ "tower_shatoy_stairs": {
+  "key": "tower_shatoy_stairs",
+  "file": "img/tower_shatoy_stairs.jpg",
+  "title": "Шуьйта бlов.jpg",
+  "artist": "Flandria12",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%A8%D1%83%D1%8C%D0%B9%D1%82%D0%B0_%D0%B1l%D0%BE%D0%B2.jpg"
+ },
+ "lake_nokhchkeloy": {
+  "key": "lake_nokhchkeloy",
+  "file": "img/lake_nokhchkeloy.jpg",
+  "title": "Нохч-Келара Iам.jpg",
+  "artist": "Flandria12",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%BE%D1%85%D1%87-%D0%9A%D0%B5%D0%BB%D0%B0%D1%80%D0%B0_I%D0%B0%D0%BC.jpg"
+ },
+ "orga": {
+  "key": "orga",
+  "file": "img/orga.jpg",
+  "title": "Орга. Нихал уллехь.jpg",
+  "artist": "Flandria12",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%9E%D1%80%D0%B3%D0%B0._%D0%9D%D0%B8%D1%85%D0%B0%D0%BB_%D1%83%D0%BB%D0%BB%D0%B5%D1%85%D1%8C.jpg"
+ },
+ "wolves_vicart": {
+  "key": "wolves_vicart",
+  "file": "video/wolves_vicart.webm",
+  "title": "Vicart - loups.webm",
+  "artist": "Damien-VICART",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vicart_-_loups.webm"
+ }
+}

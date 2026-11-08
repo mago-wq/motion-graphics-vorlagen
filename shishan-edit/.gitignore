@@ -1,0 +1,31 @@
+node_modules/
+out/
+# Das Nasheed ist urheberrechtlich geschützt: weder die Quelle noch die daraus gebaute Tonspur
+# kommen ins Repo. Wiederherstellen: scripts/fetch_nasheed.sh, dann npm run audio.
+assets-src/nasheed/
+public/audio/
+# Mixkit-Clips dürfen nicht als Rohmaterial weitergegeben werden – scripts/fetch_clips.sh lädt sie neu
+assets-src/clips/
+assets-src/video/
+public/clips/
+# Vorgerechnete Looks (scripts/bake_looks.py erzeugt sie aus assets-src/img neu)
+public/img/
+__pycache__/
+
+# Aus nokhchi-edit kopiert (scripts/fetch_commons.py legt sie an) – dort schon eingecheckt
+assets-src/img/chechen_yermakov.*
+assets-src/img/chechens_kennan.*
+assets-src/img/zelimkhan.*
+assets-src/img/mansur_1787.*
+assets-src/img/baysangur.*
+assets-src/img/war_dargo_roubaud.*
+assets-src/img/war_roubaud_scene.*
+assets-src/img/war_faesi_1836.*
+assets-src/img/war_valerik_lermontov.*
+assets-src/img/towers_ushkaloy.*
+assets-src/img/tower_khambetar.*
+assets-src/img/mountains_kezenoyam.*
+assets-src/img/cut/chechen_yermakov.png
+assets-src/img/cut/zelimkhan.png
+assets-src/img/cut/mansur_1787.png
+assets-src/img/cut/baysangur.png

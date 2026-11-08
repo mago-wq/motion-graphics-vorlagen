@@ -15,6 +15,7 @@ und wird pro Kunde nur über ihre `src/config.ts` angepasst.
 | [`nasheed-reel/`](nasheed-reel/) | Lyric-Reel „Ya Hasafa“: aufblühende Blumen, Nachtbilder, arabischer Text mit deutscher Übersetzung (Retro-Glow), Nasheed + Geräusche; 4K | 31 s |
 | [`rahil-reel/`](rahil-reel/) | Zwei Reels auf „Ya Rahilan“: Abschied (Regen, Kerze, Mond, arabisch/deutsch) und „Sommertage Vergangenheit“ (romantisch-nostalgischer Look); Schrift zittert mit der Stimme | 15,7 s |
 | [`stil-showreel/`](stil-showreel/) | Showreel: 40 Animationsstile aus Code (Shader, Canvas, SVG) im 0,4-s-Schnitt mit Zähler, Geräusche aus der earshot-Bank, keine Musik | 15 s |
+| [`shishan-edit/`](shishan-edit/) | Krieger-Edit Tschetschenien im Stil eines TikTok-Edits: Nasheed „ملحمة الشيشان“ nur Stimme, Frage/Antwort Wort für Wort, Drop auf sechs Rufe „شيشان“, Schwarz-Weiß mit Rot, Text hinter dem Motiv | ~30 s |
 
 Bedienung steht jeweils in der README der Vorlage. Kurz:
 
